@@ -23,6 +23,11 @@ const routes = [
         component: profileLandingPage
     },
     {
+        path: '/CalorieTracker',
+        name: 'CalorieTracker',
+        component: () => import('../views/CalorieTracker.vue')
+    },
+    {
         path: '/homeview',
         name: 'HomeView',
         component: HomeView
@@ -36,6 +41,11 @@ const routes = [
         path: '/favourite',
         name: 'Favourite',
         component: () => import('../views/FavouriteRecipe.vue')
+    },
+    {
+        path: '/recipe',
+        name: 'Recipe',
+        component: () => import('../views/RecipeView.vue')
     },
     {
         path: '/login',

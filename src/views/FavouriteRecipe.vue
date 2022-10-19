@@ -1,24 +1,23 @@
 <script>
-    // import { onMounted, ref } from 'vue'
     import Card from '../components/CardComp.vue'
     import Search from '../components/SearchBar.vue'
-    // import {getItems} from '../utils'
-    import { getFavourite } from '../utils'
+    import data from '../recipes.json'
+    import {getFavourite} from '../utils'
 
-    
-    // const items = getItems().length || 0
-    // console.log(recipesLength)
-    const len = getFavourite()
-    console.log(len)
+    var recipes = getFavourite()
+    console.log(recipes);
 
     export default {
         components: {
             Card,
             Search
         },
-        methods: {
-            getFavourite
+        data() {
+            return {
+                recipes
+            }
         }
+        
 
     }
 </script>
@@ -47,7 +46,9 @@
 
         <div class="row">
             <!--Start of Recipe-->
-            <Card v-for="n in len" v-bind:key="n"></Card>
+            <!-- eslint-disable-next-line -->
+            <Card v-for="recipe of recipes"  :image_url="recipe[0]['image']" :name="recipe[0]['title']" :duration="recipe[0]['readyInMinutes']" :desc="recipe[0]['summary'].slice(0, 150)+'...'"></Card>
+            <!-- <Card :image_url="'tester'" :name="'fake'"></Card> -->
             <!-- End of Recipe -->
         </div>
 

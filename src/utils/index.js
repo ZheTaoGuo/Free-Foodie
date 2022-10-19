@@ -225,59 +225,95 @@ export const addFamilyMember = (userId, userName, familyId) => {
 }
 
 // updating the fields of the user (height, weight, activityFrequency)
-// export const calculateCalories = (userId, height, weight, activityFrequency) => {
-//     console.log("calculateCalories is called")
-//     if (userId == undefined || height == undefined || weight == undefined || activityFrequency == undefined) {
-//         console.log("Error. Please pass in userId, height, weight and activityFrequency")
-//         return
-//     }
-//     // updating the database for the height, weight, and activityFrequency
-//     update(ref(db, 'users/' + userId), {
-//         height: height,
-//         weight: weight,
-//         activityFrequency: activityFrequency
-//     }); 
+export const calculateCalories = (userId, height, weight, activityFrequency) => {
+    console.log("calculateCalories is called")
+    if (userId == undefined || height == undefined || weight == undefined || activityFrequency == undefined) {
+        console.log("Error. Please pass in userId, height, weight and activityFrequency")
+        return
+    }
+    
+    // getting the gender of the user
+    let gender = "";
+    let age = 0;
+    onValue(ref(db, 'users/' + userId), (snapshot) => {
+        const data = snapshot.val();
+        if (data == null){
+            console.log("user not found")
+            return
+        }
+        console.log("this is data", data)
+        gender = data.gender
+        age = data.age
+    })
 
-//     // getting the gender of the user
-//     let gender = "";
-//     let age = 0;
-//     onValue(ref(db, 'users/' + userId), (snapshot) => {
-//         const data = snapshot.val();
-//         if (data == null){
-//             console.log("user not found")
-//             return
-//         }
-//         console.log("this is data", data)
-//         gender = data.gender
-//         age = data.age
-//     })
+    // calculating the calorie limit
+    let calorieLimit = 0
+    let BMR = 0
+    if (gender == "male"){
+        BMR = 66.5 + (13.75 * weight) + (5.003 * height) - (6.75 * age)
+    } else {
+        BMR = 655.1 + (9.563 * weight) + (1.85 * height) - (4.676 * age)
+    }
 
-//     // calculating the calorie limit
-//     let calorieLimit = 0
-//     let BMR = 0
-//     if (gender == "male"){
-//         BMR = 66.5 + (13.75 * weight) + (5.003 * height) - (6.75 * age)
-//     } else {
-//         BMR = 655.1 + (9.563 * weight) + (1.85 * height) - (4.676 * age)
-//     }
+    console.log('this is activity frequency', activityFrequency)
+    if (activityFrequency == "Little to no exercise"){
+        calorieLimit = BMR * 1.2
+    } else if (activityFrequency == "Exercise 1-3 days/week"){
+        calorieLimit = BMR * 1.375
+    } else if (activityFrequency == "Exercise 3-5 days/week"){
+        calorieLimit = BMR * 1.55
+    } else if (activityFrequency == "Exercise 6-7 days/week"){
+        calorieLimit = BMR * 1.725
+    } else if (activityFrequency == "Hard exercise 6-7 days/week"){
+        calorieLimit = BMR * 1.9
+    }
+    console.log("this is calorie limit", calorieLimit)
 
-//     if (activityFrequency == "Little to no exercise"){
-//         calorieLimit = BMR * 1.2
-//     } else if (activityFrequency == "Exercise 1-3 days/week"){
-//         calorieLimit = BMR * 1.375
-//     } else if (activityFrequency == "Exercise 3-5 days/week"){
-//         calorieLimit = BMR * 1.55
-//     } else if (activityFrequency == "Exercise 6-7 days/week"){
-//         calorieLimit = BMR * 1.725
-//     } else if (activityFrequency == "Hard exercise 6-7 days/week"){
-//         calorieLimit = BMR * 1.9
-//     }
+    // TODO: how to append list to calorieDetails
+    update(ref(db, 'users/' + userId), {
+        height: height,
+        weight: weight,
+        activityFrequency: activityFrequency
+    });
+    update(ref(db, 'users/' + userId + "/calorieDetails"), {
+        [new Date()]: 
+            {   
+                date: new Date(),
+                dailyCalorieIntake: 0,
+                calorieLimit: calorieLimit,
+            }
+    }); 
 
-//     update(ref(db, 'users/' + userId), {
-//         calorieLimit: calorieLimit
-//     }); 
-
-//     return calorieLimit
-// }
+    return calorieLimit
+}
 
 // retreiving the user's calorie limit
+export const getUser = (userId) => {
+    console.log("getUser is called")
+    if (userId == undefined) {
+        console.log("Error. Please pass in userId")
+        return
+    }
+    return new Promise((resolve, reject) => {
+        const users = ref(db, 'users/');
+        onValue(users, (snapshot) => {
+            const data = snapshot.val();
+            if (data == null){
+                return reject("no user found")
+            }
+            console.log("this is data", data)
+            for (let j = 0; j < data.length; j++){
+                let obj = data[j]
+                console.log("this is obj", obj)
+                if (obj == undefined) {
+                    continue
+                }
+                if (obj.userId == userId){
+                    console.log("this is resolved", obj)
+                    return resolve(obj)
+                }
+            }
+            return reject("no user found")
+        });
+    })
+};

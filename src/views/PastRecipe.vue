@@ -1,20 +1,23 @@
 <script>
-    // import { onMounted, ref } from 'vue'
     import Card from '../components/CardComp.vue'
     import Search from '../components/SearchBar.vue'
-    // import {getItems} from '../utils/util'
-    
-    // const items = ref({})
-    // onMounted(async () => {
-    //     items.value = await getItems();
-    // })
+    import data from '../recipes.json'
+    import {getPast} from '../utils'
+
+    var recipes = getPast()
+    console.log(recipes);
 
     export default {
         components: {
-            Card, Search
+            Card,
+            Search
+        },
+        data() {
+            return {
+                recipes
+            }
         }
-
-}
+    }
 </script>
 
 <template>
@@ -38,8 +41,10 @@
         </div>
 
         <div class="row">
-             <!--Start of Recipe-->
-            <Card v-for="n in 1" v-bind:key="n"></Card>
+            <!--Start of Recipe-->
+            <!-- eslint-disable-next-line -->
+            <Card v-for="recipe of recipes"  :image_url="recipe[0]['image']" :name="recipe[0]['title']" :desc="recipe[0]['summary'].slice(0,200) + '...'"></Card>
+            <!-- <Card :image_url="'tester'" :name="'fake'"></Card> -->
             <!-- End of Recipe -->
         </div>
         
