@@ -287,7 +287,7 @@ export const calculateCalories = (userId, height, weight, activityFrequency) => 
     return calorieLimit
 }
 
-// retreiving the user's calorie limit
+// retreiving the user details
 export const getUser = (userId) => {
     console.log("getUser is called")
     if (userId == undefined) {

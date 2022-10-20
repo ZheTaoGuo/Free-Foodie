@@ -1,6 +1,6 @@
 <script>
     // import { RouterLink } from 'vue-router'
-    import { calculateCalories, getCalorieDetails } from '../utils'
+    import { calculateCalories, getUser } from '../utils'
     // import * as d3 from "d3";
     import plot from "@/components/plotWithXandYaxis.vue";
 
@@ -26,7 +26,7 @@
         },
         methods: {
             calculateCalories,
-            getCalorieDetails
+            getUser
         },
         mounted() {
         //     const width = 800;
@@ -122,13 +122,13 @@
             </div>
         </form>
 
-        <div class="btn" v-on:click="getCalorieDetails(userId)">getcaloriedetails</div>
+        <div class="btn" v-on:click="getUser(userId)">getcaloriedetails</div>
 
         <!-- dashboard -->
         <div style="border:1px solid black; width:70%" class="p-3 mx-auto">
             <!-- TODO: make the data reflect actual user calories & insert the calorie line -->
             <!-- <svg></svg> -->
-            <plot :height="500" style='padding-left:50px'/>
+            <plot :height="500" style="padding-left:50px"/>
             <div class="row d-flex justify-content-end mt-4">
                 <label for="colFormLabelSm" class="col-1 col-form-label col-form-label-sm" style="text-align: end">X-axis:</label>
                 <div class="dropdown col-2">
