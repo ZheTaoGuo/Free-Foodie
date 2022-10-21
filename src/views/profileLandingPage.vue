@@ -75,23 +75,27 @@
                     
                 </div>
 
-                <div class="row favoriteRecipies">
-                    <div class="col-1">
-                        <a href="/"><img src="../assets/love.png" style="height:30px; width:30px;"></a>
+                <router-link to="/favourite" style="text-decoration:none; color: black">
+                    <div class="row favoriteRecipies">
+                        <div class="col-1">
+                            <a href="/"><img src="../assets/love.png" style="height:30px; width:30px;"></a>
+                        </div>
+                        <div class="col-9 pt-1">
+                            <h5>Your Favorite Recipies</h5>
+                        </div>
                     </div>
-                    <div class="col-9 pt-1">
-                        <h5>Your Favorite Recipies</h5>
-                    </div>
-                </div>
+                </router-link>
 
-                <div class="row pastRecipies">
-                    <div class="col-1">
-                        <a href="/"><img src="../assets/history.png" style="height:30px; width:30px;"></a>
+                <router-link to="/past" style="text-decoration:none; color: black">
+                    <div class="row pastRecipies">
+                        <div class="col-1">
+                            <a href="/"><img src="../assets/history.png" style="height:30px; width:30px;"></a>
+                        </div>
+                        <div class="col-9 pt-1">
+                            <h5>Your Past Recipies</h5>
+                        </div>
                     </div>
-                    <div class="col-9 pt-1">
-                        <h5>Your Past Recipies</h5>
-                    </div>
-                </div>
+                </router-link>
             </div>
 
             <div class="col calorieTracker ">
