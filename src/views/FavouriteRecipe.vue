@@ -17,8 +17,6 @@
                 recipes
             }
         }
-        
-
     }
 </script>
 
@@ -47,7 +45,7 @@
         <div class="row">
             <!--Start of Recipe-->
             <!-- eslint-disable-next-line -->
-            <Card v-for="recipe of recipes"  :image_url="recipe[0]['image']" :name="recipe[0]['title']" :duration="recipe[0]['readyInMinutes']" :desc="recipe[0]['summary'].slice(0, 150)+'...'"></Card>
+            <Card v-for="recipe of recipes"  :image_url="recipe[0]['image']" :name="recipe[0]['recipeName']" :duration="recipe[0]['duration']" :desc="recipe[0]['summary'].slice(0, 150)+'...'"></Card>
             <!-- <Card :image_url="'tester'" :name="'fake'"></Card> -->
             <!-- End of Recipe -->
         </div>
