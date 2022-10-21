@@ -2,14 +2,7 @@ import { getDatabase, ref, onValue, set, update } from "firebase/database";
 import { initializeApp } from 'firebase/app';
 
 const firebaseConfig = {
-    apiKey: "AIzaSyAIIHmCjATac_3pg0M8gVHs2wN0h_I7GN4",
-    authDomain: "wad2project-d5b31.firebaseapp.com",
-    databaseURL: "https://wad2project-d5b31-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "wad2project-d5b31",
-    storageBucket: "wad2project-d5b31.appspot.com",
-    messagingSenderId: "457383848533",
-    appId: "1:457383848533:web:bce9727937c8d714bfc2dc",
-    measurementId: "G-JFFFZGKRGY"
+    
   };
   
   // Initialize Firebase
@@ -25,7 +18,7 @@ function getRecipe(recipeID) {
         const data = snapshot.val();
         for (const obj of data){
             // console.log(obj.id);
-            if (obj.id == recipeID){
+            if (obj.recipeId == recipeID){
                 // console.log(obj);
                 found.push(obj)
             }
@@ -40,16 +33,9 @@ export const getFavourite = () => {
     const recipes = ref(db, 'recipes/FavouriteRecipes');
     onValue(recipes, (snapshot) => {
         const data = snapshot.val();
-        for (const obj of data){
-            // console.log(obj);
-            if (obj.userid == 123){
-                // len = obj.recipesID.length
-                // console.log(obj);
-                for(let id of obj.recipesID) {
-                    // eslint-disable-next-line
-                    recipeFound.push(getRecipe(id))
-                }
-            }
+        for(let id of data) {
+            // eslint-disable-next-line
+            recipeFound.push(getRecipe(id))
         }
         // console.log(len);
     });
@@ -61,16 +47,9 @@ export const getPast = () => {
     const recipes = ref(db, 'recipes/PastRecipes');
     onValue(recipes, (snapshot) => {
         const data = snapshot.val();
-        for (const obj of data){
-            // console.log(obj);
-            if (obj.userid == 123){
-                // len = obj.recipesID.length
-                // console.log(obj);
-                for(let id of obj.recipesID) {
-                    // eslint-disable-next-line
-                    recipeFound.push(getRecipe(id))
-                }
-            }
+        for(let id of data) {
+            // eslint-disable-next-line
+            recipeFound.push(getRecipe(id))
         }
         // console.log(len);
     });
