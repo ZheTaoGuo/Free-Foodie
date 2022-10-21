@@ -11,7 +11,7 @@
             // required: true
         },
         duration: {
-            type: String,
+            type: Number,
             // required: true
             default: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptatibus, qui!'
         },

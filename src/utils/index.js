@@ -28,32 +28,42 @@ function getRecipe(recipeID) {
     return found
 }
 
-export const getFavourite = () => {
-    var recipeFound = []
-    const recipes = ref(db, 'recipes/FavouriteRecipes');
-    onValue(recipes, (snapshot) => {
-        const data = snapshot.val();
-        for(let id of data) {
-            // eslint-disable-next-line
-            recipeFound.push(getRecipe(id))
-        }
-        // console.log(len);
-    });
-    return recipeFound
+// getting list of recipeId from favourite table, using the recipeId => return a list of recipe objects
+export const getFavourite = ()=> {
+    return new Promise((resolve, reject) => {
+        var recipeFound = []
+        const recipes = ref(db, 'recipes/FavouriteRecipes');
+        onValue(recipes, (snapshot) => {
+            const data = snapshot.val();
+            if (data == null) {
+                return reject([])
+            }
+            for(let id of data) {
+                // eslint-disable-next-line
+                recipeFound.push(getRecipe(id))
+            }
+        });
+        return resolve(recipeFound)
+    })
 }
 
-export const getPast = () => {
-    var recipeFound = []
-    const recipes = ref(db, 'recipes/PastRecipes');
-    onValue(recipes, (snapshot) => {
-        const data = snapshot.val();
-        for(let id of data) {
-            // eslint-disable-next-line
-            recipeFound.push(getRecipe(id))
-        }
-        // console.log(len);
-    });
-    return recipeFound
+// getting list of recipeId from Past table, using the recipeId => return a list of recipe objects
+export const getPast = ()=> {
+    return new Promise((resolve, reject) => {
+        var recipeFound = []
+        const recipes = ref(db, 'recipes/PastRecipes');
+        onValue(recipes, (snapshot) => {
+            const data = snapshot.val();
+            if (data == null) {
+                return reject([])
+            }
+            for(let id of data) {
+                // eslint-disable-next-line
+                recipeFound.push(getRecipe(id))
+            }
+        });
+        return resolve(recipeFound)
+    })
 }
 
 
@@ -266,7 +276,7 @@ export const calculateCalories = (userId, height, weight, activityFrequency) => 
     return calorieLimit
 }
 
-// retreiving the user details
+// retreiving the user's calorie limit
 export const getUser = (userId) => {
     console.log("getUser is called")
     if (userId == undefined) {

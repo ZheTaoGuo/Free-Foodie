@@ -4,8 +4,8 @@
     import data from '../recipes.json'
     import {getFavourite} from '../utils'
 
-    var recipes = getFavourite()
-    console.log(recipes);
+    // var recipes = getFavourite()
+    // console.log(recipes);
 
     export default {
         components: {
@@ -14,8 +14,19 @@
         },
         data() {
             return {
-                recipes
+                recipes: []
             }
+        },
+        methods: {
+            getFavouriteRecipe() {
+                getFavourite().then((value) => {
+                    console.log(value);
+                    this.recipes = value
+                }).catch((message)=> {this.familyList = message })
+            }
+        },
+        mounted() {
+            this.getFavouriteRecipe()
         }
     }
 </script>

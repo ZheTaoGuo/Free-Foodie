@@ -14,8 +14,19 @@
         },
         data() {
             return {
-                recipes
+                recipes: []
             }
+        },
+        methods: {
+            getPastRecipe() {
+                getPast().then((value) => {
+                    console.log(value);
+                    this.recipes = value
+                }).catch((message)=> {this.familyList = message})
+            }
+        },
+        mounted() {
+            this.getPastRecipe()
         }
     }
 </script>
