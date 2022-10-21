@@ -45,7 +45,8 @@ const routes = [
     {
         path: '/recipe',
         name: 'Recipe',
-        component: () => import('../views/RecipeView.vue')
+        component: () => import('../views/RecipeView.vue'),
+        query: true
     },
     {
         path: '/login',
