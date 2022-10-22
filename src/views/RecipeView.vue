@@ -11,6 +11,7 @@
         data(){
             return {
                 queryType: '',
+                selectedRecipe: 0,
                 recipes: []
             }
         },
@@ -42,6 +43,7 @@
         },
         mounted() {
             this.queryType = this.$route.query.type;
+            this.selectedRecipe = this.$route.query.recipeId;
             console.log(this.queryType);
             if (this.queryType == 'favourite') {
                 this.getFavouriteRecipe()
@@ -61,15 +63,19 @@
             <div class="col-3">
                 <div class="nav nav-tabs flex-column me-3" id="v-tab" role="tablist" aria-orientation="vertical">
                     <!-- eslint-disable-next-line -->
-                    <button v-for="recipe of recipes" class="nav-link border p-4 my-2" id="v-settings-tab" data-bs-toggle="pill"
+                    <button v-for="recipe of recipes" class="nav-link border p-4 my-2" 
+                        :class="{active: recipe['recipeId'] == selectedRecipe}" id="v-settings-tab" data-bs-toggle="pill"
                         :data-bs-target="'#v-settings'+recipe['recipeId']" type="button" role="tab" aria-controls="v-settings"
-                        aria-selected="false">{{recipe['recipeName']}}</button>
+                        :aria-selected="recipe['recipeId'] == selectedRecipe">{{recipe['recipeName']}}
+                    </button>
                 </div>
             </div>
             <div class="col-9">
                 <div class="tab-content" id="v-pills-tabContent">
                     <!-- eslint-disable-next-line -->
-                    <div v-for="recipe of recipes" class="tab-pane fade" :id="'v-settings'+recipe['recipeId']" role="tabpanel" :aria-labelledby="'recipe'+recipe['recipeId']"
+                    <div v-for="recipe of recipes" class="tab-pane fade" 
+                        :class="{active: recipe['recipeId'] == selectedRecipe, show: recipe['recipeId'] == selectedRecipe}"
+                        :id="'v-settings'+recipe['recipeId']" role="tabpanel" :aria-labelledby="'recipe'+recipe['recipeId']"
                         tabindex="0">
                         <div class="container-fluid bg-secondary overflow-auto">
                             <div :style="{ background: 'url(' + recipe['image'] + ') no-repeat', backgroundSize: 'cover', backgroundPosition: 'center', height:'35vh'}">
