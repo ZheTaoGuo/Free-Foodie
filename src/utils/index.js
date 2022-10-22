@@ -231,7 +231,6 @@ export const calculateCalories = (userId, height, weight, activityFrequency) => 
         console.log("Error. Please pass in userId, height, weight and activityFrequency")
         return
     }
-    
     // getting the gender of the user
     let gender = "";
     let age = 0;
@@ -245,7 +244,6 @@ export const calculateCalories = (userId, height, weight, activityFrequency) => 
         gender = data.gender
         age = data.age
     })
-
     // calculating the calorie limit
     let calorieLimit = 0
     let BMR = 0
@@ -254,7 +252,6 @@ export const calculateCalories = (userId, height, weight, activityFrequency) => 
     } else {
         BMR = 655.1 + (9.563 * weight) + (1.85 * height) - (4.676 * age)
     }
-
     console.log('this is activity frequency', activityFrequency)
     if (activityFrequency == "Little to no exercise"){
         calorieLimit = BMR * 1.2
@@ -268,8 +265,6 @@ export const calculateCalories = (userId, height, weight, activityFrequency) => 
         calorieLimit = BMR * 1.9
     }
     console.log("this is calorie limit", calorieLimit)
-
-    // TODO: how to append list to calorieDetails
     update(ref(db, 'users/' + userId), {
         height: height,
         weight: weight,
@@ -283,7 +278,6 @@ export const calculateCalories = (userId, height, weight, activityFrequency) => 
                 calorieLimit: calorieLimit,
             }
     }); 
-
     return calorieLimit
 }
 

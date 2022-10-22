@@ -6,6 +6,7 @@
     import calorieSearchModal from '../components/calorieSearchModal.vue';
     // import * as axios from "axios";
     import axios from 'axios'
+    import AutoComplete from 'primevue/autocomplete';
 
     const userId = "1"   // TODO: obtained from cookies
     const userName = "bob"   // TODO: obtained from cookies
@@ -13,7 +14,8 @@
     export default {
         components: {
             plot,
-            calorieSearchModal
+            calorieSearchModal,
+            AutoComplete
         },
         data() {
             return {
@@ -89,32 +91,29 @@
     <div class="mainContent">
         <!-- form -->
         <!-- TODO: connect to external API to get calories of external meals -->
-        <div class="container">
-            <form class="row g-3 d-flex justify-content-center">
+        <div class="container" style="margin-bottom:10px">
+            <form class="row g-1 d-flex justify-content-center">
                 <div class="col-6">
-                    <input type="text" v-model="userSearch" @keydown="searchFood()" class="form-control textBox" id="inputPassword2" placeholder="Enter your meal details here to track your calories!" style="width:100%; padding-left: 90px;">
+                    <AutoComplete v-model="userSearch" 
+                        @complete="searchFood()" 
+                        placeholder="Enter your meal details here to track your calories!" 
+                        style="width:100%; padding-left: 90px;"
+                        :suggestions="searchResults"  input-class="form-control textBox"  forceSelection="true"
+                    >
+                    </AutoComplete>
                 </div>
-                <div class="col-auto">
+                <div class="col-1">
                     <div class="btn btn-secondary mb-3" v-on:click="searchFood()">Add</div>
                 </div>
             </form>
-            <div class="row d-flex justify-content-center" style="margin-right:50px">
+            <!-- <div class="row d-flex justify-content-center" v-if="searchResults.length != 0">
                 <div class="col-6">
-                    <!-- <button
-                        type="button"
-                        class="btn"
-                        @click="showModal"
-                        >
-                        Open Modal!
-                    </button>
-            
-                    <calorieSearchModal
-                        v-show="isCalorieSearchModalVisible"
-                        @close="closeModal"
-                    /> -->
-                    {{searchResults}}
+                    
                 </div>
-            </div>
+                <div class="col-1">
+
+                </div>
+            </div> -->
         </div>
 
 
@@ -137,7 +136,7 @@
         </div>
 
         <!-- letting user key in the fields of details of themselves -->
-        <div class="row d-flex justify-content-center mt-3  pt-3" style="text-align:end;">
+        <div class="row d-flex justify-content-center mt-3  pt-3" style="text-align:end; ">
             <label for="colFormLabelSm" class="col-1 col-form-label col-form-label-sm pt-0" style="line-height: 14px;">Height <br> (in cm)</label>
             <div class="col-1">
                 <input type="text" class="form-control form-control-sm" id="colFormLabelSm" v-model="height">
@@ -174,7 +173,8 @@
 
 <style scoped>
 .mainContent {
-    padding: 10px
+    padding: 10px;
+    z-index: -1;
 }
 
 .textBox{  
