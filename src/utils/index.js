@@ -235,7 +235,6 @@ export const calculateCalories = (userId, height, weight, activityFrequency) => 
         console.log("Error. Please pass in userId, height, weight and activityFrequency")
         return
     }
-
     // getting the gender of the user
     let gender = "";
     let age = 0;
@@ -249,7 +248,6 @@ export const calculateCalories = (userId, height, weight, activityFrequency) => 
         gender = data.gender
         age = data.age
     })
-
     // calculating the calorie limit
     let calorieLimit = 0
     let BMR = 0
@@ -258,7 +256,6 @@ export const calculateCalories = (userId, height, weight, activityFrequency) => 
     } else {
         BMR = 655.1 + (9.563 * weight) + (1.85 * height) - (4.676 * age)
     }
-
     console.log('this is activity frequency', activityFrequency)
     if (activityFrequency == "Little to no exercise") {
         calorieLimit = BMR * 1.2
@@ -272,22 +269,22 @@ export const calculateCalories = (userId, height, weight, activityFrequency) => 
         calorieLimit = BMR * 1.9
     }
     console.log("this is calorie limit", calorieLimit)
-
-    // TODO: how to append list to calorieDetails
     update(ref(db, 'users/' + userId), {
         height: height,
         weight: weight,
         activityFrequency: activityFrequency
     });
+    let date = new Date()
+    let currDate = date.getDate() + " " + date.getMonth() + " " + date.getFullYear()
+    console.log("this is currDate", currDate)
     update(ref(db, 'users/' + userId + "/calorieDetails"), {
-        [new Date()]:
-        {
-            date: new Date(),
-            dailyCalorieIntake: 0,
-            calorieLimit: calorieLimit,
-        }
-    });
-
+        [currDate]: 
+            {   
+                date: date,
+                dailyCalorieIntake: 0,
+                calorieLimit: calorieLimit,
+            }
+    }); 
     return calorieLimit
 }
 
@@ -319,5 +316,24 @@ export const getUser = (userId) => {
             }
             return reject("no user found")
         });
+    })
+};
+
+// updating user calories after using external API
+export const updateCalories = (userId, calorieConsumed, dailyCalorieIntake) => {
+    console.log("updateCalories is called")
+    if (userId == undefined || calorieConsumed == undefined || dailyCalorieIntake == undefined) {
+        console.log("Error. Please pass in userId")
+        return
+    }
+    return new Promise((resolve) => {
+        let date = new Date()
+        let currDate = date.getDate() + " " + date.getMonth() + " " + date.getFullYear()
+        console.log("this is current calories", dailyCalorieIntake)
+        update(ref(db, 'users/' + userId + "/calorieDetails/" + currDate), {
+            date: date,
+            dailyCalorieIntake: calorieConsumed + dailyCalorieIntake,
+        }); 
+        return resolve(true)
     })
 };
