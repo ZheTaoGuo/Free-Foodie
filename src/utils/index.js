@@ -40,18 +40,19 @@ export const getFavourite = () => {
                         }
                     }
                     // console.log(len);
+                    return resolve(recipeFound)
                 });
             }
         });
-        console.log(recipeFound);
         console.log('end promises');
-        return resolve(recipeFound)
+        console.log('this is recipefound', recipeFound);
     })
 }
 
 // getting list of recipeId from Past table, using the recipeId => return a list of recipe objects
 export const getPast = () => {
     return new Promise((resolve, reject) => {
+        console.log('start promise');
         var recipeFound = []
         const recipes = ref(db, 'recipes/PastRecipes');
         onValue(recipes, (snapshot) => {
@@ -71,10 +72,12 @@ export const getPast = () => {
                         }
                     }
                     // console.log(len);
+                    return resolve(recipeFound)
                 });
             }
         });
-        return resolve(recipeFound)
+        console.log('end promises');
+        console.log('this is recipefound', recipeFound);
     })
 }
 
