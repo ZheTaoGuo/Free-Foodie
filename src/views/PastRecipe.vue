@@ -4,8 +4,6 @@
     import data from '../recipes.json'
     import {getPast} from '../utils'
 
-    var recipes = getPast()
-    console.log(recipes);
 
     export default {
         components: {
@@ -14,8 +12,24 @@
         },
         data() {
             return {
-                recipes
+                recipes: []
             }
+        },
+        methods: {
+            getPastRecipe() {
+                console.log('start method');
+                getPast().then((value) => {
+                    this.recipes = value
+                }).catch((message) => {
+                    this.recipes = message
+                })
+                console.log('end methods');
+            }
+        },
+        mounted() {
+            console.log('start mounted');
+            this.getPastRecipe()
+            console.log('end mounted');
         }
     }
 </script>
@@ -43,9 +57,9 @@
         <div class="row">
             <!--Start of Recipe-->
             <!-- eslint-disable-next-line -->
-            <Card v-for="recipe of recipes"  :image_url="recipe[0]['image']" :name="recipe[0]['recipeName']" :duration="recipe[0]['duration']" :desc="recipe[0]['summary'].slice(0, 150)+'...'"></Card>
-            <!-- <Card :image_url="'tester'" :name="'fake'"></Card> -->
-            <!-- End of Recipe -->
+            <Card v-for="recipe of recipes" :page="'past'" :image_url="recipe['image']" :recipeId="recipe['recipeId']" :name="recipe['recipeName']"
+                :duration="recipe['duration']" :desc="recipe['summary'].slice(0, 150)+'...'"></Card>
+             <!-- End of Recipe -->
         </div>
         
     </div>

@@ -6,15 +6,25 @@
             default: "Test recipe Name",
             // required: true
         },
-        index: {
+        recipeId: {
             type: Number,
             default: 0
+        },
+        instructions: {
+            type: Array,
+            default () {
+                return []
+            }
         }
     })
 </script>
 
 <template>
-    <div>instructions</div>
+    <ul class="list-group text-start">
+        <li class="list-group-item" v-for="step of instructions">
+            Step {{step.number}}: {{step.step}}
+        </li>
+    </ul>
 </template>
 
 <style>

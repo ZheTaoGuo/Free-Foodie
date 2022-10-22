@@ -45,7 +45,8 @@ const routes = [
     {
         path: '/recipe',
         name: 'Recipe',
-        component: () => import('../views/RecipeView.vue')
+        component: () => import('../views/RecipeView.vue'),
+        query: true
     },
     {
         path: '/login',
@@ -56,7 +57,11 @@ const routes = [
 
 const router = createRouter({
     history: createWebHistory(process.env.BASE_URL),
-    routes
+    routes,
+    scrollBehavior(to, from, savedPosition) {
+        // always scroll to top
+        return { top: 0 }
+      },
 })
 
 export default router
