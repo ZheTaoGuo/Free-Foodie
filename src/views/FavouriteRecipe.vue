@@ -1,9 +1,7 @@
 <script>
     import Card from '../components/CardComp.vue'
     import Search from '../components/SearchBar.vue'
-    import {
-        getFavourite
-    } from '../utils'
+    import { getFavourite } from '../utils'
 
 
     export default {
@@ -31,7 +29,6 @@
             console.log('start mounted');
             this.getFavouriteRecipe()
             console.log('end mounted');
-            // getFavourite()
         }
     }
 </script>
@@ -61,7 +58,7 @@
         <div class="row">
             <!--Start of Recipe-->
             <!-- eslint-disable-next-line -->
-            <Card v-for="recipe of recipes" :page="favourite" :image_url="recipe['image']" :recipeId="recipe['recipeId']" :name="recipe['recipeName']"
+            <Card v-for="recipe of recipes" :page="'favourite'" :image_url="recipe['image']" :recipeId="recipe['recipeId']" :name="recipe['recipeName']"
                 :duration="recipe['duration']" :desc="recipe['summary'].slice(0, 150)+'...'"></Card>
             <!-- <Card :image_url="'tester'" :name="'fake'"></Card> -->
             <!-- End of Recipe -->

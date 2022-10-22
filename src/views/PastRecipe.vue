@@ -17,14 +17,19 @@
         },
         methods: {
             getPastRecipe() {
+                console.log('start method');
                 getPast().then((value) => {
-                    console.log(value);
                     this.recipes = value
-                }).catch((message)=> {this.familyList = message})
+                }).catch((message) => {
+                    this.recipes = message
+                })
+                console.log('end methods');
             }
         },
         mounted() {
+            console.log('start mounted');
             this.getPastRecipe()
+            console.log('end mounted');
         }
     }
 </script>
@@ -52,7 +57,7 @@
         <div class="row">
             <!--Start of Recipe-->
             <!-- eslint-disable-next-line -->
-            <Card v-for="recipe of recipes" :page="past" :image_url="recipe['image']" :recipeId="recipe['recipeId']" :name="recipe['recipeName']"
+            <Card v-for="recipe of recipes" :page="'past'" :image_url="recipe['image']" :recipeId="recipe['recipeId']" :name="recipe['recipeName']"
                 :duration="recipe['duration']" :desc="recipe['summary'].slice(0, 150)+'...'"></Card>
              <!-- End of Recipe -->
         </div>
