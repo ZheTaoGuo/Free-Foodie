@@ -1,6 +1,6 @@
 <script>
     // import { RouterLink } from 'vue-router'
-    import { calculateCalories, getUser } from '../utils'
+    import { calculateCalories, getUser, updateCalories } from '../utils'
     // import * as d3 from "d3";
     import plot from "@/components/plotWithXandYaxis.vue";
     import calorieSearchModal from '../components/calorieSearchModal.vue';
@@ -29,7 +29,8 @@
                 age: "",
                 userSearch: "",
                 isCalorieSearchModalVisible: false,
-                searchResults: []
+                searchResults: [],
+                dailyCalorieIntake: 0,
             }
         },
         methods: {
@@ -61,7 +62,11 @@
                     console.log("this is response data",response.data);
                     for(let i = 0; i < response.data.hits.length; i++) {
                         console.log(response.data.hits[i].fields.item_name)
-                        searchResults.push(response.data.hits[i].fields.item_name)
+                        searchResults.push(
+                        {
+                            "label": `${response.data.hits[i].fields.brand_name}: ${response.data.hits[i].fields.item_name}`,
+                            "item_id": response.data.hits[i].fields.item_id,
+                        })
                     }
                     // console.log("this is searchResults", searchResults)
                 }).catch(function (error) {
@@ -69,6 +74,34 @@
                 });
                 this.searchResults = searchResults
                 console.log("this isthis.results", this.searchResults)
+            },
+            async addFood(addFoodEvent){
+                console.log("addFoodEvent is called")
+                let foodInfo = addFoodEvent.path[2][0].value
+                console.log("this is foodInfo", foodInfo)
+                const options = {
+                    method: 'GET',
+                    url: `https://nutritionix-api.p.rapidapi.com/v1_1/search/${foodInfo}`,
+                    params: {
+                        fields: 'item_name,item_id,brand_name,nf_calories,nf_total_fat', 
+                    },
+                    headers: {
+                        'X-RapidAPI-Key': '5028148f06msh1985fb5840879e5p14fd5bjsn06b1e3192403',
+                        'X-RapidAPI-Host': 'nutritionix-api.p.rapidapi.com'
+                    }
+                };
+
+                let dailyCalorieIntake = this.dailyCalorieIntake
+                console.log("this is failyCalorieIntake", dailyCalorieIntake)
+                await axios.request(options).then(function (response) {
+                    console.log("this is response data",response.data);
+                    let calorieDetails = response.data.hits[0].fields.nf_calories
+                    updateCalories(userId, calorieDetails, dailyCalorieIntake)
+                    dailyCalorieIntake = calorieDetails + dailyCalorieIntake
+                }).catch(function (error) {
+                    console.error(error);
+                });
+                this.dailyCalorieIntake = dailyCalorieIntake
             }
 
         },
@@ -79,6 +112,7 @@
                 this.activityFrequency = user.activityFrequency;
                 // console.log("this is userc calroei deiasl", user.calorieDetails[Object.keys(user.calorieDetails)[Object.keys(user.calorieDetails).length-1]])
                 this.calorieLimit = user.calorieDetails[Object.keys(user.calorieDetails)[Object.keys(user.calorieDetails).length-1]].calorieLimit.toFixed(2);
+                this.dailyCalorieIntake = user.calorieDetails[Object.keys(user.calorieDetails)[Object.keys(user.calorieDetails).length-1]].dailyCalorieIntake;
                 this.gender = user.gender;
                 this.age = user.age;
             })
@@ -98,12 +132,14 @@
                         @complete="searchFood()" 
                         placeholder="Enter your meal details here to track your calories!" 
                         style="width:100%; padding-left: 90px;"
-                        :suggestions="searchResults"  input-class="form-control textBox"  forceSelection="true"
+                        :suggestions="searchResults"  input-class="form-control"  panel-class="bg-white pt-1" 
+                        :empty-selection-message="''" empty-search-message="" search-message="" selection-message=""
+                        optionLabel="label"
                     >
                     </AutoComplete>
                 </div>
                 <div class="col-1">
-                    <div class="btn btn-secondary mb-3" v-on:click="searchFood()">Add</div>
+                    <div class="btn btn-secondary mb-3" v-on:click="addFood($event)">Add</div>
                 </div>
             </form>
             <!-- <div class="row d-flex justify-content-center" v-if="searchResults.length != 0">
@@ -197,5 +233,8 @@ select.moreMinimal {
       5px 5px,
       5px 5px;
     background-repeat: no-repeat;
+}
+.p-autocomplete-panel-custom{
+    background-color: white;
 }
 </style>

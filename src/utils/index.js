@@ -270,10 +270,13 @@ export const calculateCalories = (userId, height, weight, activityFrequency) => 
         weight: weight,
         activityFrequency: activityFrequency
     });
+    let date = new Date()
+    let currDate = date.getDate() + " " + date.getMonth() + " " + date.getFullYear()
+    console.log("this is currDate", currDate)
     update(ref(db, 'users/' + userId + "/calorieDetails"), {
-        [new Date()]: 
+        [currDate]: 
             {   
-                date: new Date(),
+                date: date,
                 dailyCalorieIntake: 0,
                 calorieLimit: calorieLimit,
             }
@@ -309,5 +312,24 @@ export const getUser = (userId) => {
             }
             return reject("no user found")
         });
+    })
+};
+
+// updating user calories after using external API
+export const updateCalories = (userId, calorieConsumed, dailyCalorieIntake) => {
+    console.log("updateCalories is called")
+    if (userId == undefined || calorieConsumed == undefined || dailyCalorieIntake == undefined) {
+        console.log("Error. Please pass in userId")
+        return
+    }
+    return new Promise((resolve) => {
+        let date = new Date()
+        let currDate = date.getDate() + " " + date.getMonth() + " " + date.getFullYear()
+        console.log("this is current calories", dailyCalorieIntake)
+        update(ref(db, 'users/' + userId + "/calorieDetails/" + currDate), {
+            date: date,
+            dailyCalorieIntake: calorieConsumed + dailyCalorieIntake,
+        }); 
+        return resolve(true)
     })
 };
