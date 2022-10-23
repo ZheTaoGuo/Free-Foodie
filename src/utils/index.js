@@ -2,14 +2,14 @@ import { getDatabase, ref, onValue, set, update } from "firebase/database";
 import { initializeApp } from 'firebase/app';
 
 const firebaseConfig = {
-    apiKey: "AIzaSyBVmBcFII59Gm4THlYXzUdRJO6CdWshazg",
-    authDomain: "glass-sequence-363307.firebaseapp.com",
-    databaseURL: "https://glass-sequence-363307-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "glass-sequence-363307",
-    storageBucket: "glass-sequence-363307.appspot.com",
-    messagingSenderId: "570933788040",
-    appId: "1:570933788040:web:ccab586252ea0577e78e3d",
-    measurementId: "G-XJ2R2HZ3EP"
+    apiKey: process.env.VUE_APP_API_KEY,
+    authDomain: process.env.VUE_APP_AUTH_DOMAIN,
+    databaseURL: process.env.VUE_APP_DATABASE_URL,
+    projectId: process.env.VUE_APP_PROJECT_ID,
+    storageBucket: process.env.VUE_APP_STORAGE_BUCKET,
+    messagingSenderId: process.env.VUE_APP_MESSAGING_SENDER_ID,
+    appId: process.env.VUE_APP_ID,
+    measurementId: process.env.VUE_APP_MEASUREMENT_ID
 };
 
 // Initialize Firebase
@@ -321,3 +321,29 @@ export const getUser = (userId) => {
         });
     })
 };
+
+
+export const createFridge = (itemName, itemWeight, quantity, selected) => {
+    console.log("createFridge is called")
+    if (itemName == undefined || itemWeight == undefined || quantiy == undefined || selected == undefined) {
+        console.log("Error. Please pass in ItemName")
+        return
+    }
+    getIndex("fridge").then(
+        function (value) {
+            console.log("this is the returned index", value)
+            // creating the family table
+            set(ref(db, 'fridge/' + value), {
+                ItemName: itemName,
+                ItemWeight: itemWeight,
+                Quantity : quantity,
+                ItemType: selected,
+                
+            });
+
+        },
+        function (error) {
+            console.log("Error: " + error.message);
+        }
+    );
+}

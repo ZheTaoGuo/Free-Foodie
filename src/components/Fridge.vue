@@ -1,94 +1,93 @@
 <template>
-  <div class="tab">
-    <button class="tablinks" onclick="openCity(eventName, 'London')">
-      All
-    </button>
-    <button class="tablinks" onclick="openCity(eventName, 'Paris')">
-      Meat
-    </button>
-    <button class="tablinks" onclick="openCity(eventName, 'Tokyo')">
-      Carbohydrates
-    </button>
-  </div>
-
-  <div class="header">
-
-    <div class="container-fluid">
-      <div class="row" id="tabcontent">
-        <div class="col-4">
-          <h3>London</h3>
-          <p>London is the capital city of England.</p>
-          
+  <div class="container">
+    <div class="row">
+      <div class="col" style="left:0">
+        <div class="tab d-flex flex-row">
+          <button class="tablinks">
+            All
+          </button>
+          <button class="tablinks">
+            Meat
+          </button>
+          <button class="tablinks">
+            Carbohydrates
+          </button>
+          <button class="tablinks">
+            Condiments
+          </button>
+          <button class="tablinks">
+            Fresh Produce
+          </button>
         </div>
-
-        <div class="col-4">
-          <h3>Paris</h3>
-          <p>Paris is the capital city of England.</p>
-        </div>
-
-        <div class="col-4">
-          <h3>Tokyo</h3>
-          <p>Tokyo is the capital city of England.</p>
-        </div>
-  
-
       </div>
     </div>
-    
-
-    <!-- <div id="Paris" class="tabcontent">
-      <h3>Paris</h3>
-      <p>Paris is the capital of France.</p>
-    </div>
-
-    <div id="Tokyo" class="tabcontent">
-      <h3>Tokyo</h3>
-      <p>Tokyo is the capital of Japan.</p>
-    </div> -->
   </div>
 
-  <div class="bottom"></div>
+
+  <div class="bottom">
+  <button @click="toggleModal" type="button"> Open Modal</button>
+  </div>
 </template>
 
 <script>
+import FridgeModal from "FridgeModal.vue";
+import { ref } from "vue";
 
 export default {
-name: "HelloWorld",
-props: {
-  msg: String,
-},
-methods: {
-  openCity(evt, cityName) {
-    var i, tabcontent, tablinks;
-    tabcontent = document.getElementsByClassName("tabcontent");
-    for (i = 0; i < tabcontent.length; i++) {
-      tabcontent[i].style.display = "none";
-    }
-    tablinks = document.getElementsByClassName("tablinks");
-    for (i = 0; i < tablinks.length; i++) {
-      tablinks[i].className = tablinks[i].className.replace(" active", "");
-    }
-    document.getElementById(cityName).style.display = "block";
-    evt.currentTarget.className += " active";
+  name: "Fridge",
+  props: {
+
   },
-},
+  methods: {
+    
+  },
+  components: {
+    FridgeModal,
+
+  },
+  setup() {
+    const modalActive = ref(false);
+
+    const toggleModal = () => {
+      modalActive.value = !modalActive.value
+    }
+    return { modalActive, toggleModal }
+  }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.tab {}
+
 h3 {
-margin: 40px 0 0;
+  margin: 40px 0 0;
 }
+
 ul {
-list-style-type: none;
-padding: 0;
+  list-style-type: none;
+  padding: 0;
 }
+
 li {
-display: inline-block;
-margin: 0 10px;
+  display: inline-block;
+  margin: 0 10px;
 }
+
 a {
-color: #42b983;
+  color: #42b983;
+}
+
+.home {
+  background-color: rgba(0, 176, 234, 0.5);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  display: flex;
+  flex-direction: column;
 }
 </style>

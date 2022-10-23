@@ -1,44 +1,82 @@
 <template>
   <div class="container-fluid">
-    <div class="row" id="recreate">
-      <h1>Recreate finest food around the world</h1>
-      <button type="button" class="btn btn-primary btnstyle">
-        Explore Menu
-      </button>
+    <div class="row" id="carouselStyle">
+      <div id="foodcarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner text-center">
+          <div class="carousel-item active" data-bs-interval="5000">
+            <img src="../assets/backgroundpicture1.jpg" class="d-block w-100">
+          </div>
+          <div class="carousel-item" data-bs-interval="5000">
+            <img src="../assets/backgroundpicture2.jpg" class="d-block w-100">
+          </div>
+          <div class="carousel-item" data-bs-interval="5000">
+            <img src="../assets/backgroundpicture3.jpg" class="d-block w-100">
+          </div>
+        </div>
+      </div>
+      <div id="titledetails">
+        <h1 class="title">Recreate the finest food around the world</h1>
+        <button type="button" class="btn btn-primary btnstyle">
+          Explore Menu
+        </button>
+      </div>
+
     </div>
-    <div class="section-header text-center mx-auto mb-5">
-      <h1 class="display-5 mb-3">How It Works</h1>
+    <div class="row">
+      <div class="section-header text-center mx-auto mb-5">
+        <h1 class="display-5 mb-3" id="sectiontitle">How It Works</h1>
+      </div>
     </div>
+
     <div class="row g-4" id="works">
       <div class="col-lg-4 col-md-6">
-        <div class="text-center h-100 p-4 p-xl-5">
+        <div class="text-center p-2 p-xl-5">
           <div class="circle-number">1</div>
           <img class="img-fluid mb-4 circleimg" src="../assets/foodbowl.jpg" />
-          <h2 class="text-white mb-3">Choose your favourite meals</h2>
+          <h2 class="text-white individualtitle">Choose your favourite meals</h2>
         </div>
       </div>
       <div class="col-lg-4 col-md-6">
-        <div class="text-center h-100 p-4 p-xl-5">
+        <div class="text-center p-2 p-xl-5">
           <div class="circle-number">2</div>
-          <img class="img-fluid mb-4 circleimg" src="../assets/foodbowl.jpg" />
-          <h2 class="text-white mb-3">We deliver fresh Ingredients</h2>
+          <img class="img-fluid mb-4 circleimg " src="../assets/foodbowl.jpg" />
+          <h2 class="text-white individualtitle">We deliver fresh Ingredients</h2>
         </div>
       </div>
       <div class="col-lg-4 col-md-6">
-        <div class="text-center h-100 p-4 p-xl-5">
+        <div class="text-center p-2 p-xl-5">
           <div class="circle-number">3</div>
-          <img class="img-fluid mb-4 circleimg" src="../assets/foodbowl.jpg" />
-          <h2 class="text-white mb-3">Prepare and enjoy!</h2>
+          <img class="img-fluid mb-4 circleimg " src="../assets/foodbowl.jpg" />
+          <h2 class="text-white individualtitle">Prepare and enjoy!</h2>
         </div>
       </div>
 
-      <div
-        class="container h-100 d-flex align-items-center justify-content-center"
-      >
+      <div class="container h-100 d-flex align-items-center justify-content-center">
         <div class="row justify-content-center">
           <button type="button" class="btn btn-primary" @click="promptLogin">
             Order Now
           </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer d-flex justify-content-center">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6 col-md-12" id="copyright">
+            <p>Copyrights &copy; 2022 - <a href="">FreeFoodie</a>, All Rights Reserved.<br>
+            </p>
+          </div>
+          <div class="col-lg-6 col-md-12">
+            <div class="social-icons">
+              <ul>
+                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -48,7 +86,7 @@
 <script>
 import Login from "./Login.vue";
 export default {
-  data() {},
+  data() { },
   methods: {
     promptLogin() {
       this.$router.push({
@@ -62,6 +100,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 * {
+  font-family: Arial;
   margin: 0;
   padding: 0;
 }
@@ -74,82 +113,117 @@ export default {
   margin: auto;
 }
 
-#recreate {
-  background-image: url("../assets/foodbackground.jpg");
-  background-size: cover;
 
-  padding-top: 250px;
-  padding-bottom: 250px;
-  color: white;
+
+.title {
+  font-weight: bold;
+  color: black;
+  background: rgba(255, 255, 255, 0.75);
+  padding: 20px;
+  margin-bottom: 10px;
 }
 
-#works {
-  animation: animate 10s ease-in-out infinite;
-  background-size: cover;
+#foodcarousel {
+  position: relative;
 }
 
-@keyframes animate {
-  0%,
-  100% {
-    background-image: url("../assets/foodbowl.jpg");
-  }
-  25% {
-    background-image: url("../assets/backgroundpicture1.jpg");
-  }
-  50% {
-    background-image: url("../assets/backgroundpicture2.jpg");
-  }
-  75% {
-    background-image: url("../assets/backgroundpicture3.jpg");
-  }
+
+#titledetails {
+  position: absolute;
+  text-align: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 35%;
+
 }
 
 .section-header {
   padding-top: 30px;
-
   /* padding-bottom: 25px; */
 }
 
 .container-fluid {
   background-color: lightblue;
 }
+
 .order-btn {
   text-align: center;
   color: blue;
 }
 
-/*add img fluid styling */
+.individualtitle {
+  margin: 0 auto;
+  background-color: green;
+  border-radius: 10px;
+  width: 450px;
+  height: 80px;
+  padding: 20px;
+
+}
+
 .circleimg {
   height: 250px;
   width: 250px;
-  object-fit: contain;
+  object-fit: cover;
+  border-radius: 50%;
 }
 
 .circle-number {
   position: absolute;
-  background-color: #f4b8aa;
+  background-color: green;
   color: #222;
   font-weight: 700;
   font-size: 20px;
-  padding-right: 23px;
-  padding-left: 23px;
+  padding-right: 20px;
+  padding-left: 20px;
   padding-top: 10px;
   padding-bottom: 10px;
-  border-radius: 40px;
+  border-radius: 50%;
+  margin-left: 200px;
 }
 
 h3 {
   margin: 40px 0 0;
 }
+
 ul {
   list-style-type: none;
   padding: 0;
 }
+
 li {
   display: inline-block;
   margin: 0 10px;
 }
+
 a {
   color: #42b983;
+}
+.footer{
+  margin-top: 20px;
+}
+.social-icons ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.social-icons ul li {
+  display: inline-block;
+}
+
+.social-icons ul li a {
+  font-size: 16px;
+  color: black;
+  opacity: 0.7;
+  padding: 16px 10px;
+  display: block;
+}
+
+#copyright{
+  padding: 16px;
+  text-align: center;
+  margin: 0 auto;
 }
 </style>
