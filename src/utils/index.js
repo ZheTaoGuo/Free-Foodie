@@ -1,4 +1,5 @@
 import { getDatabase, ref, onValue, set, update } from "firebase/database";
+import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth'
 import { initializeApp } from 'firebase/app';
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -21,6 +22,130 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
+//Authentication Functions
+export const register = () => {
+    console.log("Handling signup")
+    var email = document.getElementById('email').value;
+    var password = document.getElementById('password').value
+    var age = document.getElementById('age').value;
+    var gender = document.getElementById('gender').value;
+    var familyId = document.getElementById('familyId').value;
+    const name = document.getElementById('name').value;
+    if (email.length < 4) {
+        alert('Please enter an email address.');
+        return;
+    }
+    if (password.length < 4) {
+        alert('Please enter a password.');
+        return;
+    }
+    // Create user with email and pass.
+    createUserWithEmailAndPassword(getAuth(), email, password)
+    .then(function(result) {
+        console.log(result.user.uid)
+        set(ref(db, 'users/' + result.user.uid), {
+            userId: result.user.uid,
+            familyId: familyId,
+            username: name,
+            email: email,
+            gender: gender,
+            age: age,
+            height: "",
+            weight: "",
+            activityFrequency: "",
+            calorieDetails: []
+        });
+    }).catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        if (errorCode == 'auth/weak-password') {
+            alert('The password is too weak.');
+        } else {
+            alert(errorMessage);
+        }
+        console.log(error);
+    });
+}
+
+export const signin = () => {
+    console.log("Handling signin")
+    var email = document.getElementById('email').value;
+    var password = document.getElementById('password').value;
+    if (email.length < 4) {
+        alert('Please enter an email address.');
+        return;
+    }
+    if (password.length < 4) {
+        alert('Please enter a password.');
+        return;
+    }
+    // Create user with email and pass.
+    signInWithEmailAndPassword(getAuth(), email, password)
+    .then(()=>{
+        console.log("Successfully signed in")
+    })
+    
+    .catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        if (errorCode === 'auth/wrong-password') {
+            alert('Incorrect password!');
+        } else {
+            alert(errorMessage);
+        }
+        console.log(error);
+    });
+}
+
+export const googlesignup = () => {
+    var provider = new GoogleAuthProvider();
+    const age = document.getElementById('age').value;
+    const gender = document.getElementById('gender').value;
+    const familyId = document.getElementById('familyId').value;
+    const name = document.getElementById('name').value;
+    signInWithPopup(getAuth(), provider).then(function(result) {
+        console.log(result.user)
+        set(ref(db, 'users/' + result.user.uid), {
+            userId: result.user.uid,
+            familyId: familyId,
+            username: name,
+            email: result.user.email,
+            gender: gender,
+            age: age,
+            height: "",
+            weight: "",
+            activityFrequency: "",
+            calorieDetails: []
+        });
+    }).catch(function(error) {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        if (errorCode === 'auth/wrong-password') {
+            alert('Incorrect password!');
+        } else {
+            alert(errorMessage);
+        }
+        console.log(error);
+    })
+}
+export const googlesignin = () => {
+    var provider = new GoogleAuthProvider();
+    signInWithPopup(getAuth(), provider).then(function(result) {
+        // console.log(result.user);
+        console.log(getAuth().currentUser.uid)
+    }).catch(function(error) {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        if (errorCode === 'auth/wrong-password') {
+            alert('Incorrect password!');
+        } else {
+            alert(errorMessage);
+        }
+        console.log(error);
+    })
+}
 
 // getting list of recipeId from favourite table, using the recipeId => return a list of recipe objects
 export const getFavourite = () => {
