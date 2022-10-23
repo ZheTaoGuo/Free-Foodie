@@ -120,6 +120,13 @@ a {
   justify-content: center;
   align-items: center;
 }
+.home {
+  background-color: rgba(0, 176, 234, 0.5);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 .modal-content {
   display: flex;

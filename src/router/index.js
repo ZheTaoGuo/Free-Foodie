@@ -4,10 +4,8 @@ import HomeView from '../views/HomeView.vue'
 import FridgeView from '../views/FridgeView.vue'
 import HomePage from '../views/HomePage.vue'
 import Login from '../views/Login.vue'
-import Signup from '../views/Signup.vue'
 import ShoppingList from '../views/ShoppingList.vue'
-import FridgeModal from '../components/FridgeModal.vue'
-
+// import FridgeModal from '../components/FridgeModal.vue'
 
 const routes = [
     {

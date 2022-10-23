@@ -670,3 +670,28 @@ export const updateCalories = (userId, calorieConsumed, dailyCalorieIntake, calo
         return resolve(true)
     })
 };
+
+export const createFridge = (itemName, itemWeight, quantity, selected) => {
+    console.log("createFridge is called")
+    if (itemName == undefined || itemWeight == undefined || quantiy == undefined || selected == undefined) {
+        console.log("Error. Please pass in ItemName")
+        return
+    }
+    getIndex("fridge").then(
+        function (value) {
+            console.log("this is the returned index", value)
+            // creating the family table
+            set(ref(db, 'fridge/' + value), {
+                ItemName: itemName,
+                ItemWeight: itemWeight,
+                Quantity : quantity,
+                ItemType: selected,
+                
+            });
+
+        },
+        function (error) {
+            console.log("Error: " + error.message);
+        }
+    );
+}
