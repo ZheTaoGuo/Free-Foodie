@@ -148,19 +148,17 @@ export const googlesignin = () => {
 }
 
 // getting list of recipeId from favourite table, using the recipeId => return a list of recipe objects
-export const getFavourite = () => {
+export const getFavourite = (userid) => {
     return new Promise((resolve, reject) => {
         console.log('start promise');
         var recipeFound = []
-        const recipes = ref(db, 'recipes/FavouriteRecipes');
-        onValue(recipes, (snapshot) => {
-            const data = snapshot.val();
-            if (data == null) {
-                return reject([])
-            }
-            for (let id of data) {
+        var recipeIds = [];
+        getUser(userid).then((value) => {
+            recipeIds = value.FavouriteRecipes
+            console.log(recipeIds);
+            for (let id of recipeIds) {
                 // eslint-disable-next-line
-                const recipes = ref(db, 'recipes/recipes');
+                const recipes = ref(db, 'recipes');
                 onValue(recipes, (snapshot) => {
                     const data = snapshot.val();
                     for (const obj of data) {
@@ -173,26 +171,26 @@ export const getFavourite = () => {
                     return resolve(recipeFound)
                 });
             }
-        });
+        }).catch((message) => {
+            console.log(message);
+        })
         console.log('end promises');
         console.log('this is recipefound', recipeFound);
     })
 }
 
 // getting list of recipeId from Past table, using the recipeId => return a list of recipe objects
-export const getPast = () => {
+export const getPast = (userid) => {
     return new Promise((resolve, reject) => {
         console.log('start promise');
         var recipeFound = []
-        const recipes = ref(db, 'recipes/PastRecipes');
-        onValue(recipes, (snapshot) => {
-            const data = snapshot.val();
-            if (data == null) {
-                return reject([])
-            }
-            for (let id of data) {
+        var recipeIds = [];
+        getUser(userid).then((value) => {
+            recipeIds = value.PastRecipes
+            console.log(recipeIds);
+            for (let id of recipeIds) {
                 // eslint-disable-next-line
-                const recipes = ref(db, 'recipes/recipes');
+                const recipes = ref(db, 'recipes');
                 onValue(recipes, (snapshot) => {
                     const data = snapshot.val();
                     for (const obj of data) {
@@ -205,7 +203,9 @@ export const getPast = () => {
                     return resolve(recipeFound)
                 });
             }
-        });
+        }).catch((message) => {
+            console.log(message);
+        })
         console.log('end promises');
         console.log('this is recipefound', recipeFound);
     })

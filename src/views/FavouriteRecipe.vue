@@ -3,6 +3,7 @@
     import Search from '../components/SearchBar.vue'
     import { getFavourite } from '../utils'
 
+    const USERID = 1
 
     export default {
         components: {
@@ -17,7 +18,7 @@
         methods: {
             getFavouriteRecipe() {
                 console.log('start method');
-                getFavourite().then((value) => {
+                getFavourite(USERID).then((value) => {
                     this.recipes = value
                 }).catch((message) => {
                     this.recipes = message
