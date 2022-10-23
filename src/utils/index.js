@@ -450,9 +450,9 @@ export const getUser = (userId) => {
 };
 
 // updating user calories after using external API
-export const updateCalories = (userId, calorieConsumed, dailyCalorieIntake) => {
+export const updateCalories = (userId, calorieConsumed, dailyCalorieIntake, calorieLimit) => {
     console.log("updateCalories is called")
-    if (userId == undefined || calorieConsumed == undefined || dailyCalorieIntake == undefined) {
+    if (userId == undefined || calorieConsumed == undefined || dailyCalorieIntake == undefined || calorieLimit == undefined) {
         console.log("Error. Please pass in userId")
         return
     }
@@ -461,6 +461,7 @@ export const updateCalories = (userId, calorieConsumed, dailyCalorieIntake) => {
         let currDate = date.getDate() + " " + date.getMonth() + " " + date.getFullYear()
         console.log("this is current calories", dailyCalorieIntake)
         update(ref(db, 'users/' + userId + "/calorieDetails/" + currDate), {
+            calorieLimit: calorieLimit,
             date: date,
             dailyCalorieIntake: calorieConsumed + dailyCalorieIntake,
         }); 

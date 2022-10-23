@@ -6,8 +6,8 @@
     // import * as axios from "axios";
     import axios from 'axios'
     import AutoComplete from 'primevue/autocomplete';
-    import foodAddedModal from "@/components/foodAddedModal.vue";
-    import {ref} from 'vue'
+    import Modal from "@/components/addFoodModal.vue";
+    import { ref } from "vue";
     
     const userId = "1"   // TODO: obtained from cookies
     const userName = "bob"   // TODO: obtained from cookies
@@ -16,11 +16,14 @@
         components: {
             plot,
             AutoComplete,
-            foodAddedModal,
+            Modal,
         },
         setup(){
-            const modalActive = ref(true)
-            return {modalActive}
+            const modalActive = ref(false);
+            const toggleModal = () => {
+            modalActive.value = !modalActive.value;
+            };
+            return { modalActive, toggleModal };
         },
         data() {
             return {
@@ -71,6 +74,9 @@
                         {
                             "label": `${response.data.hits[i].fields.brand_name}: ${response.data.hits[i].fields.item_name}`,
                             "item_id": response.data.hits[i].fields.item_id,
+                            "calories": response.data.hits[i].fields.nf_calories,
+                            "brand_name": response.data.hits[i].fields.brand_name,
+                            "item_name": response.data.hits[i].fields.item_name,
                         })
                     }
                     // console.log("this is searchResults", searchResults)
@@ -97,11 +103,12 @@
                 };
 
                 let dailyCalorieIntake = this.dailyCalorieIntake
+                let calorieLimit = Number(this.calorieLimit)
                 console.log("this is failyCalorieIntake", dailyCalorieIntake)
                 await axios.request(options).then(function (response) {
                     console.log("this is response data",response.data);
                     let calorieDetails = response.data.hits[0].fields.nf_calories
-                    updateCalories(userId, calorieDetails, dailyCalorieIntake)
+                    updateCalories(userId, calorieDetails, dailyCalorieIntake, calorieLimit)
                     dailyCalorieIntake = calorieDetails + dailyCalorieIntake
                 }).catch(function (error) {
                     console.error(error);
@@ -116,7 +123,7 @@
                 this.weight = user.weight;
                 this.activityFrequency = user.activityFrequency;
                 // console.log("this is userc calroei deiasl", user.calorieDetails[Object.keys(user.calorieDetails)[Object.keys(user.calorieDetails).length-1]])
-                this.calorieLimit = user.calorieDetails[Object.keys(user.calorieDetails)[Object.keys(user.calorieDetails).length-1]].calorieLimit.toFixed(2);
+                this.calorieLimit = Number(user.calorieDetails[Object.keys(user.calorieDetails)[Object.keys(user.calorieDetails).length-1]].calorieLimit).toFixed(2);
                 this.dailyCalorieIntake = user.calorieDetails[Object.keys(user.calorieDetails)[Object.keys(user.calorieDetails).length-1]].dailyCalorieIntake;
                 this.gender = user.gender;
                 this.age = user.age;
@@ -129,14 +136,6 @@
 <template>
     <div class="mainContent">
         <!-- form -->
-        <!-- TODO: connect to external API to get calories of external meals -->
-        <foodAddedModal :modalActive="true">
-            <div class="modal-content">
-                <h1>this is a modal</h1>
-                <p>this is a modal body</p>
-            </div>
-        </foodAddedModal>
-
         <div class="container" style="margin-bottom:10px">
             <form class="row g-1 d-flex justify-content-center">
                 <div class="col-6">
@@ -151,7 +150,23 @@
                     </AutoComplete>
                 </div>
                 <div class="col-1">
-                    <div class="btn btn-secondary mb-3" v-on:click="addFood($event)">Add</div>
+                    <Modal @close="toggleModal" :modalActive="modalActive">
+                        <div class="modal-content" style="border:none">
+                            <div v-if="userSearch != ''">
+                                <h2 style="font-weight:bold; text-align:start">You have eaten:</h2>
+                                <br>
+                                <p style="font-size:20px"> <span style="font-weight:bold">{{userSearch.item_name}}</span> from <span style="font-weight:bold">{{userSearch.brand_name}}</span></p>
+                                <p style="font-size:20px">
+                                    It had {{userSearch.calories}} calories. <br>
+                                    You have <span style="font-weight:bold">{{ Number(calorieLimit - dailyCalorieIntake).toFixed(2) }} calories left</span> for today.
+                                </p>
+                            </div>
+                            <div v-else>
+                                <h2 style="font-weight:bold">Please select a food entry first.</h2>
+                            </div>
+                        </div>
+                    </Modal>
+                    <div class="btn btn-secondary mb-3" v-on:click="addFood($event)" @click="toggleModal">Add</div>
                 </div>
             </form>
             <!-- <div class="row d-flex justify-content-center" v-if="searchResults.length != 0">
@@ -163,9 +178,10 @@
                 </div>
             </div> -->
         </div>
-
-
-
+        
+        <!-- <button @click="toggleModal" type="button">Open Modal</button> -->
+        
+        
         <!-- dashboard -->
         <div style="border:1px solid black; width:70%" class="p-3 mx-auto">
             <!-- TODO: make the data reflect actual user calories & insert the calorie line -->
