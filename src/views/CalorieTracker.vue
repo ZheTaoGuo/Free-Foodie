@@ -3,19 +3,24 @@
     import { calculateCalories, getUser, updateCalories } from '../utils'
     // import * as d3 from "d3";
     import plot from "@/components/plotWithXandYaxis.vue";
-    import calorieSearchModal from '../components/calorieSearchModal.vue';
     // import * as axios from "axios";
     import axios from 'axios'
     import AutoComplete from 'primevue/autocomplete';
-
+    import foodAddedModal from "@/components/foodAddedModal.vue";
+    import {ref} from 'vue'
+    
     const userId = "1"   // TODO: obtained from cookies
     const userName = "bob"   // TODO: obtained from cookies
-
+    
     export default {
         components: {
             plot,
-            calorieSearchModal,
-            AutoComplete
+            AutoComplete,
+            foodAddedModal,
+        },
+        setup(){
+            const modalActive = ref(true)
+            return {modalActive}
         },
         data() {
             return {
@@ -116,7 +121,7 @@
                 this.gender = user.gender;
                 this.age = user.age;
             })
-        }
+        },
     }  
 
 </script>
@@ -125,6 +130,13 @@
     <div class="mainContent">
         <!-- form -->
         <!-- TODO: connect to external API to get calories of external meals -->
+        <foodAddedModal :modalActive="true">
+            <div class="modal-content">
+                <h1>this is a modal</h1>
+                <p>this is a modal body</p>
+            </div>
+        </foodAddedModal>
+
         <div class="container" style="margin-bottom:10px">
             <form class="row g-1 d-flex justify-content-center">
                 <div class="col-6">
