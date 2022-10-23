@@ -1,15 +1,20 @@
 import { getDatabase, ref, onValue, set, update } from "firebase/database";
 import { initializeApp } from 'firebase/app';
 
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-    apiKey: "AIzaSyBVmBcFII59Gm4THlYXzUdRJO6CdWshazg",
-    authDomain: "glass-sequence-363307.firebaseapp.com",
-    databaseURL: "https://glass-sequence-363307-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "glass-sequence-363307",
-    storageBucket: "glass-sequence-363307.appspot.com",
-    messagingSenderId: "570933788040",
-    appId: "1:570933788040:web:ccab586252ea0577e78e3d",
-    measurementId: "G-XJ2R2HZ3EP"
+  apiKey: "AIzaSyAIIHmCjATac_3pg0M8gVHs2wN0h_I7GN4",
+  authDomain: "wad2project-d5b31.firebaseapp.com",
+  databaseURL: "https://wad2project-d5b31-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "wad2project-d5b31",
+  storageBucket: "wad2project-d5b31.appspot.com",
+  messagingSenderId: "457383848533",
+  appId: "1:457383848533:web:bce9727937c8d714bfc2dc",
+  measurementId: "G-JFFFZGKRGY"
 };
 
 // Initialize Firebase
