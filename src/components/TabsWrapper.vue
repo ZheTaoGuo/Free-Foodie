@@ -34,6 +34,7 @@ export default {
 .tabs{
   max-width: 400px;
   margin: 0 auto;
+  left: 0;
 }
 
 .tabs-header{
@@ -41,6 +42,7 @@ export default {
   list-style: none;
   padding: 0;
   display: flex;
+  justify-content: flex-start;
 
 }
 
