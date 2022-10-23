@@ -4,6 +4,7 @@
     import data from '../recipes.json'
     import {getPast} from '../utils'
 
+    const USERID = 1
 
     export default {
         components: {
@@ -18,7 +19,7 @@
         methods: {
             getPastRecipe() {
                 console.log('start method');
-                getPast().then((value) => {
+                getPast(USERID).then((value) => {
                     this.recipes = value
                 }).catch((message) => {
                     this.recipes = message
