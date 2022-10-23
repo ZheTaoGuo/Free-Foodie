@@ -1,67 +1,80 @@
 <template>
-  <nav class="navbar navbar-expand-lg bg-white fixed-top shadow py-0">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#" style="width: 130px">
-        <img src="/img/logo_black2.png" alt="brandlogo" class="brand_logo" />
+  <nav class="navbar navbar-expand-md navbar-light bg-light" >
+    <div class="container-fluid" style="display: flex; background-color: #187bcd;">
+      <a class="navbar-brand" href="#">
+        <img src="../assets/fflogo.png" height="70px">
       </a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarNav"
-        aria-controls="navbarNav"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav mx-auto">
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mx-auto" style="justify-content: center ;">
           <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="index">Home</a>
+            <a class="nav-link active" aria-current="page" href="#">Recipes</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" onclick="promptLogin()">Menu</a>
+            <a class="nav-link" href="#">My Fridge</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" onclick="promptLogin()">Contact</a>
-          </li>
+          <!-- <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Dropdown
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="#">Action</a></li>
+              <li><a class="dropdown-item" href="#">Another action</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+          </li> -->
+          <!-- <li class="nav-item">
+            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+          </li> -->
         </ul>
-
-        <button
-          type="button"
-          class="btn-brand navbar-right-btn"
-          onclick="promptLogin()"
-          data-toggle="tooltip"
-          data-placement="bottom"
-          title="Order History"
-        >
-          <i class="fa fa-list-ul"></i>
-        </button>
-        <button
-          type="button"
-          class="btn-brand navbar-right-btn"
-          onclick="promptLogin()"
-          data-toggle="tooltip"
-          data-placement="bottom"
-          title="My Cart"
-          style="margin-right: 30px"
-        >
-          <i class="fa fa-shopping-cart fa-lg"></i>
-        </button>
-        <button
-          type="button"
-          class="btn btn-light btn-start"
-          style="background-color: black; color: #f6d7d0"
-          onclick="location.href = 'signup'"
-        >
-          Get Started
-        </button>
+        
+        <div class="d-flex">
+          <div class="row me-2">
+            <div class="col-4">
+            </div>
+            <div class="col">
+              <button class="btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-card-list" viewBox="0 0 16 16">
+                  <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
+                  <path d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8zm0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-1-5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zM4 8a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm0 2.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z"/>
+                </svg>
+              </button>
+              <button class="btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+                  <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                </svg>
+              </button>
+            </div>
+            <div class="row me-2">
+              <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn" type="submit">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                  </svg>
+                </button>
+              </form>
+            </div>
+          </div>
+          
+        </div>
       </div>
     </div>
   </nav>
 </template>
 
-<script></script>
 
-<style scoped></style>
+<script>
+export default {
+  name: 'appNavbar',
+  // props: {
+    //   msg: String
+    // }
+  }
+</script>
+
+<style scoped>
+</style>
