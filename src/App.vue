@@ -1,17 +1,14 @@
 <template>
-  <!-- <appLogin/> -->
-  <appSignup/>
+    <router-view />
 </template>
 
 <script>
-import appSignup from "./components/Signup.vue";
-import appLogin from "./views/Login.vue";
+
 export default {
   name: 'App',
   components: {
-    // appLogin,
-    appSignup
-  }
+  
+}
 }
 </script>
 
@@ -27,6 +24,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  
+
 }
 </style>
