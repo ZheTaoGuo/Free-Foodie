@@ -1,6 +1,7 @@
 <script>
     import { RouterLink } from 'vue-router'
     import { createUser, getFamily, createFamily, addFamilyMember } from '../utils'
+    import plot from "@/components/plotWithXandYaxis.vue";
 
     const userId = "0"   // TODO: obtained from cookies
     const userName = "bob"   // TODO: obtained from cookies
@@ -8,7 +9,8 @@
 
     export default {
         components: {
-            RouterLink
+            RouterLink,
+            plot
         },
         data() {
             return {
@@ -106,7 +108,7 @@
                 </div>
 
                 <div class="d-flex justify-content-center" style="padding:20px">
-                    <img src="../assets/logo.png" style="height:300px; width:300px;">
+                    <plot :height="500" style="padding-left:50px"/>
                 </div>
             </router-link>
             </div>

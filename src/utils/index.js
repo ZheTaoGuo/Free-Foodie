@@ -213,7 +213,6 @@ export const getPast = (userid) => {
 
 
 // Profile Functions
-
 // generating index for tables
 async function getIndex(table) {
     const specificTable = ref(db, table + '/');
@@ -244,8 +243,6 @@ export const createUser = (username, email, password) => {
         console.log("Please input your username, email and password")
         return
     }
-
-    // TODO: hash the password
 
     console.log("this is res", getIndex("users"))
     getIndex("users").then(
@@ -308,7 +305,7 @@ export const createFamily = (userId, userName) => {
     );
 }
 
-// get family table. MUST pass in userId
+// get family table
 export const getFamily = (userId) => {
     console.log("getFamily is called")
     if (userId == undefined) {
@@ -345,7 +342,7 @@ export const getFamily = (userId) => {
     })
 }
 
-// addFamilyMember. MUST pass in userId and familyId
+// addFamilyMember.
 export const addFamilyMember = (userId, userName, familyId) => {
     console.log("addFamilyMember is called")
     if (userId == undefined || userName == undefined || familyId == undefined) {
@@ -418,7 +415,7 @@ export const calculateCalories = (userId, height, weight, activityFrequency) => 
     return calorieLimit
 }
 
-// retreiving the user's calorie limit
+// retreiving the user's details
 export const getUser = (userId) => {
     console.log("getUser is called")
     if (userId == undefined) {

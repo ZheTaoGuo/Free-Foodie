@@ -17,9 +17,6 @@
   
   <script>
   import * as d3 from "d3";
-  import { getUser } from '../utils'
-
-  let userId = "1"  // TODO: to be obtained from cookies 
 
   export default {
     name: "plotWithXandY",
@@ -99,29 +96,13 @@
         this.setScales();
         this.renderAxes();
       },
-      getCalorieDetails() {
-        getUser(userId).then((user) => {
-          console.log('getCalorieDetails is called')
-          console.log("this is getCalorieDetails", user.calorieDetails)
-          this.userData = user.calorieDetails
-        }).catch((message)=> {console.log("this is message", message); this.userData = null })
-      },
-
-
-      // rendering the data from user DB
-      update() {
-
-      }
     },
     mounted() {
       this.render();
-      this.getCalorieDetails();
-      // this.update();
     }
   };
   </script>
   
-  <!-- Add "scoped" attribute to limit CSS to this component only -->
   <style scoped>
   </style>
   

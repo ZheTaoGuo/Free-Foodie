@@ -1,13 +1,13 @@
 <script>
     // import { RouterLink } from 'vue-router'
     import { calculateCalories, getUser, updateCalories } from '../utils'
-    // import * as d3 from "d3";
+    import * as d3 from "d3";
     import plot from "@/components/plotWithXandYaxis.vue";
     // import * as axios from "axios";
     import axios from 'axios'
     import AutoComplete from 'primevue/autocomplete';
     import Modal from "@/components/addFoodModal.vue";
-    import { ref } from "vue";
+    import { ref, toRaw } from "vue";
     
     const userId = "1"   // TODO: obtained from cookies
     const userName = "bob"   // TODO: obtained from cookies
@@ -39,6 +39,8 @@
                 isCalorieSearchModalVisible: false,
                 searchResults: [],
                 dailyCalorieIntake: 0,
+                userCaloriesData: [],
+                xAxisVariable: "day",
             }
         },
         methods: {
@@ -114,6 +116,122 @@
                     console.error(error);
                 });
                 this.dailyCalorieIntake = dailyCalorieIntake
+            },
+            renderGraph (variable) {
+                var svg = d3.select("svg"),
+                margin = 170,
+                width = svg.attr("width") - margin,
+                height = svg.attr("height") - margin
+
+                svg.append("text")
+                .attr("transform", "translate(100,0)")
+                .attr("x", 50)
+                .attr("y", 50)
+                .attr("style", "font-size:24px;")
+                .text("Calorie Tracker");
+
+                var xScale = d3.scaleBand().range ([0, width]).padding(0.4),
+                    yScale = d3.scaleLinear().range ([height, 0]);
+
+                var g = svg.append("g")
+                        .attr("transform", "translate(" + 100 + "," + 100 + ")");
+
+            
+                // let data = this.userCaloriesData 
+                // console.log('this is my proxy', data)
+                // // data = toRaw(data)
+                // console.log("tis data type", typeof(data.__v_raw))  
+                // console.log('this is data.date', data.__v_raw['date']) 
+                // console.log('eeee') 
+                // for(ele of data){
+                //     console.log("eeee")
+                //     console.log("this is ele", ele)
+                // } 
+
+                let data = [
+                    {date: "2022-10-22T15:54:45.173Z", calories: 2560},
+                    {date: "2022-10-23T14:42:57.815Z", calories: 350},
+                    {date: "2022-10-24T06:57:29.537Z", calories: 395},
+                ]
+                
+                let days = { 
+                    0: "Sunday",
+                    1: "Monday",
+                    2: "Tuesday",
+                    3: "Wednesday",
+                    4: "Thursday",
+                    5: "Friday",
+                    6: "Saturday"
+                }
+                let months = {
+                    0: "January",
+                    1: "February",
+                    2: "March",
+                    3: "April",
+                    4: "May",
+                    5: "June",
+                    6: "July",
+                    7: "August",
+                    8: "September",
+                    9: "October",
+                    10: "November",
+                    11: "December"   
+                }
+                
+                // console.log("tbis is my vairbale", variable)
+                // TODO: aggregate the values together when it is in the same month
+                // TODO: only get the 7 lastest entries to show in the graph
+                // TODO: After re-rendering the graph, make sure that the past bars get removed and that it doesnt just add on 
+                // TODO: make sure that the data fed to the graph is dynamic (change the hardcoded portions)
+                if (variable == "day"){
+                    xScale.domain(data.map(function(d) { console.log("this is converted days", days[new Date(d.date).getDay()]); return days[new Date(d.date).getDay()] }));
+                    yScale.domain([0, 4000]);
+                } else {
+                    xScale.domain(data.map(function(d) { console.log("this is converted months", days[new Date(d.date).getMonth()]); return months[new Date(d.date).getMonth()] }));
+                    yScale.domain([0, 4000]);
+                }
+
+                g.append("g")
+                .attr("transform", "translate(0," + height + ")")
+                .call(d3.axisBottom(xScale))
+                .append("text")
+                .attr("y", height - 250)
+                .attr("x", width - 100)
+                .attr("text-anchor", "end")
+                .attr("stroke", "black")
+                .text("Days");
+
+                g.append("g")
+                .call(d3.axisLeft(yScale)
+                .ticks(10))
+                .append("text")
+                .attr("transform", "rotate(-90)")
+                .attr("y", 6)
+                .attr("dy", "-5.1em")
+                .attr("text-anchor", "middle")
+                .attr("stroke", "black")
+                .text("Calories Consumed");
+
+                if (variable == "day") {
+                    g.selectAll(".bar")
+                    .data(data)
+                    .enter().append("rect")
+                    .attr("style", "fill: steelblue")
+                    .attr("x", function(d) { return xScale(days[new Date(d.date).getDay()]); })
+                    .attr("y", function(d) { return yScale(d.calories); })
+                    .attr("width", xScale.bandwidth())
+                    .attr("height", function(d) { return height - yScale(d.calories); });
+                } else {
+                    g.selectAll(".bar")
+                    .data(data)
+                    .enter().append("rect")
+                    .attr("style", "fill: steelblue")
+                    .attr("x", function(d) { return xScale(months[new Date(d.date).getMonth()]); })
+                    .attr("y", function(d) { return yScale(d.calories); })
+                    .attr("width", xScale.bandwidth())
+                    .attr("height", function(d) { return height - yScale(d.calories); });
+                }
+
             }
 
         },
@@ -127,7 +245,13 @@
                 this.dailyCalorieIntake = user.calorieDetails[Object.keys(user.calorieDetails)[Object.keys(user.calorieDetails).length-1]].dailyCalorieIntake;
                 this.gender = user.gender;
                 this.age = user.age;
-            })
+
+                for (const property in user.calorieDetails) {
+                    console.log("this is new obj created", { date: user.calorieDetails[property].date, calories: user.calorieDetails[property].dailyCalorieIntake})
+                    this.userCaloriesData.push({ date: user.calorieDetails[property].date, calories: user.calorieDetails[property].dailyCalorieIntake})
+                }
+            }),
+            this.renderGraph(this.xAxisVariable)
         },
     }  
 
@@ -169,29 +293,19 @@
                     <div class="btn btn-secondary mb-3" v-on:click="addFood($event)" @click="toggleModal">Add</div>
                 </div>
             </form>
-            <!-- <div class="row d-flex justify-content-center" v-if="searchResults.length != 0">
-                <div class="col-6">
-                    
-                </div>
-                <div class="col-1">
-
-                </div>
-            </div> -->
         </div>
-        
-        <!-- <button @click="toggleModal" type="button">Open Modal</button> -->
-        
         
         <!-- dashboard -->
         <div style="border:1px solid black; width:70%" class="p-3 mx-auto">
-            <!-- TODO: make the data reflect actual user calories & insert the calorie line -->
-            <!-- <svg></svg> -->
-            <plot :height="500" style="padding-left:50px"/>
+            <!-- <plot :height="500" style="padding-left:50px" :data="userCaloriesData" /> -->
+
+            <svg width="800" height="600"></svg>
+
             <div class="row d-flex justify-content-end mt-4">
                 <label for="colFormLabelSm" class="col-1 col-form-label col-form-label-sm" style="text-align: end">X-axis:</label>
                 <div class="dropdown col-2">
-                    <select class="form-control moreMinimal" style="text-align:center">
-                        <option selected>Day</option>
+                    <select class="form-control moreMinimal" style="text-align:center" v-model="xAxisVariable" v-on:change="renderGraph(xAxisVariable)">
+                        <option value="day" selected>Day</option>
                         <option value="week">Week</option>
                         <option value="month">Month</option>
                     </select>
