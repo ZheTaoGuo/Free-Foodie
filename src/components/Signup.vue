@@ -74,9 +74,6 @@ export default{
             </div>
             </div>
             
-            <div class="container" >
-            </div>
-            
             <div class="d-grid" style="align-items: center;"> 
               <router-link to="/login">
                 <p style = "margin-top: 20px; text-decoration: underline; color: blue;">
