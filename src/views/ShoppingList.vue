@@ -6,7 +6,7 @@
   <div class="container">
     <div class="row">
       <div class="col-3">
-        <div class="nav nav-tabs flex-column me-3" id="tab" aria-orientation="vertical">
+        <div class="nav nav-pills flex-column me-3" id="tab" aria-orientation="vertical">
           
         </div>
         <i class="fa-light fa-user"></i>
@@ -15,7 +15,7 @@
 
       <div class="col-9">
         <div class="row">
-          hello
+          
         </div>
       </div>
     </div>
