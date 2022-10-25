@@ -8,14 +8,14 @@ import { initializeApp } from 'firebase/app';
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: process.env.VUE_APP_API_KEY,
-  authDomain: process.env.VUE_APP_AUTH_DOMAIN,
-  databaseURL: process.env.VUE_APP_DATABASE_URL,
-  projectId: process.env.VUE_APP_PROJECT_ID,
-  storageBucket: process.env.VUE_APP_STORAGE_BUCKET,
-  messagingSenderId: process.env.VUE_APP_MESSAGING_SENDER_ID,
-  appId: process.env.VUE_APP_APP_ID,
-  measurementId: process.env.VUE_APP_MEASUREMENT_ID
+    apiKey: process.env.VUE_APP_API_KEY,
+    authDomain: process.env.VUE_APP_AUTH_DOMAIN,
+    databaseURL: process.env.VUE_APP_DATABASE_URL,
+    projectId: process.env.VUE_APP_PROJECT_ID,
+    storageBucket: process.env.VUE_APP_STORAGE_BUCKET,
+    messagingSenderId: process.env.VUE_APP_MESSAGING_SENDER_ID,
+    appId: process.env.VUE_APP_ID,
+    measurementId: process.env.VUE_APP_MEASUREMENT_ID
 };
 
 // Initialize Firebase
@@ -467,3 +467,28 @@ export const updateCalories = (userId, calorieConsumed, dailyCalorieIntake) => {
         return resolve(true)
     })
 };
+
+export const createFridge = (itemName, itemWeight, quantity, selected) => {
+    console.log("createFridge is called")
+    if (itemName == undefined || itemWeight == undefined || quantiy == undefined || selected == undefined) {
+        console.log("Error. Please pass in ItemName")
+        return
+    }
+    getIndex("fridge").then(
+        function (value) {
+            console.log("this is the returned index", value)
+            // creating the family table
+            set(ref(db, 'fridge/' + value), {
+                ItemName: itemName,
+                ItemWeight: itemWeight,
+                Quantity : quantity,
+                ItemType: selected,
+                
+            });
+
+        },
+        function (error) {
+            console.log("Error: " + error.message);
+        }
+    );
+}

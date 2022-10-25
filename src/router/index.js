@@ -1,9 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import profileLandingPage from '../views/profileLandingPage.vue'
 import HomeView from '../views/HomeView.vue'
-import FridgeView from '../components/FridgeView.vue'
+import FridgeView from '../views/FridgeView.vue'
 import HomePage from '../views/HomePage.vue'
 import Login from '../views/Login.vue'
+import ShoppingList from '../views/ShoppingList.vue'
+import FridgeModal from '../components/FridgeModal.vue'
 
 
 const routes = [
@@ -13,9 +15,17 @@ const routes = [
         component: HomePage
     },
     {
-        path: '/fridge',
+        
+    },
+    {
+        path: '/fridgefinal',
         name: 'Fridge',
         component: FridgeView
+    },
+    {
+        path: '/shoppinglist',
+        name: 'ShoppingList',
+        component: ShoppingList
     },
     {
         path: '/profile',
@@ -52,6 +62,11 @@ const routes = [
         path: '/login',
         name: 'Login',
         component: Login
+    },
+    {
+        path: '/fridgemodal',
+        name: 'FridgeModal',
+        component: FridgeModal
     }
 ]
 

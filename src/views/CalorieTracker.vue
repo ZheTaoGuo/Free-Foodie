@@ -3,6 +3,7 @@
     import { calculateCalories, getUser, updateCalories } from '../utils'
     // import * as d3 from "d3";
     import plot from "@/components/plotWithXandYaxis.vue";
+    // import calorieSearchModal from '../components/calorieSearchModal.vue';
     // import * as axios from "axios";
     import axios from 'axios'
     import AutoComplete from 'primevue/autocomplete';
