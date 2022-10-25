@@ -14,9 +14,6 @@ const routes = [
         component: HomePage
     },
     {
-        
-    },
-    {
         path: '/fridgefinal',
         name: 'Fridge',
         component: FridgeView
