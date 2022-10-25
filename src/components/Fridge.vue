@@ -25,12 +25,47 @@
 
 
   <div class="bottom">
-  <button @click="toggleModal" type="button"> Open Modal</button>
+    <!-- <FridgeModal @close="toggleModal" :modalActive="modalActive"/> -->
+    <FridgeModal @close="toggleModal" :modalActive="modalActive">
+      <div>hello world</div>
+      <div class="modal-content">
+              <div class="form-group">
+                <label for="ItemName">ItemName</label>
+                <input type="text" class="form-control" id="ItemName" placeholder="Enter Ingredient" />
+              </div>
+
+              <div class="form-group">
+                <label for="ItemWeight">Item Weight</label>
+                <input type="text" class="form-control" id="ItemWeight" placeholder="Enter Weight" />
+              </div>
+
+              <div class="form-group">
+                <label for="Quantity">Quantity</label>
+                <input type="text" class="form-control" id="Quantity" placeholder="Enter Quantity" />
+              </div>
+
+              <div class="form-group">
+                <label for="Category">Category</label>
+                <select>
+                  <option disabled value="Please select one"></option>
+                  <option value="Meat">Meat</option>
+                  <option value="Carbohydrates">Carbohydrates</option>
+                  <option value="Condiments">Condiments</option>
+                  <option value="Sauces">Sauces</option>
+                  <option value="Fresh Produce">Fresh Produce</option>
+                </select>
+              </div>
+            
+      </div>
+    </FridgeModal>
+
+    
+    <button @click="toggleModal" type="button"> Open Modal</button>
   </div>
 </template>
 
 <script>
-import FridgeModal from "FridgeModal.vue";
+import FridgeModal from "./FridgeModal.vue";
 import { ref } from "vue";
 
 export default {
@@ -58,7 +93,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.tab {}
+/* .tab {}
 
 h3 {
   margin: 40px 0 0;
@@ -76,9 +111,9 @@ li {
 
 a {
   color: #42b983;
-}
+} */
 
-.home {
+.bottom {
   background-color: rgba(0, 176, 234, 0.5);
   height: 100vh;
   display: flex;

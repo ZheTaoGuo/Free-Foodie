@@ -1,63 +1,63 @@
 <template>
-    <div id="app">
-      <Tabs>
-        <Tab name="description" selected="true">
-          <p>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolorum error autem dignissimos nobis illum temporibus 
-            voluptate laboriosam eius consequatur! Labore laborum ducimus, culpa sit neque molestias dignissimos natus 
-            minima sed recusandae ipsa necessitatibus obcaecati vel eligendi voluptatem, provident in non ad saepe veniam 
-            eveniet cumque, fugit unde eaque! Doloribus, iusto?
-          </p>
-        </Tab>
-        <Tab name="list">
-          <ul>
-            <li>Item 1</li>
-            <li>Item 2</li>
-            <li>Item 3</li>
-            <li>Item 4</li>
-            <li>Item 5</li>
-          </ul>
-        </Tab>
-        <Tab name="table">
-          <table>
-            <tr>
-              <th>Name</th>
-              <th>Value</th>
-            </tr>
-            <tr>
-              <td>Cheese</td>
-              <td>Yellow</td>
-            </tr>
-            <tr>
-              <td>Apple</td>
-              <td>Red</td>
-            </tr>
-          </table>
-        </Tab>
-      </Tabs>
+
+<TabsWrapper>
+
+<IndividualTab title="Personal">
+  <div class="container">
+    <div class="row">
+      <div class="col-3">
+        <div class="nav nav-tabs flex-column me-3" id="tab" aria-orientation="vertical">
+          
+        </div>
+        <i class="fa-light fa-user"></i>
+      
+      </div>
+
+      <div class="col-9">
+        <div class="row">
+          hello
+        </div>
+      </div>
     </div>
-  </template>
-  
-  <script>
-    import Tab from '@/components/Tab'
-    import Tabs from '@/components/Tabs'
-    export default {
-      name: 'ShoppingList',
-      components: {
-        Tab,
-        Tabs
-      }
+  </div>
+</IndividualTab>
+<IndividualTab title="Family">
+  Family
+</IndividualTab>
+
+
+</TabsWrapper>
+
+</template>
+
+<script>
+import IndividualTab from '../components/IndividualTab.vue';
+import TabsWrapper from '../components/TabsWrapperShoppingList.vue'
+export default{
+  data(){
+    return{
+      queryType: "",
+      selectedUser: 0,
+      users:['User1', 'User2', 'User3']
     }
-  </script>
-  
-  <style scoped>
-    body {
-      background-color: #45443F;
-      color: #fefefe;
-    }
-    th, td {
-      padding: 5px;
-      border: 1px solid #fefefe;
-      text-align: center;
-    }
-  </style>
+  },
+  methods: {
+    
+  },
+  components:{
+    IndividualTab,
+    TabsWrapper
+  }
+}
+</script>
+
+<script setup>
+
+</script>
+
+<style>
+
+.tabs-component{
+  color: red;
+}
+</style>
