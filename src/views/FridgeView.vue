@@ -21,8 +21,8 @@
 
 <script setup>
 
-import IndividualTab from './IndividualTab.vue';
-import TabsWrapper from './TabsWrapper.vue';
+import IndividualTab from '../components/IndividualTab.vue';
+import TabsWrapper from '../components/TabsWrapperFridge.vue';
 </script>
 
 <style scoped>

@@ -5,70 +5,54 @@
         <div v-show="modalActive" class="modal-inner">
           <i @click="close" class="far fa-times-circle"></i>
           <!-- Modal Content-->
-          <div class="modal-content">
-            <div class="form-group">
-              <label for="ItemName">ItemName</label>
-              <input type="text" class="form-control" id="ItemName" placeholder="Enter Ingredient" v-model="itemName" />
-            </div>
+          
+            <slot />
+        
 
-            <div class="form-group">
-              <label for="ItemWeight">Item Weight</label>
-              <input type="text" class="form-control" id="ItemWeight" placeholder="Enter Weight" v-model="itemWeight" />
-            </div>
-
-            <div class="form-group">
-              <label for="Quantity">Quantity</label>
-              <input type="text" class="form-control" id="Quantity" placeholder="Enter Quantity" v-model="quantity" />
-            </div>
-
-            <div class="form-group">
-              <label for="Category">Category</label>
-              <select v-model="selected">
-                <option disabled value="Please select one"></option>
-                <option value="Meat">Meat</option>
-                <option value="Carbohydrates">Carbohydrates</option>
-                <option value="Condiments">Condiments</option>
-                <option value="Sauces">Sauces</option>
-                <option value="Fresh Produce">Fresh Produce</option>
-              </select>
-            </div>
-          </div>
-          <slot />
           <button>Close</button>
+        <!-- <button class="button" @click="createFridge(itemName, itemWeight, quantity, selected)">Submit</button> -->
         </div>
-        <button class="button" @click="createFridge(itemName, itemWeight, quantity, selected)">Submit</button>
       </transition>
     </div>
   </transition>
 </template>
 <script>
 
-const itemName = "Chicken";
-const itemWeight = 2;
-const quantity = 2;
-const selected = "Meat"
+// const itemName = "Chicken";
+// const itemWeight = 2;
+// const quantity = 2;
+// const selected = "Meat"
 
-import { createFridge } from '../utils'
+// import { createFridge } from '../utils'
+// export default {
+//   data: {
+//     itemName: "",
+//     itemWeight: "",
+//     quantity: "",
+//     selected: ""
+
+//   },
+//   methods: {
+//     // createFridge
+//   },
+//   props: ["modalActive"],
+//   setup(props, { emit }) {
+//     const close = () => {
+//       emit('close');
+//     };
+
+//     return { close };
+//   }
+
+// };
 export default {
-  data: {
-    itemName: "",
-    itemWeight: "",
-    quantity: "",
-    selected: ""
-
-  },
-  methods: {
-    createFridge
-  },
   props: ["modalActive"],
   setup(props, { emit }) {
     const close = () => {
-      emit('close');
+      emit("close");
     };
-
     return { close };
-  }
-
+  },
 };
 </script>
 <style>
@@ -97,7 +81,7 @@ export default {
 
 .modal-animation-inner-leave-to {
   transform: scale(0.8);
-}
+} */
 
 .modal {
   display: flex;

@@ -32,8 +32,8 @@ export default {
 </script>
 <style scoped>
 .tabs{
-  max-width: 400px;
-  margin: 0 auto;
+  margin-left: 20px;
+  /* max-width: 400px; */
   left: 0;
 }
 
