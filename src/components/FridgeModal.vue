@@ -46,16 +46,6 @@
 
 // };
 export default {
-  data: {
-    itemName: "",
-    itemWeight: "",
-    quantity: "",
-    selected: ""
-
-  },
-  methods: {
-    createFridge
-  },
   props: ["modalActive"],
   setup(props, { emit }) {
     const close = () => {
