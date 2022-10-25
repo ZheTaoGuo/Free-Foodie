@@ -63,7 +63,7 @@
     <div class="container-fluid align-items-start">
         <div class="row">
             <div class="col-3">
-                <div class="nav nav-tabs flex-column me-3" id="v-tab" role="tablist" aria-orientation="vertical">
+                <div class="nav nav-pills flex-column me-3" id="v-tab" role="tablist" aria-orientation="vertical">
                     <!-- eslint-disable-next-line -->
                     <button v-for="recipe of recipes" class="nav-link border p-4 my-2" 
                         :class="{active: recipe['recipeId'] == selectedRecipe}" id="v-settings-tab" data-bs-toggle="pill"

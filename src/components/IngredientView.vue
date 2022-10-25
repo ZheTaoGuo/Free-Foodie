@@ -22,14 +22,11 @@
 </script>
 
 <template>
-    <!-- <div class="container-fluid">
-        <div v-for="item of ingredients" style="background-color: white;">
-           {{item.amount}} <span v-show="item.unit !== ''">{{item.unit}} of</span> {{item.originalName}}
-        </div>
-    </div> -->
     <ul class="list-group text-start">
         <li class="list-group-item" v-for="item of ingredients">
-            {{item.amount}} <span v-show="item.unit !== ''">{{item.unit}} of</span> {{item.originalName}}
+            <span v-if="Number.isInteger(item.amount)">{{item.amount}}&nbsp</span> 
+            <span v-else>{{item.amount.toFixed(2)}}&nbsp</span>
+            <span v-if="item.unit">{{item.unit}} of</span>{{item.originalName}}
         </li>
     </ul>
 </template>
