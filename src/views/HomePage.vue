@@ -86,7 +86,11 @@
 <script>
 import Login from "./Login.vue";
 export default {
-  data() { },
+  data() {
+    return {
+      
+    }
+  },
   methods: {
     promptLogin() {
       this.$router.push({
