@@ -166,7 +166,7 @@ export const getFavourite = (userid) => {
         var recipeIds = [];
         getUser(userid).then((value) => {
             recipeIds = value.FavouriteRecipes
-            console.log(recipeIds);
+            // console.log(recipeIds);
             for (let id of recipeIds) {
                 // eslint-disable-next-line
                 const recipes = ref(db, 'recipes');
@@ -198,7 +198,7 @@ export const getPast = (userid) => {
         var recipeIds = [];
         getUser(userid).then((value) => {
             recipeIds = value.PastRecipes
-            console.log(recipeIds);
+            // console.log(recipeIds);
             for (let id of recipeIds) {
                 // eslint-disable-next-line
                 const recipes = ref(db, 'recipes');

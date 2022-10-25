@@ -7,6 +7,8 @@
         getFavourite, getPast
     } from '../utils'
 
+    const USERID = 1
+
     export default {
         data(){
             return {
@@ -22,7 +24,7 @@
         methods: {
             getFavouriteRecipe() {
                 console.log('start method');
-                getFavourite().then((value) => {
+                getFavourite(USERID).then((value) => {
                     console.log(value);
                     this.recipes = value
                 }).catch((message) => {
@@ -32,7 +34,7 @@
             },
             getPastRecipe() {
                 console.log('start method');
-                getPast().then((value) => {
+                getPast(USERID).then((value) => {
                     console.log(value);
                     this.recipes = value
                 }).catch((message) => {
