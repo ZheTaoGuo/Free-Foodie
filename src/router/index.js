@@ -64,6 +64,11 @@ const routes = [
         path: '/fridgemodal',
         name: 'FridgeModal',
         component: FridgeModal
+    },
+    {
+        path: '/search',
+        name: 'SearchRecipe',
+        component: () => import('../views/SearchRecipe.vue')
     }
 ]
 
