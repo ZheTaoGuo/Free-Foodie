@@ -52,6 +52,11 @@ const routes = [
         path: '/login',
         name: 'Login',
         component: Login
+    },
+    {
+        path: '/search',
+        name: 'SearchRecipe',
+        component: () => import('../views/SearchRecipe.vue')
     }
 ]
 
