@@ -1,6 +1,7 @@
 <script>
     import Card from '../components/CardComp.vue'
     import Search from '../components/SearchBar.vue'
+    import NavBar from '../components/Navbar.vue'
     import data from '../recipes.json'
     import {getPast} from '../utils'
 
@@ -9,7 +10,8 @@
     export default {
         components: {
             Card,
-            Search
+            Search,
+            NavBar
         },
         data() {
             return {
@@ -39,13 +41,8 @@
     <div class="container-fluid">
         <div class="row">
             <!--Start of NavBar-->
-            <div class="col text-center">
-                <h1>Past Recipes
-                    <router-link to="/">
-                        <button class="btn btn-primary">Back</button>
-                    </router-link>
-                </h1>
-            </div> <!--End of NavBar-->
+            <NavBar></NavBar>
+            <!--End of NavBar-->
         </div>
 
         <div class="row">

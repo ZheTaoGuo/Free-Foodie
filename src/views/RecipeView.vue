@@ -4,7 +4,7 @@
     import Instruction from '../components/InstructionView.vue'
     import Ingredient from '../components/IngredientView.vue'
     import {
-        getFavourite, getPast
+        getFavourite, getPast, getAll
     } from '../utils'
 
     const USERID = 1
@@ -42,6 +42,15 @@
                 })
                 console.log('end method');
             },
+            getAllRecipe() {
+                console.log('start method');
+                getAll().then((value) => {
+                    this.recipes = value
+                }).catch((message) => {
+                    this.recipes = message
+                })
+                console.log('end methods');
+            }
         },
         mounted() {
             this.queryType = this.$route.query.type;
@@ -51,6 +60,8 @@
                 this.getFavouriteRecipe()
             } else if(this.queryType == 'past'){
                 this.getPastRecipe()
+            }else {
+                this.getAllRecipe()
             }
         }
     }
@@ -65,21 +76,21 @@
             <div class="col-3">
                 <div class="nav nav-pills flex-column me-3" id="v-tab" role="tablist" aria-orientation="vertical">
                     <!-- eslint-disable-next-line -->
-                    <button v-for="recipe of recipes" class="nav-link border p-4 my-2" 
+                    <button v-for="recipe of recipes" class="nav-link border p-4 my-2"
                         :class="{active: recipe['recipeId'] == selectedRecipe}" id="v-settings-tab" data-bs-toggle="pill"
                         :data-bs-target="'#v-settings'+recipe['recipeId']" type="button" role="tab" aria-controls="v-settings"
                         :aria-selected="recipe['recipeId'] == selectedRecipe">{{recipe['recipeName']}}
                     </button>
                 </div>
             </div>
-            <div class="col-9">
-                <div class="tab-content" id="v-pills-tabContent">
+            <div class="col-9 position-relative">
+                <div class="tab-content position-sticky top-0" id="v-pills-tabContent" style="overflow-y: auto; max-height: 100vh;">
                     <!-- eslint-disable-next-line -->
                     <div v-for="recipe of recipes" class="tab-pane fade" 
                         :class="{active: recipe['recipeId'] == selectedRecipe, show: recipe['recipeId'] == selectedRecipe}"
                         :id="'v-settings'+recipe['recipeId']" role="tabpanel" :aria-labelledby="'recipe'+recipe['recipeId']"
                         tabindex="0">
-                        <div class="container-fluid bg-secondary overflow-auto">
+                        <div class="container-fluid bg-secondary">
                             <div :style="{ background: 'url(' + recipe['image'] + ') no-repeat', backgroundSize: 'cover', backgroundPosition: 'center', height:'35vh'}">
                                 <div style="background-color: rgba(0, 0, 0, 0.6); height:inherit">
                                     <div class="d-flex justify-content-center align-items-center mt-2 p-5 text-white rounded" style="height:inherit">
@@ -98,8 +109,8 @@
                             </div>
                             <Ingredient :name="recipe['recipeName']" :recipeId="recipe['recipeId']" :ingredients="recipe['ingredientDetails']"></Ingredient>
                             <hr>
-                            <button v-show="queryType !== 'favourite' && queryType !== 'past'">Favourite</button>
-                            <button v-show="queryType !== 'favourite' && queryType !== 'past'">Use this recipe</button>
+                            <button class="btn btn-secondary" v-show="queryType !== 'favourite' && queryType !== 'past'">Favourite</button>
+                            <button class="btn btn-secondary" v-show="queryType !== 'favourite' && queryType !== 'past'">Use this recipe</button>
                             <hr>
                         </div>
                     </div>

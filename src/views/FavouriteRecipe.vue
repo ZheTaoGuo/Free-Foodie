@@ -1,6 +1,7 @@
 <script>
     import Card from '../components/CardComp.vue'
     import Search from '../components/SearchBar.vue'
+    import NavBar from '../components/Navbar.vue'
     import { getFavourite } from '../utils'
 
     const USERID = 1
@@ -8,7 +9,8 @@
     export default {
         components: {
             Card,
-            Search
+            Search,
+            NavBar
         },
         data() {
             return {
@@ -38,13 +40,14 @@
     <div class="container-fluid">
         <div class="row">
             <!--Start of NavBar-->
-            <div class="col text-center">
+            <NavBar></NavBar>
+            <!-- <div class="col text-center">
                 <h1>Favourite Recipes
                     <router-link to="/">
                         <button class="btn btn-primary">Back</button>
                     </router-link>
                 </h1>
-            </div>
+            </div> -->
             <!--End of NavBar-->
         </div>
 
