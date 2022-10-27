@@ -121,11 +121,12 @@ export default {
         renderGraph(variable) {
             console.log('renderGraph() called')
             console.log("this is variable", variable)
-            var svg = d3.select("svg"),
+            var svg = d3.select("#dashboard"),
                 margin = 170,
                 width = svg.attr("width") - margin,
                 height = svg.attr("height") - margin
 
+            console.log("this is svg", svg)
             svg.append("text")
                 .attr("transform", "translate(100,0)")
                 .attr("x", 50)
@@ -144,6 +145,7 @@ export default {
                 document.getElementById("dashboardTitle").remove()
             }
 
+            console.log("appending g")
             var g = svg.append("g")
                 .attr("transform", "translate(" + 100 + "," + 100 + ")");
 
@@ -200,7 +202,7 @@ export default {
             } else if (variable == "week") {
                 filteredData = [{date:"Week 1", calories: 0}, {date:"Week 2", calories: 0}, {date:"Week 3", calories: 0}, {date:"Week 4", calories: 0}, {date:"Week 5", calories: 0}]
                 for (let obj of data) {
-                    console.log("this is filtereddata week", Math.ceil((new Date(obj.date).getDate() + 1) / 7))
+                    // console.log("this is filtereddata week", Math.ceil((new Date(obj.date).getDate() + 1) / 7))
                     for (let obj2 of filteredData) {
                         if (Math.ceil((new Date(obj.date).getDate() + 1) / 7) == obj2.date.slice(-1)) {
                             obj2.calories += obj.calories
@@ -220,7 +222,6 @@ export default {
             }
             console.log("this is filteredData", filteredData)
 
-            // TODO: aggregate the values together when it is in the same month
             // TODO: only get the 7 lastest entries to show in the graph
             // TODO: add a line for max calorie intake
 
@@ -231,6 +232,7 @@ export default {
                 scale = 30
             }
 
+            console.log("this is height", height)
             xScale.domain(filteredData.map(function (d) { console.log("this is converted days", d.date); return d.date }));
             let mult = Math.pow(10, 1 - Math.floor(Math.log(this.calorieLimit * scale) / Math.LN10) - 1);
             let maxY = Math.ceil(this.calorieLimit * scale * mult) / mult
@@ -338,7 +340,7 @@ export default {
         <div style="border:1px solid black; width:70%" class="p-3 mx-auto">
             <!-- <plot :height="500" style="padding-left:50px" :data="userCaloriesData" /> -->
 
-            <svg width="950" height="600"></svg>
+            <svg width="950" height="600" id="dashboard"></svg>
 
             <div class="row d-flex justify-content-end mt-4">
                 <label for="colFormLabelSm" class="col-1 col-form-label col-form-label-sm"
