@@ -131,10 +131,18 @@ export default {
                 .attr("x", 50)
                 .attr("y", 50)
                 .attr("style", "font-size:24px;")
+                .attr("id", "dashboardTitle")
                 .text("Calorie Tracker");
 
             var xScale = d3.scaleBand().range([0, width]).padding(0.4),
                 yScale = d3.scaleLinear().range([height, 0]);
+
+            // DOM manipulation to remove <g> tag if it already exists
+            if (document.getElementsByTagName("g").length >= 1) {
+                // console.log("this is getElementsByTagName", document.getElementsByTagName("g"))
+                document.getElementsByTagName("g")[0].remove()
+                document.getElementById("dashboardTitle").remove()
+            }
 
             var g = svg.append("g")
                 .attr("transform", "translate(" + 100 + "," + 100 + ")");
@@ -191,6 +199,14 @@ export default {
                 }
             } else if (variable == "week") {
                 filteredData = [{date:"Week 1", calories: 0}, {date:"Week 2", calories: 0}, {date:"Week 3", calories: 0}, {date:"Week 4", calories: 0}, {date:"Week 5", calories: 0}]
+                for (let obj of data) {
+                    console.log("this is filtereddata week", Math.ceil((new Date(obj.date).getDate() + 1) / 7))
+                    for (let obj2 of filteredData) {
+                        if (Math.ceil((new Date(obj.date).getDate() + 1) / 7) == obj2.date.slice(-1)) {
+                            obj2.calories += obj.calories
+                        }
+                    }
+                }
             } else {
                 filteredData = [{date: "January", calories: 0}, {date: "February", calories: 0}, {date: "March", calories: 0}, {date: "April", calories: 0}, {date: "May", calories: 0}, {date: "June", calories: 0}, {date: "July", calories: 0}, {date: "August", calories: 0}, {date: "September", calories: 0}, {date: "October", calories: 0}, {date: "November", calories: 0}, {date: "December", calories: 0}]
                 for (let obj of data) {
@@ -204,22 +220,21 @@ export default {
             }
             console.log("this is filteredData", filteredData)
 
-
-
-            // console.log("tbis is my vairbale", variable)
             // TODO: aggregate the values together when it is in the same month
             // TODO: only get the 7 lastest entries to show in the graph
-            // TODO: After re-rendering the graph, make sure that the past bars get removed and that it doesnt just add on 
-            // TODO: make sure that the data fed to the graph is dynamic (change the hardcoded portions)
             // TODO: add a line for max calorie intake
 
-            if (variable == "day") {
-                xScale.domain(filteredData.map(function (d) { console.log("this is converted days", d.date); return d.date }));
-                yScale.domain([0, 4000]);
+            let scale = 1
+            if (variable == "week"){
+                scale = 7
             } else if (variable == "month") {
-                xScale.domain(filteredData.map(function (d) { console.log("this is converted months", d.date); return d.date }));
-                yScale.domain([0, 4000]);
+                scale = 30
             }
+
+            xScale.domain(filteredData.map(function (d) { console.log("this is converted days", d.date); return d.date }));
+            let mult = Math.pow(10, 1 - Math.floor(Math.log(this.calorieLimit * scale) / Math.LN10) - 1);
+            let maxY = Math.ceil(this.calorieLimit * scale * mult) / mult
+            yScale.domain([0, maxY]);
 
             g.append("g")
                 .attr("transform", "translate(0," + height + ")")
@@ -236,32 +251,20 @@ export default {
                     .ticks(10))
                 .append("text")
                 .attr("transform", "rotate(-90)")
-                .attr("y", 6)
+                .attr("y", 1)
                 .attr("dy", "-5.1em")
                 .attr("text-anchor", "middle")
                 .attr("stroke", "black")
                 .text("Calories Consumed");
 
-            if (variable == "day") {
-                g.selectAll(".bar")
-                    .data(data)
-                    .enter().append("rect")
-                    .attr("style", "fill: steelblue")
-                    .attr("x", function (d) { return xScale(days[new Date(d.date).getDay()]); })
-                    .attr("y", function (d) { return yScale(d.calories); })
-                    .attr("width", xScale.bandwidth())
-                    .attr("height", function (d) { return height - yScale(d.calories); });
-            } else {
-                g.selectAll(".bar")
-                    .data(data)
-                    .enter().append("rect")
-                    .attr("style", "fill: steelblue")
-                    .attr("x", function (d) { return xScale(months[new Date(d.date).getMonth()]); })
-                    .attr("y", function (d) { return yScale(d.calories); })
-                    .attr("width", xScale.bandwidth())
-                    .attr("height", function (d) { return height - yScale(d.calories); });
-            }
-
+            g.selectAll(".bar")
+                .data(filteredData)
+                .enter().append("rect")
+                .attr("style", "fill: steelblue")
+                .attr("x", function (d) { return xScale(d.date); })
+                .attr("y", function (d) { return yScale(d.calories); })
+                .attr("width", xScale.bandwidth())
+                .attr("height", function (d) { return height - yScale(d.calories); });
         }
 
     },
