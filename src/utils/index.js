@@ -198,6 +198,72 @@ export const getAll = () => {
     })
 }
 
+// Filter by Cuisine
+export const checkCuisine = (phrase) => {
+    return new Promise((resolve, reject) => {
+        console.log('start promise');
+        var recipeFound = []
+        // eslint-disable-next-line
+        const recipes = ref(db, 'recipes');
+        onValue(recipes, (snapshot) => {
+            const data = snapshot.val();
+            for (const obj of data) {
+                if ('cuisines' in obj && obj.cuisines.includes(phrase) && !recipeFound.includes(obj)) {
+                    recipeFound.push(obj)
+                }
+            }
+            // console.log(recipeFound);
+            return resolve(recipeFound)
+        })
+        console.log('end promises');
+        console.log('this is recipefound', recipeFound);
+    })
+}
+
+// Filter bu Diet
+export const checkDiet = (phrase) => {
+    return new Promise((resolve, reject) => {
+        console.log('start promise');
+        var recipeFound = []
+        // eslint-disable-next-line
+        const recipes = ref(db, 'recipes');
+        onValue(recipes, (snapshot) => {
+            const data = snapshot.val();
+            for (const obj of data) {
+                if ('diets' in obj && obj.diets.includes(phrase) && !recipeFound.includes(obj)) {
+                    recipeFound.push(obj)
+                }
+            }
+            // console.log(recipeFound);
+            return resolve(recipeFound)
+        })
+        console.log('end promises');
+        console.log('this is recipefound', recipeFound);
+    })
+}
+
+// Filter by Dish Type
+export const checkDish = (phrase) => {
+    return new Promise((resolve, reject) => {
+        console.log('start promise');
+        var recipeFound = []
+        // eslint-disable-next-line
+        const recipes = ref(db, 'recipes');
+        onValue(recipes, (snapshot) => {
+            const data = snapshot.val();
+            for (const obj of data) {
+                if ('dishTypes' in obj && obj.dishTypes.includes(phrase) && !recipeFound.includes(obj)) {
+                    recipeFound.push(obj)
+                }
+            }
+            // console.log(recipeFound);
+            return resolve(recipeFound)
+        })
+        console.log('end promises');
+        console.log('this is recipefound', recipeFound);
+    })
+}
+
 // Search bar functionality for SearchRecipe. Looks through the recipe name and summary to see if the keyword is found
 export const searchContent = (phrase) => {
     return new Promise((resolve, reject) => {

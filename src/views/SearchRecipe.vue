@@ -1,7 +1,7 @@
 <script>
     import Card from '../components/CardComp.vue'
     import NavBar from '../components/Navbar.vue'
-    import { getAll, searchContent } from '../utils'
+    import { getAll, searchContent, checkCuisine, checkDiet, checkDish } from '../utils'
 
     export default {
         components: {
@@ -33,7 +33,37 @@
                     this.recipeFiltered = message
                 })
                 console.log('end methods');
-            }
+            },
+            filterCuisine(event){
+                let searchBy = event.target.value
+                console.log('start method');
+                checkCuisine(searchBy).then((value) => {
+                    this.recipeFiltered = value
+                }).catch((message) => {
+                    this.recipeFiltered = message
+                })
+                console.log('end methods');
+            },
+            filterDiet(event){
+                let searchBy = event.target.value
+                console.log('start method');
+                checkDiet(searchBy).then((value) => {
+                    this.recipeFiltered = value
+                }).catch((message) => {
+                    this.recipeFiltered = message
+                })
+                console.log('end methods');
+            },
+            filterDish(event){
+                let searchBy = event.target.value
+                console.log('start method');
+                checkDish(searchBy).then((value) => {
+                    this.recipeFiltered = value
+                }).catch((message) => {
+                    this.recipeFiltered = message
+                })
+                console.log('end methods');
+            },
         },
         mounted() {
             console.log('start mounted');
@@ -64,12 +94,40 @@
             </div>
             <!--End of Search Bar-->
         </div>
-        <div class="row">
+        <div class="row my-3 g-3 justify-content-between">
+            <div class="col-1"></div>
             <!--Start of filter Bar-->
-            <div class="col">
-                filters
+            <div class="col-3">
+                <select class="form-select" aria-label="Cuisine" @change="filterCuisine($event)">
+                    <option selected>Cuisines</option>
+                    <option value="European">European</option>
+                    <option value="Asian">Asian</option>
+                    <option value="Italian">Italian</option>
+                    </select>
             </div>
             <!--End of filter Bar-->
+            <!--Start of filter Bar-->
+            <div class="col-3">
+                <select class="form-select" aria-label="Diets" @change="filterDiet($event)">
+                    <option selected>Diets</option>
+                    <option value="gluten free">Gluten Free</option>
+                    <option value="dairy free">Dairy Free</option>
+                    <option value="lacto ovo vegetarian">Vegitarian</option>
+                    </select>
+            </div>
+            <!--End of filter Bar-->
+            <!--Start of filter Bar-->
+            <div class="col-3">
+                <select class="form-select" aria-label="Dish Type" @change="filterDish($event)">
+                    <option selected>Dish Type</option>
+                    <option value="breakfast">Breakfast</option>
+                    <option value="lunch">Lunch</option>
+                    <option value="dinner">Dinner</option>
+                    <option value="dessert">Dessert</option>
+                    </select>
+            </div>
+            <!--End of filter Bar-->
+            <div class="col-1"></div>
         </div>
 
         <div class="row" v-if="recipeFiltered.length == 0">
