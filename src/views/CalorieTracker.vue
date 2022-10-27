@@ -42,6 +42,7 @@ export default {
             dailyCalorieIntake: 0,
             userCaloriesData: [],
             xAxisVariable: "day",
+            filteredData: [],
         }
     },
     methods: {
@@ -118,6 +119,91 @@ export default {
             });
             this.dailyCalorieIntake = dailyCalorieIntake
         },
+
+        //mouseover event handler function
+         onMouseOver (d, i) {
+            console.log("this is d", d)
+            
+            var svg = d3.select("#dashboard"),
+                margin = 170,
+                width = svg.attr("width") - margin,
+                height = svg.attr("height") - margin
+            var xScale = d3.scaleBand().range([0, width]).padding(0.4),
+                yScale = d3.scaleLinear().range([height, 0]);
+
+            let scale = 1
+            let variable = this.xAxisVariable
+            if (variable == "week"){
+                scale = 7
+            } else if (variable == "month") {
+                scale = 30
+            }
+            xScale.domain(this.filteredData.map(function (d) { console.log("this is converted days", d.date); return d.date }));
+            let mult = Math.pow(10, 1 - Math.floor(Math.log(this.calorieLimit * scale) / Math.LN10) - 1);
+            let maxY = Math.ceil(this.calorieLimit * scale * mult) / mult
+            yScale.domain([0, maxY]);
+            
+            d3.select(d.path[0]).attr('style', 'fill: orange');
+            d3.select(d.path[0])
+            .transition()     // adds animation
+            .duration(400)
+            .attr('width', xScale.bandwidth() + 10)
+            .attr("x", (a) => xScale(a.date) - 5)
+            .attr("y", function(d) { return yScale(d.calories) - 10; })
+            .attr("height", function(d) { return height - yScale(d.calories) + 10; });
+
+
+            let g = d3.select("g")
+            g.append("text")
+            .attr('class', 'val') 
+            .attr('x', function() {
+                console.log("this shld be my d", d.path[0]["__data__"].date)
+                return xScale(d.path[0]["__data__"].date) + ((xScale.bandwidth() + 10) / 4) - 5;
+            })
+            .attr('y', function() {
+                console.log("this is my caloriees", d.path[0]["__data__"].calories)
+                return yScale(d.path[0]["__data__"].calories) - 12;
+            })
+            .text(function() {
+                return [d.path[0]["__data__"].calories];  // Value of the text
+            });
+        },
+        //mouseout event handler function
+        onMouseOut(d, i) {
+            // use the text label class to remove label on mouseout
+
+            var svg = d3.select("#dashboard"),
+                margin = 170,
+                width = svg.attr("width") - margin,
+                height = svg.attr("height") - margin
+            var xScale = d3.scaleBand().range([0, width]).padding(0.4),
+                yScale = d3.scaleLinear().range([height, 0]);
+
+            let scale = 1
+            let variable = this.xAxisVariable
+            if (variable == "week"){
+                scale = 7
+            } else if (variable == "month") {
+                scale = 30
+            }
+            xScale.domain(this.filteredData.map(function (d) { console.log("this is converted days", d.date); return d.date }));
+            let mult = Math.pow(10, 1 - Math.floor(Math.log(this.calorieLimit * scale) / Math.LN10) - 1);
+            let maxY = Math.ceil(this.calorieLimit * scale * mult) / mult
+            yScale.domain([0, maxY]);
+
+            d3.select(d.path[0]).attr('style', 'fill: steelblue');
+            d3.select(d.path[0])
+            .transition()     // adds animation
+            .duration(400)
+            .attr('width', xScale.bandwidth())
+            .attr("x", function(d) { return xScale(d.date); })
+            .attr("y", function(d) { return yScale(d.calories); })
+            .attr("height", function(d) { return height - yScale(d.calories); });
+
+            d3.selectAll('.val')
+            .remove()
+        },
+
         renderGraph(variable) {
             console.log('renderGraph() called')
             console.log("this is variable", variable)
@@ -221,8 +307,7 @@ export default {
                 }
             }
             console.log("this is filteredData", filteredData)
-
-            // TODO: add a line for max calorie intake
+            this.filteredData = filteredData
 
             let scale = 1
             if (variable == "week"){
@@ -262,16 +347,18 @@ export default {
                 .data(filteredData)
                 .enter().append("rect")
                 .attr("style", "fill: steelblue")
+                .on("mouseover", this.onMouseOver) //Add listener for the mouseover event
+                .on("mouseout", this.onMouseOut)   //Add listener for the mouseout event
                 .attr("x", function (d) { return xScale(d.date); })
                 .attr("y", function (d) { return yScale(d.calories); })
                 .attr("width", xScale.bandwidth())
+                .transition()
+                .ease(d3.easeLinear)
+                .duration(300)
+                .delay(function (d, i) {
+                    return i * 50;
+                })
                 .attr("height", function (d) { return height - yScale(d.calories); });
-
-
-            let lineData = [{date: "Monday", calories: this.calorieLimit}, {date: "Tuesday", calories: this.calorieLimit}, {date: "Wednesday", calories: this.calorieLimit}, {date: "Thursday", calories: this.calorieLimit}, {date: "Friday", calories: this.calorieLimit}, {date: "Saturday", calories: this.calorieLimit}, {date: "Sunday", calories: this.calorieLimit}]
-            if (variable == "week"){
-                lineData = [{date: "Week 1", calories: this.calorieLimit}, {date: "Week 2", calories: this.calorieLimit}, {date: "Week 3", calories: this.calorieLimit}, {date: "Week 4", calories: this.calorieLimit}, {date: "Week 5", calories: this.calorieLimit}]
-            }
 
             g.append("line")
                 .attr("x1", 0)
@@ -279,6 +366,13 @@ export default {
                 .attr("y1", yScale(this.calorieLimit * scale))
                 .attr("y2", yScale(this.calorieLimit * scale))
                 .attr("stroke", "black")
+
+            g.append("text")
+                .attr("x", width - 10)
+                .attr("y", yScale(this.calorieLimit * scale) - 10)
+                .attr("text-anchor", "end")
+                .attr("style", "font-size: 15px; font-weight: bold")
+                .text("Max Calorie Intake: " +this.calorieLimit)
         }
 
     },
@@ -441,4 +535,5 @@ select.moreMinimal {
 .p-autocomplete-panel-custom {
     background-color: white;
 }
+
 </style>
