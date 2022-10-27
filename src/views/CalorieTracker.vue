@@ -119,42 +119,51 @@ export default {
             this.dailyCalorieIntake = dailyCalorieIntake
         },
         renderGraph(variable) {
-            var svg = d3.select("svg"),
+            console.log('renderGraph() called')
+            console.log("this is variable", variable)
+            var svg = d3.select("#dashboard"),
                 margin = 170,
                 width = svg.attr("width") - margin,
                 height = svg.attr("height") - margin
 
+            console.log("this is svg", svg)
             svg.append("text")
                 .attr("transform", "translate(100,0)")
                 .attr("x", 50)
                 .attr("y", 50)
                 .attr("style", "font-size:24px;")
+                .attr("id", "dashboardTitle")
                 .text("Calorie Tracker");
 
             var xScale = d3.scaleBand().range([0, width]).padding(0.4),
                 yScale = d3.scaleLinear().range([height, 0]);
 
+            // DOM manipulation to remove <g> tag if it already exists
+            if (document.getElementsByTagName("g").length >= 1) {
+                // console.log("this is getElementsByTagName", document.getElementsByTagName("g"))
+                document.getElementsByTagName("g")[0].remove()
+                document.getElementById("dashboardTitle").remove()
+            }
+
+            console.log("appending g")
             var g = svg.append("g")
                 .attr("transform", "translate(" + 100 + "," + 100 + ")");
 
-
-            // let data = this.userCaloriesData 
-            // console.log('this is my proxy', data)
-            // // data = toRaw(data)
-            // console.log("tis data type", typeof(data.__v_raw))  
-            // console.log('this is data.date', data.__v_raw['date']) 
-            // console.log('eeee') 
-            // for(ele of data){
-            //     console.log("eeee")
-            //     console.log("this is ele", ele)
-            // } 
-
-            let data = [
-                { date: "2022-10-22T15:54:45.173Z", calories: 2560 },
-                { date: "2022-10-23T14:42:57.815Z", calories: 350 },
-                { date: "2022-10-24T06:57:29.537Z", calories: 395 },
-            ]
-
+            // let data = [
+            //     { date: "2022-10-22T15:54:45.173Z", calories: 2560 },
+            //     { date: "2022-10-23T14:42:57.815Z", calories: 350 },
+            //     { date: "2022-10-24T06:57:29.537Z", calories: 395 },
+            // ]
+                
+            // let data = [] 
+            // for (let obj of this.userCaloriesData) {
+            //     console.log("this is my returned obj", obj)
+            //     data.push({
+            //         "date": obj.date,
+            //         "calories": obj.calories
+            //     })
+            // }
+            // console.log("this is converted data", data)
             let days = {
                 0: "Sunday",
                 1: "Monday",
@@ -179,18 +188,55 @@ export default {
                 11: "December"
             }
 
-            // console.log("tbis is my vairbale", variable)
-            // TODO: aggregate the values together when it is in the same month
-            // TODO: only get the 7 lastest entries to show in the graph
-            // TODO: After re-rendering the graph, make sure that the past bars get removed and that it doesnt just add on 
-            // TODO: make sure that the data fed to the graph is dynamic (change the hardcoded portions)
+            let data = this.userCaloriesData
+            let filteredData = [{date:"Sunday", calories: 0}, {date:"Monday", calories: 0}, {date:"Tuesday", calories: 0}, {date:"Wednesday", calories: 0}, {date:"Thursday", calories: 0}, {date:"Friday", calories: 0}, {date:"Saturday", calories: 0}]
             if (variable == "day") {
-                xScale.domain(data.map(function (d) { console.log("this is converted days", days[new Date(d.date).getDay()]); return days[new Date(d.date).getDay()] }));
-                yScale.domain([0, 4000]);
+                for (let obj of data) {
+                    // console.log("this is filtereddata day", days[new Date(obj.date).getDay()])
+                    for (let obj2 of filteredData) {
+                        if (days[new Date(obj.date).getDay()] == obj2.date) {
+                            obj2.calories += obj.calories
+                        }
+                    }
+                }
+            } else if (variable == "week") {
+                filteredData = [{date:"Week 1", calories: 0}, {date:"Week 2", calories: 0}, {date:"Week 3", calories: 0}, {date:"Week 4", calories: 0}, {date:"Week 5", calories: 0}]
+                for (let obj of data) {
+                    // console.log("this is filtereddata week", Math.ceil((new Date(obj.date).getDate() + 1) / 7))
+                    for (let obj2 of filteredData) {
+                        if (Math.ceil((new Date(obj.date).getDate() + 1) / 7) == obj2.date.slice(-1)) {
+                            obj2.calories += obj.calories
+                        }
+                    }
+                }
             } else {
-                xScale.domain(data.map(function (d) { console.log("this is converted months", days[new Date(d.date).getMonth()]); return months[new Date(d.date).getMonth()] }));
-                yScale.domain([0, 4000]);
+                filteredData = [{date: "January", calories: 0}, {date: "February", calories: 0}, {date: "March", calories: 0}, {date: "April", calories: 0}, {date: "May", calories: 0}, {date: "June", calories: 0}, {date: "July", calories: 0}, {date: "August", calories: 0}, {date: "September", calories: 0}, {date: "October", calories: 0}, {date: "November", calories: 0}, {date: "December", calories: 0}]
+                for (let obj of data) {
+                    // console.log("this is filtereddata day", months[new Date(obj.date).getMonth()])
+                    for (let obj2 of filteredData) {
+                        if (months[new Date(obj.date).getMonth()] == obj2.date) {
+                            obj2.calories += obj.calories
+                        }
+                    }
+                }
             }
+            console.log("this is filteredData", filteredData)
+
+            // TODO: only get the 7 lastest entries to show in the graph
+            // TODO: add a line for max calorie intake
+
+            let scale = 1
+            if (variable == "week"){
+                scale = 7
+            } else if (variable == "month") {
+                scale = 30
+            }
+
+            console.log("this is height", height)
+            xScale.domain(filteredData.map(function (d) { console.log("this is converted days", d.date); return d.date }));
+            let mult = Math.pow(10, 1 - Math.floor(Math.log(this.calorieLimit * scale) / Math.LN10) - 1);
+            let maxY = Math.ceil(this.calorieLimit * scale * mult) / mult
+            yScale.domain([0, maxY]);
 
             g.append("g")
                 .attr("transform", "translate(0," + height + ")")
@@ -207,32 +253,20 @@ export default {
                     .ticks(10))
                 .append("text")
                 .attr("transform", "rotate(-90)")
-                .attr("y", 6)
+                .attr("y", 1)
                 .attr("dy", "-5.1em")
                 .attr("text-anchor", "middle")
                 .attr("stroke", "black")
                 .text("Calories Consumed");
 
-            if (variable == "day") {
-                g.selectAll(".bar")
-                    .data(data)
-                    .enter().append("rect")
-                    .attr("style", "fill: steelblue")
-                    .attr("x", function (d) { return xScale(days[new Date(d.date).getDay()]); })
-                    .attr("y", function (d) { return yScale(d.calories); })
-                    .attr("width", xScale.bandwidth())
-                    .attr("height", function (d) { return height - yScale(d.calories); });
-            } else {
-                g.selectAll(".bar")
-                    .data(data)
-                    .enter().append("rect")
-                    .attr("style", "fill: steelblue")
-                    .attr("x", function (d) { return xScale(months[new Date(d.date).getMonth()]); })
-                    .attr("y", function (d) { return yScale(d.calories); })
-                    .attr("width", xScale.bandwidth())
-                    .attr("height", function (d) { return height - yScale(d.calories); });
-            }
-
+            g.selectAll(".bar")
+                .data(filteredData)
+                .enter().append("rect")
+                .attr("style", "fill: steelblue")
+                .attr("x", function (d) { return xScale(d.date); })
+                .attr("y", function (d) { return yScale(d.calories); })
+                .attr("width", xScale.bandwidth())
+                .attr("height", function (d) { return height - yScale(d.calories); });
         }
 
     },
@@ -248,12 +282,17 @@ export default {
             this.age = user.age;
 
             for (const property in user.calorieDetails) {
-                console.log("this is new obj created", { date: user.calorieDetails[property].date, calories: user.calorieDetails[property].dailyCalorieIntake })
-                this.userCaloriesData.push({ date: user.calorieDetails[property].date, calories: user.calorieDetails[property].dailyCalorieIntake })
+                // console.log("this is new obj created", { date: user.calorieDetails[property].date, calories: user.calorieDetails[property].dailyCalorieIntake})
+                this.userCaloriesData.push({ date: user.calorieDetails[property].date, calories: user.calorieDetails[property].dailyCalorieIntake})
             }
-        }),
+
+            // console.log("this is userCaloriesData", this.userCaloriesData)
+            // console.log(this.userCaloriesData[0])
+            // console.log(this.userCaloriesData[0].date)
+            // console.log(this.userCaloriesData[0].calories)
             this.renderGraph(this.xAxisVariable)
-    },
+        })
+    }
 }
 
 </script>
@@ -301,7 +340,7 @@ export default {
         <div style="border:1px solid black; width:70%" class="p-3 mx-auto">
             <!-- <plot :height="500" style="padding-left:50px" :data="userCaloriesData" /> -->
 
-            <svg width="800" height="600"></svg>
+            <svg width="950" height="600" id="dashboard"></svg>
 
             <div class="row d-flex justify-content-end mt-4">
                 <label for="colFormLabelSm" class="col-1 col-form-label col-form-label-sm"
