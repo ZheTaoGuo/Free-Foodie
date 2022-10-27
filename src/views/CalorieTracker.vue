@@ -222,7 +222,6 @@ export default {
             }
             console.log("this is filteredData", filteredData)
 
-            // TODO: only get the 7 lastest entries to show in the graph
             // TODO: add a line for max calorie intake
 
             let scale = 1
@@ -267,6 +266,19 @@ export default {
                 .attr("y", function (d) { return yScale(d.calories); })
                 .attr("width", xScale.bandwidth())
                 .attr("height", function (d) { return height - yScale(d.calories); });
+
+
+            let lineData = [{date: "Monday", calories: this.calorieLimit}, {date: "Tuesday", calories: this.calorieLimit}, {date: "Wednesday", calories: this.calorieLimit}, {date: "Thursday", calories: this.calorieLimit}, {date: "Friday", calories: this.calorieLimit}, {date: "Saturday", calories: this.calorieLimit}, {date: "Sunday", calories: this.calorieLimit}]
+            if (variable == "week"){
+                lineData = [{date: "Week 1", calories: this.calorieLimit}, {date: "Week 2", calories: this.calorieLimit}, {date: "Week 3", calories: this.calorieLimit}, {date: "Week 4", calories: this.calorieLimit}, {date: "Week 5", calories: this.calorieLimit}]
+            }
+
+            g.append("line")
+                .attr("x1", 0)
+                .attr("x2", width)
+                .attr("y1", yScale(this.calorieLimit * scale))
+                .attr("y2", yScale(this.calorieLimit * scale))
+                .attr("stroke", "black")
         }
 
     },
