@@ -8,14 +8,14 @@ import { initializeApp } from 'firebase/app';
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: process.env.VUE_APP_API_KEY,
-  authDomain: process.env.VUE_APP_AUTH_DOMAIN,
-  databaseURL: process.env.VUE_APP_DATABASE_URL,
-  projectId: process.env.VUE_APP_PROJECT_ID,
-  storageBucket: process.env.VUE_APP_STORAGE_BUCKET,
-  messagingSenderId: process.env.VUE_APP_MESSAGING_SENDER_ID,
-  appId: process.env.VUE_APP_ID,
-  measurementId: process.env.VUE_APP_MEASUREMENT_ID,
+    apiKey: process.env.VUE_APP_API_KEY,
+    authDomain: process.env.VUE_APP_AUTH_DOMAIN,
+    databaseURL: process.env.VUE_APP_DATABASE_URL,
+    projectId: process.env.VUE_APP_PROJECT_ID,
+    storageBucket: process.env.VUE_APP_STORAGE_BUCKET,
+    messagingSenderId: process.env.VUE_APP_MESSAGING_SENDER_ID,
+    appId: process.env.VUE_APP_ID,
+    measurementId: process.env.VUE_APP_MEASUREMENT_ID,
 };
 
 // Initialize Firebase
@@ -140,16 +140,16 @@ export const googlesignup = () => {
         }
         console.log(error);
     })
-    .catch(function (error) {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      if (errorCode === "auth/wrong-password") {
-        alert("Incorrect password!");
-      } else {
-        alert(errorMessage);
-      }
-      console.log(error);
-    });
+        .catch(function (error) {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            if (errorCode === "auth/wrong-password") {
+                alert("Incorrect password!");
+            } else {
+                alert(errorMessage);
+            }
+            console.log(error);
+        });
 };
 export const googlesignin = () => {
     var provider = new GoogleAuthProvider();
@@ -166,16 +166,16 @@ export const googlesignin = () => {
         }
         console.log(error);
     })
-    .catch(function (error) {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      if (errorCode === "auth/wrong-password") {
-        alert("Incorrect password!");
-      } else {
-        alert(errorMessage);
-      }
-      console.log(error);
-    });
+        .catch(function (error) {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            if (errorCode === "auth/wrong-password") {
+                alert("Incorrect password!");
+            } else {
+                alert(errorMessage);
+            }
+            console.log(error);
+        });
 };
 
 // Getting all the recipe from the DB for display in SearchRecipe.vue
@@ -198,72 +198,142 @@ export const getAll = () => {
     })
 }
 
-// getting list of recipeId from favourite table, using the recipeId => return a list of recipe objects
-export const getFavourite = (userid) => {
-  return new Promise((resolve, reject) => {
-    console.log("start promise");
-    var recipeFound = [];
-    var recipeIds = [];
-    getUser(userid)
-      .then((value) => {
-        recipeIds = value.FavouriteRecipes;
-        // console.log(recipeIds);
-        for (let id of recipeIds) {
-          // eslint-disable-next-line
-          const recipes = ref(db, "recipes");
-          onValue(recipes, (snapshot) => {
+// Search bar functionality for SearchRecipe. Looks through the recipe name and summary to see if the keyword is found
+export const searchContent = (phrase) => {
+    return new Promise((resolve, reject) => {
+        console.log('start promise');
+        var recipeFound = []
+        // eslint-disable-next-line
+        const recipes = ref(db, 'recipes');
+        onValue(recipes, (snapshot) => {
             const data = snapshot.val();
             for (const obj of data) {
-              // console.log(obj.id);
-              if (obj.recipeId == id) {
-                recipeFound.push(obj);
-              }
+                if (obj.recipeName.toLowerCase().includes(phrase) && !recipeFound.includes(obj)) {
+                    recipeFound.push(obj)
+                }
+                if (obj.summary.toLowerCase().includes(phrase) && !recipeFound.includes(obj)) {
+                    recipeFound.push(obj)
+                }
             }
-            // console.log(len);
-            return resolve(recipeFound);
-          });
-        }
-      })
-      .catch((message) => {
-        console.log(message);
-      });
-    console.log("end promises");
-    console.log("this is recipefound", recipeFound);
-  });
+            // console.log(recipeFound);
+            return resolve(recipeFound)
+        })
+        console.log('end promises');
+        console.log('this is recipefound', recipeFound);
+    })
+}
+
+// Search bar functionality for Fav/Past recipes. Looks through the recipe name and summary to see if the keyword is found
+export const searchFavPast = (userid, phrase, type) => {
+    return new Promise((resolve, reject) => {
+        console.log("start promise");
+        var recipeFound = [];
+        var recipeIds = [];
+        getUser(userid)
+            .then((value) => {
+                var location = ''
+                if (type == 'fav') {
+                    location = value.FavouriteRecipes
+                } else {
+                    location = value.PastRecipes
+                }
+                recipeIds = location;
+                // console.log(recipeIds);
+                for (let id of recipeIds) {
+                    // eslint-disable-next-line
+                    const recipes = ref(db, "recipes");
+                    onValue(recipes, (snapshot) => {
+                        const data = snapshot.val();
+                        for (const obj of data) {
+                            // console.log(obj.id);
+                            if (obj.recipeId == id) {
+                                if (obj.recipeName.toLowerCase().includes(phrase) && !recipeFound.includes(obj)) {
+                                    recipeFound.push(obj)
+                                }
+                                if (obj.summary.toLowerCase().includes(phrase) && !recipeFound.includes(obj)) {
+                                    recipeFound.push(obj)
+                                }
+                            }
+                        }
+                        // console.log(len);
+                        return resolve(recipeFound);
+                    });
+                }
+            })
+            .catch((message) => {
+                console.log(message);
+            });
+        console.log("end promises");
+        console.log("this is recipefound", recipeFound);
+    });
+}
+
+// getting list of recipeId from favourite table, using the recipeId => return a list of recipe objects
+export const getFavourite = (userid) => {
+    return new Promise((resolve, reject) => {
+        console.log("start promise");
+        var recipeFound = [];
+        var recipeIds = [];
+        getUser(userid)
+            .then((value) => {
+                recipeIds = value.FavouriteRecipes;
+                // console.log(recipeIds);
+                for (let id of recipeIds) {
+                    // eslint-disable-next-line
+                    const recipes = ref(db, "recipes");
+                    onValue(recipes, (snapshot) => {
+                        const data = snapshot.val();
+                        for (const obj of data) {
+                            // console.log(obj.id);
+                            if (obj.recipeId == id) {
+                                recipeFound.push(obj);
+                            }
+                        }
+                        // console.log(len);
+                        return resolve(recipeFound);
+                    });
+                }
+            })
+            .catch((message) => {
+                console.log(message);
+            });
+        console.log("end promises");
+        console.log("this is recipefound", recipeFound);
+    });
 };
 
 // getting list of recipeId from Past table, using the recipeId => return a list of recipe objects
 export const getPast = (userid) => {
-  return new Promise((resolve, reject) => {
-    console.log("start promise");
-    var recipeFound = [];
-    var recipeIds = [];
-    getUser(userid)
-      .then((value) => {
-        recipeIds = value.PastRecipes;
-        // console.log(recipeIds);
-        for (let id of recipeIds) {
-          // eslint-disable-next-line
-          const recipes = ref(db, "recipes");
-          onValue(recipes, (snapshot) => {
-            const data = snapshot.val();
-            for (const obj of data) {
-              // console.log(obj.id);
-              if (obj.recipeId == id) {
-                recipeFound.push(obj);
-              }
-            }
-            // console.log(len);
-            return resolve(recipeFound);
-          });
-        }
-      })
-      .catch((message) => {
-        console.log(message);
-      });
-    console.log("end promises");
-    console.log("this is recipefound", recipeFound);
-  });
+    return new Promise((resolve, reject) => {
+        console.log("start promise");
+        var recipeFound = [];
+        var recipeIds = [];
+        getUser(userid)
+            .then((value) => {
+                recipeIds = value.PastRecipes;
+                // console.log(recipeIds);
+                for (let id of recipeIds) {
+                    // eslint-disable-next-line
+                    const recipes = ref(db, "recipes");
+                    onValue(recipes, (snapshot) => {
+                        const data = snapshot.val();
+                        for (const obj of data) {
+                            // console.log(obj.id);
+                            if (obj.recipeId == id) {
+                                recipeFound.push(obj);
+                            }
+                        }
+                        // console.log(len);
+                        return resolve(recipeFound);
+                    });
+                }
+            })
+            .catch((message) => {
+                console.log(message);
+            });
+        console.log("end promises");
+        console.log("this is recipefound", recipeFound);
+    });
 };
 
 // Profile Functions
