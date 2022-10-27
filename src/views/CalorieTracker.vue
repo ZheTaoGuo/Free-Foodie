@@ -372,7 +372,7 @@ export default {
                 .attr("y", yScale(this.calorieLimit * scale) - 10)
                 .attr("text-anchor", "end")
                 .attr("style", "font-size: 15px; font-weight: bold")
-                .text("Max Calorie Intake: " +this.calorieLimit)
+                .text("Max Calorie Intake: " + Number(this.calorieLimit * scale).toFixed(2))
         }
 
     },
