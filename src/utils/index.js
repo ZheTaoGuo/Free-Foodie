@@ -622,7 +622,7 @@ export const getUser = (userId) => {
             console.log("this is data", data)
             for (let j = 0; j < data.length; j++) {
                 let obj = data[j]
-                console.log("this is obj", obj)
+                // console.log("this is obj", obj)
                 if (obj == undefined) {
                     continue
                 }
@@ -643,15 +643,38 @@ export const updateCalories = (userId, calorieConsumed, dailyCalorieIntake, calo
         console.log("Error. Please pass in userId")
         return
     }
-    return new Promise((resolve) => {
+    return new Promise( async (resolve) => {
         let date = new Date()
         let currDate = date.getDate() + " " + date.getMonth() + " " + date.getFullYear()
         console.log("this is current calories", dailyCalorieIntake)
-        update(ref(db, 'users/' + userId + "/calorieDetails/" + currDate), {
-            calorieLimit: calorieLimit,
-            date: date,
-            dailyCalorieIntake: calorieConsumed + dailyCalorieIntake,
+
+        const users = ref(db, 'users/' + userId + "/calorieDetails" + "/" + currDate);
+        await onValue(users, (snapshot) => {
+            const data = snapshot.val();
+            console.log("this is data1", data)
         });
+
+        console.log("this is currDate", currDate)
+        console.log("this is date", date)
+        await update(ref(db, 'users/' + userId + "/calorieDetails"), {
+            [currDate]:
+            {
+                calorieLimit: calorieLimit,
+                dailyCalorieIntake: calorieConsumed + dailyCalorieIntake,
+                date: date,
+            }
+        });
+        console.log("this shld be added obj", {
+            calorieLimit: calorieLimit,
+            dailyCalorieIntake: calorieConsumed + dailyCalorieIntake,
+            date: date,
+        })
+
+        await onValue(users, (snapshot) => {
+            const data = snapshot.val();
+            console.log("this is data2", data)
+        });
+
         return resolve(true)
     })
 };

@@ -7,7 +7,7 @@ import plot from "@/components/plotWithXandYaxis.vue";
 // import * as axios from "axios";
 import axios from 'axios'
 import AutoComplete from 'primevue/autocomplete';
-import Modal from "@/components/addFoodModal.vue";
+import Modal from "@/components/Modal.vue";
 import { ref, toRaw } from "vue";
 
 const userId = "1"   // TODO: obtained from cookies
@@ -48,6 +48,30 @@ export default {
     methods: {
         calculateCalories,
         getUser,
+        getUserDetails(userId){
+            this.getUser(userId).then((user) => {
+            this.height = user.height;
+            this.weight = user.weight;
+            this.activityFrequency = user.activityFrequency;
+            // console.log("this is userc calroei deiasl", user.calorieDetails[Object.keys(user.calorieDetails)[Object.keys(user.calorieDetails).length-1]])
+            this.calorieLimit = Number(user.calorieDetails[Object.keys(user.calorieDetails)[Object.keys(user.calorieDetails).length - 1]].calorieLimit).toFixed(2);
+            this.dailyCalorieIntake = user.calorieDetails[Object.keys(user.calorieDetails)[Object.keys(user.calorieDetails).length - 1]].dailyCalorieIntake;
+            this.gender = user.gender;
+            this.age = user.age;
+
+            this.userCaloriesData = [];
+            for (const property in user.calorieDetails) {
+                // console.log("this is new obj created", { date: user.calorieDetails[property].date, calories: user.calorieDetails[property].dailyCalorieIntake})
+                this.userCaloriesData.push({ date: user.calorieDetails[property].date, calories: user.calorieDetails[property].dailyCalorieIntake})
+            }
+            
+            console.log("this is userCaloriesData", this.userCaloriesData)
+            // console.log(this.userCaloriesData[0])
+            // console.log(this.userCaloriesData[0].date)
+            // console.log(this.userCaloriesData[0].calories)
+            this.renderGraph(this.xAxisVariable)
+            })
+        },
         showModal() {
             this.isCalorieSearchModalVisible = true;
         },
@@ -109,15 +133,19 @@ export default {
             let dailyCalorieIntake = this.dailyCalorieIntake
             let calorieLimit = Number(this.calorieLimit)
             console.log("this is failyCalorieIntake", dailyCalorieIntake)
-            await axios.request(options).then(function (response) {
+            await axios.request(options).then(response => {
                 console.log("this is response data", response.data);
                 let calorieDetails = response.data.hits[0].fields.nf_calories
-                updateCalories(userId, calorieDetails, dailyCalorieIntake, calorieLimit)
+                updateCalories(userId, calorieDetails, dailyCalorieIntake, calorieLimit).then(response => {
+                    console.log("this is response", response)
+                    // calling on the method getUserDetails 
+                    this.dailyCalorieIntake = dailyCalorieIntake
+                    this.getUserDetails(this.userId)
+                })
                 dailyCalorieIntake = calorieDetails + dailyCalorieIntake
             }).catch(function (error) {
                 console.error(error);
             });
-            this.dailyCalorieIntake = dailyCalorieIntake
         },
 
         //mouseover event handler function
@@ -138,7 +166,7 @@ export default {
             } else if (variable == "month") {
                 scale = 30
             }
-            xScale.domain(this.filteredData.map(function (d) { console.log("this is converted days", d.date); return d.date }));
+            xScale.domain(this.filteredData.map(function (d) { return d.date }));
             let mult = Math.pow(10, 1 - Math.floor(Math.log(this.calorieLimit * scale) / Math.LN10) - 1);
             let maxY = Math.ceil(this.calorieLimit * scale * mult) / mult
             yScale.domain([0, maxY]);
@@ -186,7 +214,7 @@ export default {
             } else if (variable == "month") {
                 scale = 30
             }
-            xScale.domain(this.filteredData.map(function (d) { console.log("this is converted days", d.date); return d.date }));
+            xScale.domain(this.filteredData.map(function (d) { return d.date }));
             let mult = Math.pow(10, 1 - Math.floor(Math.log(this.calorieLimit * scale) / Math.LN10) - 1);
             let maxY = Math.ceil(this.calorieLimit * scale * mult) / mult
             yScale.domain([0, maxY]);
@@ -212,7 +240,6 @@ export default {
                 width = svg.attr("width") - margin,
                 height = svg.attr("height") - margin
 
-            console.log("this is svg", svg)
             svg.append("text")
                 .attr("transform", "translate(100,0)")
                 .attr("x", 50)
@@ -231,7 +258,6 @@ export default {
                 document.getElementById("dashboardTitle").remove()
             }
 
-            console.log("appending g")
             var g = svg.append("g")
                 .attr("transform", "translate(" + 100 + "," + 100 + ")");
 
@@ -317,7 +343,7 @@ export default {
             }
 
             console.log("this is height", height)
-            xScale.domain(filteredData.map(function (d) { console.log("this is converted days", d.date); return d.date }));
+            xScale.domain(filteredData.map(function (d) { return d.date }));
             let mult = Math.pow(10, 1 - Math.floor(Math.log(this.calorieLimit * scale) / Math.LN10) - 1);
             let maxY = Math.ceil(this.calorieLimit * scale * mult) / mult
             yScale.domain([0, maxY]);
@@ -377,27 +403,7 @@ export default {
 
     },
     mounted() {
-        this.getUser(userId).then((user) => {
-            this.height = user.height;
-            this.weight = user.weight;
-            this.activityFrequency = user.activityFrequency;
-            // console.log("this is userc calroei deiasl", user.calorieDetails[Object.keys(user.calorieDetails)[Object.keys(user.calorieDetails).length-1]])
-            this.calorieLimit = Number(user.calorieDetails[Object.keys(user.calorieDetails)[Object.keys(user.calorieDetails).length - 1]].calorieLimit).toFixed(2);
-            this.dailyCalorieIntake = user.calorieDetails[Object.keys(user.calorieDetails)[Object.keys(user.calorieDetails).length - 1]].dailyCalorieIntake;
-            this.gender = user.gender;
-            this.age = user.age;
-
-            for (const property in user.calorieDetails) {
-                // console.log("this is new obj created", { date: user.calorieDetails[property].date, calories: user.calorieDetails[property].dailyCalorieIntake})
-                this.userCaloriesData.push({ date: user.calorieDetails[property].date, calories: user.calorieDetails[property].dailyCalorieIntake})
-            }
-
-            // console.log("this is userCaloriesData", this.userCaloriesData)
-            // console.log(this.userCaloriesData[0])
-            // console.log(this.userCaloriesData[0].date)
-            // console.log(this.userCaloriesData[0].calories)
-            this.renderGraph(this.xAxisVariable)
-        })
+        this.getUserDetails(this.userId)
     }
 }
 
