@@ -47,6 +47,12 @@ export default {
     },
     methods: {
         calculateCalories,
+        calculateCaloriesAndUpdate(userId, height, weight, activityFrequency, dailyCalorieIntake) {
+            this.calculateCalories(userId, height, weight, activityFrequency, dailyCalorieIntake).then(response => {
+                this.calorieLimit = response
+                this.renderGraph(this.xAxisVariable)
+            })
+        },
         getUser,
         getUserDetails(userId){
             this.getUser(userId).then((user) => {
@@ -193,7 +199,7 @@ export default {
                 return yScale(d.path[0]["__data__"].calories) - 12;
             })
             .text(function() {
-                return [d.path[0]["__data__"].calories];  // Value of the text
+                return [Number(d.path[0]["__data__"].calories).toFixed(2)];  // Value of the text
             });
         },
         //mouseout event handler function
@@ -493,7 +499,7 @@ export default {
             </div>
 
             <div class="btn btn-secondary col-1" style="height:10%"
-                v-on:click="calculateCalories(userId, height, weight, activityFrequency)">Calculate</div>
+                v-on:click="calculateCaloriesAndUpdate(userId, height, weight, activityFrequency, dailyCalorieIntake)">Calculate</div>
         </div>
 
         <!-- personal details -->

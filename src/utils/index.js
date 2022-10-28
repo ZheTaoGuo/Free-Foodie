@@ -546,63 +546,70 @@ export const addFamilyMember = (userId, userName, familyId) => {
 }
 
 // updating the fields of the user (height, weight, activityFrequency)
-export const calculateCalories = (userId, height, weight, activityFrequency) => {
+export const calculateCalories = (userId, height, weight, activityFrequency, dailyCalorieIntake) => {
     console.log("calculateCalories is called")
     if (userId == undefined || height == undefined || weight == undefined || activityFrequency == undefined) {
         console.log("Error. Please pass in userId, height, weight and activityFrequency")
         return
     }
-    // getting the gender of the user
-    let gender = "";
-    let age = 0;
-    onValue(ref(db, 'users/' + userId), (snapshot) => {
-        const data = snapshot.val();
-        if (data == null) {
-            console.log("user not found")
-            return
+
+    if (dailyCalorieIntake == undefined) {
+        dailyCalorieIntake = 0
+    }
+    
+    return new Promise((resolve) => {
+        // getting the gender of the user
+        let gender = "";
+        let age = 0;
+        onValue(ref(db, 'users/' + userId), (snapshot) => {
+            const data = snapshot.val();
+            if (data == null) {
+                console.log("user not found")
+                return
+            }
+            console.log("this is data", data)
+            gender = data.gender
+            age = data.age
+        })
+        // calculating the calorie limit
+        let calorieLimit = 0
+        let BMR = 0
+        if (gender == "male") {
+            BMR = 66.5 + (13.75 * weight) + (5.003 * height) - (6.75 * age)
+        } else {
+            BMR = 655.1 + (9.563 * weight) + (1.85 * height) - (4.676 * age)
         }
-        console.log("this is data", data)
-        gender = data.gender
-        age = data.age
+        console.log('this is activity frequency', activityFrequency)
+        if (activityFrequency == "Little to no exercise") {
+            calorieLimit = BMR * 1.2
+        } else if (activityFrequency == "Exercise 1-3 days/week") {
+            calorieLimit = BMR * 1.375
+        } else if (activityFrequency == "Exercise 3-5 days/week") {
+            calorieLimit = BMR * 1.55
+        } else if (activityFrequency == "Exercise 6-7 days/week") {
+            calorieLimit = BMR * 1.725
+        } else if (activityFrequency == "Hard exercise 6-7 days/week") {
+            calorieLimit = BMR * 1.9
+        }
+        console.log("this is calorie limit", calorieLimit)
+        update(ref(db, 'users/' + userId), {
+            height: height,
+            weight: weight,
+            activityFrequency: activityFrequency
+        });
+        let date = new Date()
+        let currDate = date.getDate() + " " + date.getMonth() + " " + date.getFullYear()
+        console.log("this is currDate", currDate)
+        update(ref(db, 'users/' + userId + "/calorieDetails"), {
+            [currDate]:
+            {
+                date: date,
+                dailyCalorieIntake: dailyCalorieIntake,
+                calorieLimit: calorieLimit,
+            }
+        });
+        resolve(calorieLimit)
     })
-    // calculating the calorie limit
-    let calorieLimit = 0
-    let BMR = 0
-    if (gender == "male") {
-        BMR = 66.5 + (13.75 * weight) + (5.003 * height) - (6.75 * age)
-    } else {
-        BMR = 655.1 + (9.563 * weight) + (1.85 * height) - (4.676 * age)
-    }
-    console.log('this is activity frequency', activityFrequency)
-    if (activityFrequency == "Little to no exercise") {
-        calorieLimit = BMR * 1.2
-    } else if (activityFrequency == "Exercise 1-3 days/week") {
-        calorieLimit = BMR * 1.375
-    } else if (activityFrequency == "Exercise 3-5 days/week") {
-        calorieLimit = BMR * 1.55
-    } else if (activityFrequency == "Exercise 6-7 days/week") {
-        calorieLimit = BMR * 1.725
-    } else if (activityFrequency == "Hard exercise 6-7 days/week") {
-        calorieLimit = BMR * 1.9
-    }
-    console.log("this is calorie limit", calorieLimit)
-    update(ref(db, 'users/' + userId), {
-        height: height,
-        weight: weight,
-        activityFrequency: activityFrequency
-    });
-    let date = new Date()
-    let currDate = date.getDate() + " " + date.getMonth() + " " + date.getFullYear()
-    console.log("this is currDate", currDate)
-    update(ref(db, 'users/' + userId + "/calorieDetails"), {
-        [currDate]:
-        {
-            date: date,
-            dailyCalorieIntake: 0,
-            calorieLimit: calorieLimit,
-        }
-    });
-    return calorieLimit
 }
 
 // retreiving the user's details
@@ -648,14 +655,6 @@ export const updateCalories = (userId, calorieConsumed, dailyCalorieIntake, calo
         let currDate = date.getDate() + " " + date.getMonth() + " " + date.getFullYear()
         console.log("this is current calories", dailyCalorieIntake)
 
-        const users = ref(db, 'users/' + userId + "/calorieDetails" + "/" + currDate);
-        await onValue(users, (snapshot) => {
-            const data = snapshot.val();
-            console.log("this is data1", data)
-        });
-
-        console.log("this is currDate", currDate)
-        console.log("this is date", date)
         await update(ref(db, 'users/' + userId + "/calorieDetails"), {
             [currDate]:
             {
@@ -664,17 +663,6 @@ export const updateCalories = (userId, calorieConsumed, dailyCalorieIntake, calo
                 date: date,
             }
         });
-        console.log("this shld be added obj", {
-            calorieLimit: calorieLimit,
-            dailyCalorieIntake: calorieConsumed + dailyCalorieIntake,
-            date: date,
-        })
-
-        await onValue(users, (snapshot) => {
-            const data = snapshot.val();
-            console.log("this is data2", data)
-        });
-
         return resolve(true)
     })
 };
