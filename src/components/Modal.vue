@@ -3,7 +3,6 @@
       <div v-show="modalActive" class="modal">
         <transition name="modal-animation-inner">
           <div v-show="modalActive" class="modal-inner">
-            <i @click="close" class="far fa-times-circle"></i>
             <!-- Modal Content -->
             <slot />
             <button @click="close" type="button">Close</button>
