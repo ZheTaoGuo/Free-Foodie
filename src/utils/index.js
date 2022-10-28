@@ -1,6 +1,7 @@
 import { getDatabase, ref, onValue, set, update } from "firebase/database";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth'
 import { initializeApp } from 'firebase/app';
+import router from "@/router";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -66,6 +67,7 @@ export const register = () => {
                 activityFrequency: "",
                 calorieDetails: []
             });
+            router.push('/')
         }).catch(function (error) {
             // Handle Errors here.
             var errorCode = error.code;
@@ -95,6 +97,7 @@ export const signin = () => {
     signInWithEmailAndPassword(getAuth(), email, password)
         .then(() => {
             console.log("Successfully signed in")
+            router.push('/')
         })
 
         .catch(function (error) {
@@ -130,6 +133,7 @@ export const googlesignup = () => {
             activityFrequency: "",
             calorieDetails: []
         });
+        router.push('/')
     }).catch(function (error) {
         var errorCode = error.code;
         var errorMessage = error.message;
@@ -156,6 +160,7 @@ export const googlesignin = () => {
     signInWithPopup(getAuth(), provider).then(function (result) {
         // console.log(result.user);
         console.log(getAuth().currentUser.uid)
+        router.push('/')
     }).catch(function (error) {
         var errorCode = error.code;
         var errorMessage = error.message;

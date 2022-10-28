@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-md navbar-light bg-light" >
+  <nav class="navbar navbar-expand-md navbar-light bg-light" style="display: flex; background-color: #187bcd;">
     <div class="container-fluid" style="display: flex; background-color: #187bcd;">
       <a class="navbar-brand" href="#">
         <img src="../assets/fflogo.png" height="70px">
@@ -10,29 +10,18 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mx-auto" style="justify-content: center ;">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Recipes</a>
+            <!-- <router-link to="/recipe"></router-link> -->
+            <a class="nav-link active" aria-current="page" href="/recipe">Recipes</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">My Fridge</a>
+            <!-- <router-link to="/"> -->
+              <a class="nav-link active" href="#">My Fridge</a>
+            <!-- </router-link> -->
           </li>
-          <!-- <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Dropdown
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
-          </li> -->
-          <!-- <li class="nav-item">
-            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-          </li> -->
         </ul>
         
-        <div class="d-flex">
-          <div class="row me-2">
+        <div class="d-flex justify-content-center">
+          <div class="row">
             <div class="col-4">
             </div>
             <div class="col">
