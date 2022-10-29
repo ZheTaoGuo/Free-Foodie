@@ -8,13 +8,13 @@
     <div class="row" id="carouselStyle">
       <div id="foodcarousel" class="carousel slide" data-bs-ride="carousel" style="height:90%">
         <div class="carousel-inner text-center">
-          <div class="carousel-item active h-100" data-bs-interval="3000">
+          <div class="carousel-item active" data-bs-interval="3000">
             <img src="../assets/backgroundpicture1.jpg" class="d-block w-100">
           </div>
-          <div class="carousel-item h-100" data-bs-interval="3000">
+          <div class="carousel-item" data-bs-interval="3000">
             <img src="../assets/backgroundpicture2.jpg" class="d-block w-100">
           </div>
-          <div class="carousel-item h-100" data-bs-interval="3000">
+          <div class="carousel-item" data-bs-interval="3000">
             <img src="../assets/backgroundpicture3.jpg" class="d-block w-100">
           </div>
         </div>
@@ -28,31 +28,28 @@
 
     </div>
     <div class="row">
-      <div class="section-header text-center mx-auto mb-5">
-        <h1 class="display-5 mb-3" id="sectiontitle">How It Works</h1>
+      <div class="section-header text-center mx-auto mb-1">
+        <h1 class="display-4 mb-3" id="sectiontitle">How It Works</h1>
       </div>
     </div>
 
     <div class="row g-4" id="works">
       <div class="col-lg-4 col-md-6">
         <div class="text-center p-2 p-xl-5">
-          <div class="circle-number">1</div>
-          <img class="img-fluid mb-4 circleimg" src="../assets/foodbowl.jpg" />
-          <h2 class="text-white individualtitle">Choose your favourite meals</h2>
+          <img class="img-fluid mb-5 circleimg" src="../assets/roundimage1.jpeg" />
+          <h2 class="text-white individualtitle">Manage your existing ingredients on the go</h2>
         </div>
       </div>
       <div class="col-lg-4 col-md-6">
         <div class="text-center p-2 p-xl-5">
-          <div class="circle-number">2</div>
-          <img class="img-fluid mb-4 circleimg " src="../assets/foodbowl.jpg" />
-          <h2 class="text-white individualtitle">We deliver fresh Ingredients</h2>
+          <img class="img-fluid mb-5 circleimg " src="../assets/roundimage2.jpg" />
+          <h2 class="text-white individualtitle">We show the best recipes for what you have on hand</h2>
         </div>
       </div>
       <div class="col-lg-4 col-md-6">
         <div class="text-center p-2 p-xl-5">
-          <div class="circle-number">3</div>
-          <img class="img-fluid mb-4 circleimg " src="../assets/foodbowl.jpg" />
-          <h2 class="text-white individualtitle">Prepare and enjoy!</h2>
+          <img class="img-fluid mb-5 circleimg " src="../assets/roundimage3.jpg" />
+          <h2 class="text-white individualtitle">Buy missing ingredients, select a recipe and enjoy!</h2>
         </div>
       </div>
 
@@ -114,7 +111,6 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 * {
-  font-family: Playfair;
   margin: 0;
   padding: 0;
 }
@@ -132,8 +128,9 @@ export default {
 .title {
   font-weight: bold;
   color: black;
-  background: rgba(255, 255, 255, 0.75);
-  padding: 20px;
+  background: rgba(255, 255, 255, 0.5);
+  padding: 10px;
+  border-radius: 10px;
   margin-bottom: 10px;
 }
 
@@ -167,11 +164,12 @@ export default {
 }
 
 .individualtitle {
+  font-size: 1.5rem;
   margin: 0 auto;
-  background-color: green;
+  background-color: rgba(0, 128, 0, 0.282);
   border-radius: 10px;
-  width: 450px;
-  height: 80px;
+  width: 80%;
+  /* height: 80px; */
   padding: 20px;
 
 }
