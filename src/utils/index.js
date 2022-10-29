@@ -627,9 +627,9 @@ export const getUser = (userId) => {
                 return reject("no user found")
             }
             console.log("this is data", data)
-            for (let j = 0; j < data.length; j++) {
-                let obj = data[j]
-                // console.log("this is obj", obj)
+            for (const content in data) {
+                let obj = data[content]
+                console.log("this is obj", obj)
                 if (obj == undefined) {
                     continue
                 }
