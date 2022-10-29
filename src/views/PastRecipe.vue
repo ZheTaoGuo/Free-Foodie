@@ -31,6 +31,7 @@
             console.log('start mounted');
             this.getPastRecipe()
             console.log('end mounted');
+            
         }
     }
 </script>
