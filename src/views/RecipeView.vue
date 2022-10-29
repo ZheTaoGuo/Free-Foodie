@@ -84,17 +84,17 @@
                 </div>
             </div>
             <div class="col-9 position-relative">
-                <div class="tab-content position-sticky top-0" id="v-pills-tabContent" style="overflow-y: auto; max-height: 100vh;">
+                <div class="tab-content position-sticky top-0 bg-secondary" id="v-pills-tabContent" style="overflow-y: auto; max-height: 100vh;">
                     <!-- eslint-disable-next-line -->
                     <div v-for="recipe of recipes" class="tab-pane fade" 
                         :class="{active: recipe['recipeId'] == selectedRecipe, show: recipe['recipeId'] == selectedRecipe}"
                         :id="'v-settings'+recipe['recipeId']" role="tabpanel" :aria-labelledby="'recipe'+recipe['recipeId']"
                         tabindex="0">
-                        <div class="container-fluid bg-secondary">
+                        <div class="container-fluid mt-3">
                             <div :style="{ background: 'url(' + recipe['image'] + ') no-repeat', backgroundSize: 'cover', backgroundPosition: 'center', height:'35vh'}">
-                                <div style="background-color: rgba(0, 0, 0, 0.6); height:inherit">
+                                <div style="background-color: rgba(0, 0, 0, 0.5); height:inherit">
                                     <div class="d-flex justify-content-center align-items-center mt-2 p-5 text-white rounded" style="height:inherit">
-                                        <h1>{{recipe['recipeName']}}</h1>
+                                        <h1 style="font-weight: 800; text-shadow: 2px 2px rgba(0, 0, 0, 0.7)" >{{recipe['recipeName']}}</h1>
                                     </div>
                                 </div>
                             </div>

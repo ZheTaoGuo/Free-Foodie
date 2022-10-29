@@ -127,8 +127,9 @@ export default {
 
 .title {
   font-weight: bold;
-  color: black;
-  background: rgba(255, 255, 255, 0.5);
+  text-shadow: 2px 2.5px rgba(0, 0, 0, 0.8);
+  color: rgb(255, 255, 255);
+  /* background: rgba(255, 255, 255, 0.5); */
   padding: 10px;
   border-radius: 10px;
   margin-bottom: 10px;
