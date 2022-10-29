@@ -3,7 +3,7 @@
     import NavBar from '../components/Navbar.vue'
     import { getFavourite, searchFavPast } from '../utils'
 
-    const USERID = 1
+const USERID = 1
 
     export default {
         components: {
@@ -69,8 +69,9 @@
         <div class="row" v-if="recipeFiltered.length == 0">
             <!--Start of Recipe-->
             <!-- eslint-disable-next-line -->
-            <Card v-for="recipe of recipes" :page="'favourite'" :image_url="recipe['image']" :recipeId="recipe['recipeId']" :name="recipe['recipeName']"
-                :duration="recipe['duration']" :desc="recipe['summary'].slice(0, 150)+'...'"></Card>
+            <Card v-for="recipe of recipes" :page="'favourite'" :image_url="recipe['image']"
+                :recipeId="recipe['recipeId']" :name="recipe['recipeName']" :duration="recipe['duration']"
+                :desc="recipe['summary'].slice(0, 150) + '...'"></Card>
             <!-- <Card :image_url="'tester'" :name="'fake'"></Card> -->
             <!-- End of Recipe -->
         </div>

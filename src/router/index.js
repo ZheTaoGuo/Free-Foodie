@@ -5,8 +5,6 @@ import FridgeView from '../views/FridgeView.vue'
 import HomePage from '../views/HomePage.vue'
 import Login from '../views/Login.vue'
 import ShoppingList from '../views/ShoppingList.vue'
-import FridgeModal from '../components/FridgeModal.vue'
-
 
 const routes = [
     {
@@ -15,7 +13,7 @@ const routes = [
         component: HomePage
     },
     {
-        path: '/fridgefinal',
+        path: '/fridge',
         name: 'Fridge',
         component: FridgeView
     },

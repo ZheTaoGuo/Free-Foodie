@@ -33,19 +33,50 @@ export default {
 <style scoped>
 .tabs{
   margin-left: 20px;
-  /* max-width: 400px; */
+  margin-right: 20px;
+  width: auto;
   left: 0;
 }
 
 .tabs-header{
+  width: auto;
   margin-bottom: 10px;
   list-style: none;
   padding: 0;
   display: flex;
   justify-content: flex-start;
-
+  
 }
 
+@media only screen and (max-width: 1023px){
+
+  .tabs{
+    width: auto;
+  }
+  .tabs-header{
+    width: auto;
+  }
+}
+
+@media only screen and (max-width: 767px){
+
+  .tabs{
+    width: auto;
+  }
+  .tabs-header{
+    width: auto;
+  }
+}
+
+@media only screen and (max-width: 480px){
+
+  .tabs{
+    width: auto;
+  }
+  .tabs-header{
+    width: auto;
+  }
+}
 .tabs-header li{
   height: 50px;
   width: 150px;

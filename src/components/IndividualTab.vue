@@ -26,7 +26,7 @@ export default {
         left: 50%;
         top: 50%;
         width: 100%;
-        min-height: 500px;
+        height: 500px;
         border-radius: 10px;
         box-shadow: 0 3px 5px 5px rgba(0,0,0,0.05);
         
