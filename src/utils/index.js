@@ -27,7 +27,6 @@ const db = getDatabase(app);
 export const getLoggedInUser = () => {
     var currentUser = getAuth().currentUser
     var userId = currentUser.uid;
-    //To-do: add username, get this info from db
     var user = ref(db, 'users/' + userId);
     onValue(user, (snapshot) => {
         const data = snapshot.val();

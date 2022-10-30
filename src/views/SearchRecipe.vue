@@ -74,17 +74,15 @@
 </script>
 
 <template>
-    <div class="container-fluid">
-        <div class="row">
-            <!--Start of NavBar-->
-            <NavBar class="p-0"></NavBar>
-            <!--End of NavBar-->
-        </div>
+    <!--Start of NavBar-->
+    <NavBar></NavBar>
+    <!--End of NavBar-->
+    <div class="container">
         <div class="row">
             <!--Start of Search Bar-->
             <div class="col">
                 <div class="search">
-                    <nav class="navbar bg-light">
+                    <nav class="navbar">
                         <div class="d-flex my-3 my-lg-2 w-75 mx-auto">
                             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" v-model="searchPhrase">
                             <button class="btn btn-outline-success my-2 my-sm-0" type="submit" @click="getAllSearchResult()">Search</button>
