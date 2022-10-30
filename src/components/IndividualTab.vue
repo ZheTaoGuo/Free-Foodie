@@ -1,5 +1,5 @@
 <template>
-    <div class="tab-content" v-show="title == selectedTitle">
+    <div class="container tab-content" v-show="title == selectedTitle">
         <slot/>
     </div>
 
@@ -26,7 +26,7 @@ export default {
         left: 50%;
         top: 50%;
         width: 100%;
-        height: 500px;
+        height: 100%;
         border-radius: 10px;
         box-shadow: 0 3px 5px 5px rgba(0,0,0,0.05);
         

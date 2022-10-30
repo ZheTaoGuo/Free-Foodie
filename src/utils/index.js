@@ -430,22 +430,6 @@ async function getIndex(table) {
   return indexPromise;
 }
 
-async function geIndex(table) {
-  const specificTable = ref(db, table + "/");
-  let index = 0;
-  let indexPromise = onValue(specificTable, (snapshot) => {
-    const data = snapshot.val();
-    if (data == null) {
-      index = 0;
-    } else {
-      index = Object.keys(data).length;
-    }
-    console.log("this is data", data);
-    console.log("this is userid", index);
-    resolve(index);
-  });
-  return indexPromise;
-}
 
 // creating a new user account
 export const createUser = (username, email, password) => {

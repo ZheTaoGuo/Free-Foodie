@@ -1,6 +1,7 @@
 <template>
-  <div class="tabs">
-    <ul class="tabs-header">
+  <div class="container tabs">
+    <div class="row">
+      <ul class="tabs-header">
       <li
         v-for="title in tabTitlesSlot"
         :key="title"
@@ -9,7 +10,9 @@
       >
         {{title}}
       </li>
-    </ul>
+      </ul>
+    </div>
+
     <slot />
   </div>
 </template>
@@ -35,7 +38,6 @@ export default {
   margin-left: 20px;
   margin-right: 20px;
   width: auto;
-  left: 0;
 }
 
 .tabs-header{

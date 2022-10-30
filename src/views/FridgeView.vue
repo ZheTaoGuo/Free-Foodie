@@ -2,7 +2,7 @@
   <TabsWrapper>
 
     <IndividualTab title="All" id="all">
-      <div class="container">
+
         <div class="row">
           <div class="col-2 col-sm-4 card" v-for="item in this.items">
             <div class="card-body">
@@ -14,7 +14,7 @@
             </div>
           </div>
         </div>
-      </div>
+
 
 
     </IndividualTab>
