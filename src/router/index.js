@@ -5,6 +5,7 @@ import FridgeView from '../views/FridgeView.vue'
 import HomePage from '../views/HomePage.vue'
 import Login from '../views/Login.vue'
 import ShoppingList from '../views/ShoppingList.vue'
+import Signup from '../views/Signup.vue'
 
 const routes = [
     {
