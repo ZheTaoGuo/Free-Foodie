@@ -3,6 +3,7 @@
     import { createUser, getFamily, createFamily, addFamilyMember, getUser } from '../utils'
     import * as d3 from "d3";
     // import plot from "@/components/plotWithXandYaxis.vue";
+    import NavBar from '../components/Navbar.vue'
 
     const userId = "1"   // TODO: obtained from cookies
     const userName = "bob"   // TODO: obtained from cookies
@@ -10,6 +11,7 @@
     export default {
         components: {
             RouterLink,
+            NavBar
         },
         data() {
             return {
@@ -125,6 +127,9 @@
 </script>
 
 <template>
+    <!--Start of NavBar-->
+    <NavBar></NavBar>
+    <!--End of NavBar-->
     <div class="mainContent">
         <div class="row">
             <div class="col-lg-4 col-md-12">
@@ -196,7 +201,7 @@
                 </div>
 
                 <div class="d-flex justify-content-center" style="padding:20px">
-                    <svg width="900" height="400" id="dashboard"></svg>
+                    <svg width="800" height="400" id="dashboard"></svg>
                 </div>
             </router-link>
             </div>
@@ -208,11 +213,12 @@
 <style scoped>
     .mainContent {
         height: 100vh;
-        padding: 70px
+        padding: 20px 70px;
+        background-color: lightgrey;
     }
 
     .familyMembers {
-        background-color: lightgrey;
+        background-color: white;
         border-radius: 10px;
         height: 400px;
         width: 100%;
@@ -220,7 +226,7 @@
     }
 
     .pastRecipies, .favoriteRecipies{
-        background-color: lightgrey;
+        background-color: white;
         margin-top: 10px;
         height: 60px;
         width: 100%;
@@ -240,7 +246,7 @@
     }
 
     .calorieTracker {
-        background-color: lightgrey;
+        background-color: white;
         border-radius: 10px;
         text-align: start;
         width: 100%;
