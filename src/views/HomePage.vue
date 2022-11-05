@@ -117,24 +117,16 @@ export default {
 }
 
 .btnstyle {
-  font-size: 1.5em;
   margin-top: 5px;
   width: 10em;
   display: flex;
   justify-content: center;
   margin: auto;
-  background-color: #00D1B2;
-  border-color: #00D1B2;
 }
 
-.btnstyle:hover{
-  background-color: #00D1B2;
-  border-color: #00D1B2;
-}
 
 
 .title {
-  font-size: 3em;
   font-weight: bold;
   text-shadow: 2px 2.5px rgba(0, 0, 0, 0.8);
   color: rgb(255, 255, 255);
@@ -181,13 +173,6 @@ export default {
   width: 80%;
   /* height: 80px; */
   padding: 20px;
-
-}
-
-.circleimg:hover{
-  box-shadow: 10px 5px 5px green;
-  position: relative;
-  right: 10px;
 
 }
 

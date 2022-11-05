@@ -1,25 +1,20 @@
 <template>
-  <div class="container-fluid tabs">
-    <div class="row tabs-header">
-      <div class="col" v-for="title in tabTitlesSlot"
-        :key="title"
-        :class="{ selected: title == selectedTitle }"
-        @click="selectedTitle = title">
-        {{title}}
-
-      </div>
-      <!-- <ul class="tabs-header"> -->
-        
-      <!-- <li
+  <div class="container tabs">
+    <div class="row">
+      <ul class="tabs-header">
+      <li
         v-for="title in tabTitlesSlot"
         :key="title"
         :class="{ selected: title == selectedTitle }"
         @click="selectedTitle = title"
-      > -->
-      </div>
-      <slot />
+      >
+        {{title}}
+      </li>
+      </ul>
     </div>
 
+    <slot />
+  </div>
 </template>
 
 <script>
@@ -40,7 +35,8 @@ export default {
 </script>
 <style scoped>
 .tabs{
-  margin: auto;
+  margin-left: 20px;
+  margin-right: 20px;
   width: auto;
 }
 

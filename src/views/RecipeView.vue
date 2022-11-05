@@ -106,7 +106,7 @@
             <div class="col-3">
                 <div class="nav nav-pills flex-column me-3" id="v-tab" role="tablist" aria-orientation="vertical">
                     <!-- eslint-disable-next-line -->
-                    <button v-for="recipe of recipes" class="nav-link border p-4 my-2 receipe-button"
+                    <button v-for="recipe of recipes" class="nav-link border p-4 my-2"
                         :class="{active: recipe['recipeId'] == selectedRecipe}" id="v-settings-tab" data-bs-toggle="pill"
                         :data-bs-target="'#v-settings'+recipe['recipeId']" type="button" role="tab" aria-controls="v-settings"
                         :aria-selected="recipe['recipeId'] == selectedRecipe">{{recipe['recipeName']}}
@@ -114,34 +114,34 @@
                 </div>
             </div>
             <div class="col-9 position-relative">
-                <div class="tab-content position-sticky top-0 background-style" id="v-pills-tabContent" style="overflow-y: auto; max-height: 100vh;">
+                <div class="tab-content position-sticky top-0 bg-secondary" id="v-pills-tabContent" style="overflow-y: auto; max-height: 100vh;">
                     <!-- eslint-disable-next-line -->
                     <div v-for="recipe of recipes" class="tab-pane fade" 
                         :class="{active: recipe['recipeId'] == selectedRecipe, show: recipe['recipeId'] == selectedRecipe}"
                         :id="'v-settings'+recipe['recipeId']" role="tabpanel" :aria-labelledby="'recipe'+recipe['recipeId']"
                         tabindex="0">
-                        <div class="container-fluid mt-3 px-4">
-                            <div class="image-style" :style="{ background: 'url(' + recipe['image'] + ') no-repeat', backgroundSize: 'cover', backgroundPosition: 'center', height:'35vh'}">
-                                <div class="image-style" style="background-color: rgba(0, 0, 0, 0.5); height:inherit">
+                        <div class="container-fluid mt-3">
+                            <div :style="{ background: 'url(' + recipe['image'] + ') no-repeat', backgroundSize: 'cover', backgroundPosition: 'center', height:'35vh'}">
+                                <div style="background-color: rgba(0, 0, 0, 0.5); height:inherit">
                                     <div class="d-flex justify-content-center align-items-center mt-2 p-5 text-white rounded" style="height:inherit">
                                         <h1 style="font-weight: 800; text-shadow: 2px 2px rgba(0, 0, 0, 0.7)" >{{recipe['recipeName']}}</h1>
                                     </div>
                                 </div>
                             </div>
-                       
+                            <hr>
                             <div class="p-3 text-white rounded">
-                                <h2 class="instructions-style">Instructions</h2>
+                                <h2>Instructions</h2>
                             </div>
                             <Instruction :name="recipe['recipeName']" :recipeId="recipe['recipeId']" :instructions="recipe['instructions'][0]['steps']"></Instruction>
-            
+                            <hr>
                             <div class="p-3 text-white rounded">
-                                <h2 class="instructions-style">Ingredients</h2>
+                                <h2>Ingredients</h2>
                             </div>
                             <Ingredient :name="recipe['recipeName']" :recipeId="recipe['recipeId']" :ingredients="recipe['ingredientDetails']" 
                                 :fridge="fridgeContent" @missing="getMissing"></Ingredient>
                             <hr>
-                            <button class="btn btn-secondary me-2" v-show="queryType !== 'favourite' && queryType !== 'past'">Favourite</button>
-                            <button class="btn btn-secondary" v-show="queryType !== 'favourite' && queryType !== 'past'">Use this recipe</button>
+                            <button class="btn btn-secondary" v-show="queryType !== 'favourite' && queryType !== 'past'" @click="addToFav()">Favourite</button>
+                            <button class="btn btn-secondary" v-show="queryType !== 'favourite' && queryType !== 'past'" @click="callAddToMissing(recipe['recipeId'])">Use this recipe</button>
                             <hr>
                         </div>
                     </div>
@@ -151,41 +151,6 @@
     </div>
 </template>
 
-<style scoped>
-*{
-    font-family:sans-serif;
-}
+<style>
 
-.background-style{
-    background-color: #2E3440;
-}
-
-.image-style{
-    border-radius: 20px;
-}
-
-.instructions-style{
-    font-weight: 600;
-}
-.receipe-button{
-    background-color: #00D1B2!important;
-    border-color: #00D1B2!important;
-    color: white;
-    font-size: 1em;
-    font-weight: 500;
-}
-.receipe-button:hover{
-    box-shadow: 3px 3px 7px #00D1B2!important;
-    background-color: white!important;
-    border-color: #00D1B2!important;
-    color: #00D1B2!important;
-}
-
-.receipe-button.active{
-    box-shadow: 3px 3px 7px #00D1B2!important;
-    background-color: white!important;
-    border-color: #00D1B2!important;
-    color: #00D1B2!important;
-
-}
 </style>
