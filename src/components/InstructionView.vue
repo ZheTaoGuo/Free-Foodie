@@ -27,6 +27,9 @@
     </ul>
 </template>
 
-<style>
-    
+<style scoped>
+
+.instruction-style{
+    font-size: 1.5em;
+}
 </style>

@@ -42,42 +42,6 @@ export default {
 
 .tabs-header{
   width: auto;
-  margin-bottom: 10px;
-  list-style: none;
-  padding: 0;
-  display: flex;
-  justify-content: flex-start;
-  
-}
-
-@media only screen and (max-width: 1023px){
-
-  .tabs{
-    width: auto;
-  }
-  .tabs-header{
-    width: auto;
-  }
-}
-
-@media only screen and (max-width: 767px){
-
-  .tabs{
-    width: auto;
-  }
-  .tabs-header{
-    width: auto;
-  }
-}
-
-@media only screen and (max-width: 480px){
-
-  .tabs{
-    width: auto;
-  }
-  .tabs-header{
-    width: auto;
-  }
 }
 .tabs-header li{
   height: 50px;
