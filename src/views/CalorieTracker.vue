@@ -1,6 +1,6 @@
 <script>
 // import { RouterLink } from 'vue-router'
-import { calculateCalories, getUser, updateCalories } from '../utils'
+import { calculateCalories, getUser, updateCalories, getLoggedInUser } from '../utils'
 import * as d3 from "d3";
 import plot from "@/components/plotWithXandYaxis.vue";
 // import calorieSearchModal from '../components/calorieSearchModal.vue';
@@ -11,8 +11,6 @@ import Modal from "@/components/Modal.vue";
 import { ref, toRaw } from "vue";
 import NavBar from '../components/Navbar.vue'
 
-const userId = "1"   // TODO: obtained from cookies
-const userName = "bob"   // TODO: obtained from cookies
 
 export default {
     components: {
@@ -30,14 +28,16 @@ export default {
     },
     data() {
         return {
-            userId: userId,
-            userName: userName,
+            userObj: {},
+            userId: "",
+            userName: "",
             height: "",
             weight: "",
             activityFrequency: "",
             calorieLimit: 0,
             gender: "",
             age: "",
+            userCalorieDetails: "",
             userSearch: "",
             isCalorieSearchModalVisible: false,
             searchResults: [],
@@ -48,6 +48,7 @@ export default {
         }
     },
     methods: {
+        getLoggedInUser,
         calculateCalories,
         calculateCaloriesAndUpdate(userId, height, weight, activityFrequency, dailyCalorieIntake) {
             this.calculateCalories(userId, height, weight, activityFrequency, dailyCalorieIntake).then(response => {
@@ -58,26 +59,27 @@ export default {
         getUser,
         getUserDetails(userId){
             this.getUser(userId).then((user) => {
-            this.height = user.height;
-            this.weight = user.weight;
-            this.activityFrequency = user.activityFrequency;
-            // console.log("this is userc calroei deiasl", user.calorieDetails[Object.keys(user.calorieDetails)[Object.keys(user.calorieDetails).length-1]])
-            this.calorieLimit = Number(user.calorieDetails[Object.keys(user.calorieDetails)[Object.keys(user.calorieDetails).length - 1]].calorieLimit).toFixed(2);
-            this.dailyCalorieIntake = user.calorieDetails[Object.keys(user.calorieDetails)[Object.keys(user.calorieDetails).length - 1]].dailyCalorieIntake;
-            this.gender = user.gender;
-            this.age = user.age;
-
-            this.userCaloriesData = [];
-            for (const property in user.calorieDetails) {
-                // console.log("this is new obj created", { date: user.calorieDetails[property].date, calories: user.calorieDetails[property].dailyCalorieIntake})
-                this.userCaloriesData.push({ date: user.calorieDetails[property].date, calories: user.calorieDetails[property].dailyCalorieIntake})
-            }
-            
-            console.log("this is userCaloriesData", this.userCaloriesData)
-            // console.log(this.userCaloriesData[0])
-            // console.log(this.userCaloriesData[0].date)
-            // console.log(this.userCaloriesData[0].calories)
-            this.renderGraph(this.xAxisVariable)
+                this.userObj = user
+                this.height = user.height;
+                this.weight = user.weight;
+                this.activityFrequency = user.activityFrequency;
+                // console.log("this is userc calroei deiasl", user.calorieDetails[Object.keys(user.calorieDetails)[Object.keys(user.calorieDetails).length-1]])
+                if (user.calorieDetails != null){
+                    this.calorieLimit = Number(user.calorieDetails[Object.keys(user.calorieDetails)[Object.keys(user.calorieDetails).length - 1]].calorieLimit).toFixed(2);
+                    this.dailyCalorieIntake = user.calorieDetails[Object.keys(user.calorieDetails)[Object.keys(user.calorieDetails).length - 1]].dailyCalorieIntake;
+                    this.userCaloriesData = [];
+                    for (const property in user.calorieDetails) {
+                        // console.log("this is new obj created", { date: user.calorieDetails[property].date, calories: user.calorieDetails[property].dailyCalorieIntake})
+                        this.userCaloriesData.push({ date: user.calorieDetails[property].date, calories: user.calorieDetails[property].dailyCalorieIntake})
+                    }
+                    // console.log(this.userCaloriesData[0])
+                    // console.log(this.userCaloriesData[0].date)
+                    // console.log(this.userCaloriesData[0].calories)
+                    console.log("this is userCaloriesData", this.userCaloriesData)
+                    this.renderGraph(this.xAxisVariable)
+                }
+                this.gender = user.gender;
+                this.age = user.age;
             })
         },
         showModal() {
@@ -144,7 +146,7 @@ export default {
             await axios.request(options).then(response => {
                 console.log("this is response data", response.data);
                 let calorieDetails = response.data.hits[0].fields.nf_calories
-                updateCalories(userId, calorieDetails, dailyCalorieIntake, calorieLimit).then(response => {
+                updateCalories(this.userId, calorieDetails, dailyCalorieIntake, calorieLimit).then(response => {
                     console.log("this is response", response)
                     // calling on the method getUserDetails 
                     this.dailyCalorieIntake = dailyCalorieIntake
@@ -248,6 +250,7 @@ export default {
                 width = svg.attr("width") - margin,
                 height = svg.attr("height") - margin
 
+            // console.log("this is svg", svg)
             svg.append("text")
                 .attr("transform", "translate(100,0)")
                 .attr("x", 50)
@@ -309,6 +312,7 @@ export default {
             }
 
             let data = this.userCaloriesData
+            console.log("thissss is data", data)
             let filteredData = [{date:"Sunday", calories: 0}, {date:"Monday", calories: 0}, {date:"Tuesday", calories: 0}, {date:"Wednesday", calories: 0}, {date:"Thursday", calories: 0}, {date:"Friday", calories: 0}, {date:"Saturday", calories: 0}]
             if (variable == "day") {
                 for (let obj of data) {
@@ -411,7 +415,11 @@ export default {
 
     },
     mounted() {
-        this.getUserDetails(this.userId)
+        this.getLoggedInUser().then((user) => {
+            this.userId = user.userId
+            this.userName = user.userName 
+            this.getUserDetails(this.userId)
+        })
     }
 }
 
@@ -518,14 +526,14 @@ export default {
             </div>
 
             <!-- dashboard -->
-            <div class="col-lg-9 col-md-12 box">
+            <div class="col-lg-9 col-md-12 box" style="position:relative">
                 <div style="width:90%" class="p-3 mx-auto col-6">
                     <h2 style="text-align:left">Overview</h2>
-                    <div style="border:1px solid black;">
+                    <div style="border:1px solid black;" class="mb-3">
                         <!-- <plot :height="500" style="padding-left:50px" :data="userCaloriesData" /> -->
             
                         <svg width="950" height="600" id="dashboard"></svg>
-            
+                        
                         <div class="row d-flex justify-content-end m-4">
                             <label for="colFormLabelSm" class="col-1 col-form-label col-form-label-sm"
                                 style="text-align: end">X-axis:</label>
@@ -540,6 +548,7 @@ export default {
                         </div>
                     </div>
                 </div>
+                <!-- <h2 v-else style="position:absolute; top:30%; width:100%;">Enter your personal details to start tracking your calorie intake!</h2> -->
             </div>
         </div>
     </div>
@@ -551,7 +560,7 @@ export default {
     padding: 20px;
     z-index: -1;
     background-color: lightgrey;
-    overflow-x: hidden
+    overflow-x: hidden;
 }
 
 .textBox {

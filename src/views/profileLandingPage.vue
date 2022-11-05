@@ -1,12 +1,12 @@
 <script>
     import { RouterLink } from 'vue-router'
-    import { createUser, getFamily, createFamily, addFamilyMember, getUser } from '../utils'
+    import { createUser, getFamily, createFamily, addFamilyMember, getUser, getLoggedInUser } from '../utils'
     import * as d3 from "d3";
     // import plot from "@/components/plotWithXandYaxis.vue";
     import NavBar from '../components/Navbar.vue'
 
-    const userId = "1"   // TODO: obtained from cookies
-    const userName = "bob"   // TODO: obtained from cookies
+    // const userId = "1"   // TODO: obtained from cookies
+    // const userName = "bob"   // TODO: obtained from cookies
 
     export default {
         components: {
@@ -15,15 +15,17 @@
         },
         data() {
             return {
-                userId: userId,
-                userName: userName,
+                userId: "",
+                userName: "",
                 familyList: {},
                 userCaloriesData: [],
                 filteredData: [],
                 calorieLimit: 0,
+                userObj: {},
             }
         },
         methods: {
+            getLoggedInUser,
             createUser,
             getUser,
             getFamilyList(userId) {
@@ -76,7 +78,7 @@
                 console.log("this is filteredData", filteredData)
                 this.filteredData = filteredData
 
-                xScale.domain(filteredData.map(function (d) { console.log("this is converted days", d.date); return d.date }));
+                xScale.domain(filteredData.map(function (d) { return d.date }));
                 let mult = Math.pow(10, 1 - Math.floor(Math.log(this.calorieLimit) / Math.LN10) - 1);
                 let maxY = Math.ceil(this.calorieLimit * mult) / mult
                 yScale.domain([0, maxY]);
@@ -112,14 +114,23 @@
             }
         },
         mounted(){
-            this.getFamilyList(userId)
-            this.getUser(userId).then((user) => {
-                this.calorieLimit = Number(user.calorieDetails[Object.keys(user.calorieDetails)[Object.keys(user.calorieDetails).length - 1]].calorieLimit).toFixed(2);
-                for (const property in user.calorieDetails) {
-                    console.log("this is new obj created", { date: user.calorieDetails[property].date, calories: user.calorieDetails[property].dailyCalorieIntake})
-                    this.userCaloriesData.push({ date: user.calorieDetails[property].date, calories: user.calorieDetails[property].dailyCalorieIntake})
-                }
-                this.renderGraph()
+            this.getLoggedInUser().then((user)=> {
+                this.userId = user.userId
+                this.userName = user.userName 
+                
+                this.getFamilyList(this.userId)
+                this.getUser(this.userId).then((user) => {
+                    // console.log("this is userObj", user)
+                    this.userObj = user
+                    if (user.calorieDetails != null) {
+                        this.calorieLimit = Number(user.calorieDetails[Object.keys(user.calorieDetails)[Object.keys(user.calorieDetails).length - 1]].calorieLimit).toFixed(2);
+                        for (const property in user.calorieDetails) {
+                            // console.log("this is new obj created", { date: user.calorieDetails[property].date, calories: user.calorieDetails[property].dailyCalorieIntake})
+                            this.userCaloriesData.push({ date: user.calorieDetails[property].date, calories: user.calorieDetails[property].dailyCalorieIntake})
+                        }
+                        this.renderGraph()
+                    }
+                })
             })
         }
     }
@@ -200,8 +211,11 @@
                     <div class="btn btn-secondary">Expand</div>
                 </div>
 
-                <div class="d-flex justify-content-center" style="padding:20px">
+                <div v-if="userObj.calorieDetails != null" class="d-flex justify-content-center" style="padding:20px">
                     <svg width="800" height="400" id="dashboard"></svg>
+                </div>
+                <div v-else class="d-flex justify-content-center" style="padding:30px">
+                    <h2>Click here to start tracking your calories!</h2> 
                 </div>
             </router-link>
             </div>
