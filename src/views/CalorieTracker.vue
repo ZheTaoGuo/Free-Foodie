@@ -462,7 +462,7 @@ export default {
             </div>
         </div>
         <div class="row justify-content-around ">
-            <div class="col-lg-2 col-md-12 mb-3">
+            <div class="col-lg-3 col-md-12 mb-3">
                 <div class="box pt-3 px-4">
                     <h2 style="text-align:start">Personal Details</h2>
                     <!-- letting user key in the fields of details of themselves -->

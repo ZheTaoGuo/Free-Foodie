@@ -188,7 +188,7 @@ export default {
   box-shadow: 10px 5px 5px green;
   position: relative;
   right: 10px;
-
+  transition-duration: 0.35s;
 }
 
 .circleimg {

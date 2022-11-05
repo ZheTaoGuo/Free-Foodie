@@ -179,6 +179,7 @@
     background-color: white!important;
     border-color: #00D1B2!important;
     color: #00D1B2!important;
+    transition-duration: 0.35s;
 }
 
 .receipe-button.active{
