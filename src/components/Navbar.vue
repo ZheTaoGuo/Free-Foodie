@@ -47,6 +47,23 @@ export default {
 </script>
 
 <style scoped>
+*{
+  font-family: sans-serif;
+}
+
+.recipe-style{
+  color: white!important;
+  font-size: 1.5em;
+
+}
+
+.fridge-style{
+  color: white!important;
+  font-size: 1.5em;
+}
+#search-style{
+  font-family: sans-serif;
+}
 nav {
    margin: 0;
    padding: 0;

@@ -20,7 +20,7 @@
 </script>
 
 <template>
-    <ul class="list-group text-start">
+    <ul class="list-group text-start instruction-style">
         <li class="list-group-item" v-for="step of instructions">
             Step {{step.number}}: {{step.step}}
         </li>
@@ -30,6 +30,6 @@
 <style scoped>
 
 .instruction-style{
-    font-size: 1.5em;
+    font-size: 1.2em;
 }
 </style>
