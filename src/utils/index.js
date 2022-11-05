@@ -1,4 +1,4 @@
-import { getDatabase, ref, onValue, set, update } from "firebase/database";
+import { getDatabase, ref, onValue, set, update, push } from "firebase/database";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth'
 import { initializeApp } from 'firebase/app';
 import router from "@/router";
@@ -347,8 +347,8 @@ export const getFavourite = (userid) => {
         getUser(userid)
             .then((value) => {
                 recipeIds = value.FavouriteRecipes;
-                // console.log(recipeIds);
-                for (let id of recipeIds) {
+                console.log(recipeIds);
+                for (let id in recipeIds) {
                     // eslint-disable-next-line
                     const recipes = ref(db, "recipes");
                     onValue(recipes, (snapshot) => {
@@ -382,7 +382,7 @@ export const getPast = (userid) => {
             .then((value) => {
                 recipeIds = value.PastRecipes;
                 // console.log(recipeIds);
-                for (let id of recipeIds) {
+                for (let id in recipeIds) {
                     // eslint-disable-next-line
                     const recipes = ref(db, "recipes");
                     onValue(recipes, (snapshot) => {
@@ -405,6 +405,33 @@ export const getPast = (userid) => {
         console.log("this is recipefound", recipeFound);
     });
 };
+
+// Adding a recipe from recipe page to user's favourite list [Takes in USERID, recipeId]
+export const addToFavourite = (userid, recipeId) => {
+    console.log('Start addToFavourite');
+
+    console.log(userid, recipeId);
+    const userFavList = ref(db, "users/" + userid + "/FavouriteRecipes/" + recipeId)
+    set(userFavList, Number(recipeId))
+
+    console.log('End addToFavourite');
+}
+
+// Adding missing items to family list of missing ingredients
+export const addToMissing = (userId, missingItems) => {
+    getFamily(userId).then((value) => {
+        console.log("Start addToMissing");
+        let familyId = value.familyId
+        console.log('Family found: ', value.familyId);
+        // console.log('Item adding: ', itemName);
+        for(let item of missingItems){
+            // console.log(item);
+            push(ref(db, "families/" + familyId + "/missingIngredients/" ), item);
+        }
+        console.log("End addToMissing");
+
+    })
+} 
 
 // Profile Functions
 // generating index for tables
@@ -505,6 +532,7 @@ export const createFamily = (userId, userName) => {
 // get family table
 export const getFamily = (userId) => {
   console.log("getFamily is called");
+//   console.log('UserID of: ', userId);
   if (userId == undefined) {
     console.log("Error. Please pass in userId");
     return;
@@ -718,7 +746,7 @@ export const retrieveIngredients = () => {
       if (data == null) {
         return reject("no ingredients found");
       }
-      console.log("this is data" + data + "1");
+    //   console.log("this is data" + data + "1");
       for (let index = 0; index < data.length; index++) {
         let retrievedObject = data[index];
         let itemName = retrievedObject.Name;
@@ -732,6 +760,7 @@ export const retrieveIngredients = () => {
         };
         retrievedIngredientObject.push(ingredientObject);
       }
+    //   console.log(retrievedIngredientObject);
       resolve(retrievedIngredientObject);
     });
   });

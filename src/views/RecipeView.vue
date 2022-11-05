@@ -1,10 +1,11 @@
 <script>
     import RecipeTab from '../components/RecipeTab.vue'
     import RecipeContent from '../components/RecipeContent.vue'
+    import router from '../router'
     import Instruction from '../components/InstructionView.vue'
     import Ingredient from '../components/IngredientView.vue'
     import {
-        getFavourite, getPast, getAll
+        getFavourite, getPast, getAll, addToFavourite, retrieveIngredients, addToMissing
     } from '../utils'
 
     const USERID = 1
@@ -14,7 +15,9 @@
             return {
                 queryType: '',
                 selectedRecipe: 0,
-                recipes: []
+                recipes: [],
+                fridgeContent: [],
+                shoppingList: {},
             }
         },
         components: {
@@ -50,6 +53,30 @@
                     this.recipes = message
                 })
                 console.log('end methods');
+            },
+            addToFav(){
+                console.log('Start addToFav');
+
+                addToFavourite(USERID, this.selectedRecipe)
+                router.push('/favourite')
+
+                console.log('End addToFav');
+            },
+            getAllFridgeIngredient(){
+                console.log('Start getAllFridgeIngredient');
+
+                retrieveIngredients().then((value) => {
+                    this.fridgeContent = value
+                })
+                console.log('End getAllFridgeIngredient');
+            },
+            getMissing(missingIngredient, recipeId){
+                // console.log(missingIngredient, recipeId);
+                this.shoppingList[recipeId] = missingIngredient
+            },
+            callAddToMissing(recipeId){
+                // console.log(this.shoppingList[recipeId]);
+                addToMissing(USERID, this.shoppingList[recipeId])
             }
         },
         mounted() {
@@ -63,6 +90,9 @@
             }else {
                 this.getAllRecipe()
             }
+
+           this.getAllFridgeIngredient()
+           console.log(this.shoppingList);
         }
     }
     
@@ -107,10 +137,11 @@
                             <div class="p-3 text-white rounded">
                                 <h2>Ingredients</h2>
                             </div>
-                            <Ingredient :name="recipe['recipeName']" :recipeId="recipe['recipeId']" :ingredients="recipe['ingredientDetails']"></Ingredient>
+                            <Ingredient :name="recipe['recipeName']" :recipeId="recipe['recipeId']" :ingredients="recipe['ingredientDetails']" 
+                                :fridge="fridgeContent" @missing="getMissing"></Ingredient>
                             <hr>
-                            <button class="btn btn-secondary" v-show="queryType !== 'favourite' && queryType !== 'past'">Favourite</button>
-                            <button class="btn btn-secondary" v-show="queryType !== 'favourite' && queryType !== 'past'">Use this recipe</button>
+                            <button class="btn btn-secondary" v-show="queryType !== 'favourite' && queryType !== 'past'" @click="addToFav()">Favourite</button>
+                            <button class="btn btn-secondary" v-show="queryType !== 'favourite' && queryType !== 'past'" @click="callAddToMissing(recipe['recipeId'])">Use this recipe</button>
                             <hr>
                         </div>
                     </div>
