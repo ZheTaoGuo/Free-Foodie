@@ -10,6 +10,8 @@
         assignItem
     } from '../utils'
 
+    // import {sendMessage} from '../utils/send_sms'
+
 
 
     export default {
@@ -59,6 +61,7 @@
                 let member = event.target.value
                 // console.log(member);
                 assignItem(member, itemName)
+                // sendMessage(itemName)
                 // adding the bottom line will fix the issue with the selected refreshing... but will to force reload causing the screen flash
                 // window.location.reload()
                 this.callGetAllMissing()
