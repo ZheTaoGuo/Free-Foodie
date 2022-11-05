@@ -68,6 +68,6 @@
     </ul>
 </template>
 
-<style>
-    
+<style scoped>
+
 </style>
