@@ -1,12 +1,12 @@
 <template>
   <div class="container-fluid">
     <div class="row">
-            <!--Start of NavBar-->
-            <NavBar></NavBar>
-            <!--End of NavBar-->
-        </div>
-    <div class="row" id="carouselStyle">
-      <div id="foodcarousel" class="carousel slide" data-bs-ride="carousel" style="height:90%">
+      <!--Start of NavBar-->
+      <NavBar></NavBar>
+      <!--End of NavBar-->
+    </div>
+    <div class="row " id="carouselStyle ">
+      <div id="foodcarousel" class="carousel slide " data-bs-ride="carousel" style="height:90%">
         <div class="carousel-inner text-center">
           <div class="carousel-item active" data-bs-interval="3000">
             <img src="../assets/backgroundpicture1.jpg" class="d-block w-100">
@@ -25,14 +25,14 @@
           </button>
         </div>
       </div>
-
+      
     </div>
     <div class="row">
       <div class="section-header text-center mx-auto mb-1">
         <h1 class="display-4 mb-3" id="sectiontitle">How It Works</h1>
       </div>
     </div>
-
+    
     <div class="row g-4" id="works">
       <div class="col-lg-4 col-md-6">
         <div class="text-center p-2 p-xl-5">
@@ -52,7 +52,7 @@
           <h2 class="text-white individualtitle">Buy missing ingredients, select a recipe and enjoy!</h2>
         </div>
       </div>
-
+      
       <div class="container h-100 d-flex align-items-center justify-content-center">
         <div class="row justify-content-center">
           <button type="button" class="btn btn-primary" @click="promptLogin">
@@ -61,7 +61,7 @@
         </div>
       </div>
     </div>
-
+    
     <div class="footer d-flex justify-content-center">
       <div class="container">
         <div class="row">
@@ -75,7 +75,7 @@
                 <li><a href="#"><i class="fa fa-facebook"></i></a></li>
                 <li><a href="#"><i class="fa fa-twitter"></i></a></li>
                 <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-
+                
               </ul>
             </div>
           </div>
@@ -90,8 +90,8 @@ import Login from "./Login.vue";
 import NavBar from '../components/Navbar.vue'
 export default {
   components: {
-            NavBar
-        },
+    NavBar
+  },
   data() {
     
     return {
@@ -111,9 +111,10 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 * {
-  font-family: Arial;
+  /* font-family: Arial; */
   margin: 0;
   padding: 0;
+  
 }
 
 .btnstyle {
@@ -148,7 +149,7 @@ export default {
   left: 50%;
   transform: translate(-50%, -50%);
   width: 35%;
-
+  
 }
 
 .section-header {
@@ -157,12 +158,7 @@ export default {
 }
 
 .container-fluid {
-  background-color: lightblue;
-}
-
-.order-btn {
-  text-align: center;
-  color: blue;
+  background-color: rgb(183, 221, 234);
 }
 
 .individualtitle {
@@ -173,7 +169,7 @@ export default {
   width: 80%;
   /* height: 80px; */
   padding: 20px;
-
+  
 }
 
 .circleimg {
@@ -181,6 +177,10 @@ export default {
   width: 250px;
   object-fit: cover;
   border-radius: 50%;
+}
+
+.circleimg:hover{
+  box-shadow: 5px 5px rgba(0, 0, 0, 0.2);
 }
 
 .circle-number {
