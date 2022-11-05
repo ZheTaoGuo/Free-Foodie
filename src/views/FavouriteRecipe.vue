@@ -71,7 +71,7 @@ const USERID = 1
             <!-- eslint-disable-next-line -->
             <Card v-for="recipe of recipes" :page="'favourite'" :image_url="recipe['image']"
                 :recipeId="recipe['recipeId']" :name="recipe['recipeName']" :duration="recipe['duration']"
-                :desc="recipe['summary'].slice(0, 150) + '...'"></Card>
+                :desc="recipe['summary'].slice(0, 150) + '...'" ></Card>
             <!-- <Card :image_url="'tester'" :name="'fake'"></Card> -->
             <!-- End of Recipe -->
         </div>
@@ -88,5 +88,7 @@ const USERID = 1
 </template>
 
 <style>
-
+.card:hover{
+    box-shadow: 3px 3px 7px #00D1B2!important;
+}
 </style>
