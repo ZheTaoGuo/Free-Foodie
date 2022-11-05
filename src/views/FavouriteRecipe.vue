@@ -43,7 +43,6 @@ const USERID = 1
             console.log('end mounted');
         }
     }
-
 </script>
 
 <template>
