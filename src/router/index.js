@@ -5,7 +5,7 @@ import FridgeView from '../views/FridgeView.vue'
 import HomePage from '../views/HomePage.vue'
 import Login from '../views/Login.vue'
 import ShoppingList from '../views/ShoppingList.vue'
-import ShoppingItem from '../components/ShoppingItem.vue'
+import Signup from '../views/Signup.vue'
 
 const routes = [
     {
@@ -60,9 +60,15 @@ const routes = [
         component: Login
     },
     {
-        path: '/shoppingitem',
-        name: 'shoppingitem',
-        component: ShoppingItem
+        path: '/search',
+        name: 'SearchRecipe',
+        component: () => import('../views/SearchRecipe.vue')
+    }
+    ,
+    {
+        path: '/signup',
+        name: 'Signup',
+        component: Signup
     }
 ]
 
