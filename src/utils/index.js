@@ -409,145 +409,148 @@ export const getPast = (userid) => {
 // Profile Functions
 // generating index for tables
 async function getIndex(table) {
-    const specificTable = ref(db, table + '/');
-    let index = 0
-    let indexPromise = new Promise(function (resolve) {
-        setTimeout(
-            onValue(specificTable, (snapshot) => {
-                const data = snapshot.val();
-                if (data == null) {
-                    index = 0
-                } else {
-                    index = Object.keys(data).length;
-                }
-                console.log("this is data", data)
-                console.log("this is userid", index)
-                resolve(index)
-            }), 3000);
-
-    });
-    return indexPromise;
+  const specificTable = ref(db, table + "/");
+  let index = 0;
+  let indexPromise = new Promise(function (resolve) {
+    setTimeout(
+      onValue(specificTable, (snapshot) => {
+        const data = snapshot.val();
+        if (data == null) {
+          index = 0;
+        } else {
+          index = Object.keys(data).length;
+        }
+        console.log("this is data", data);
+        console.log("this is userid", index);
+        resolve(index);
+      }),
+      3000
+    );
+  });
+  return indexPromise;
 }
+
 
 // creating a new user account
 export const createUser = (username, email, password) => {
-    console.log("createUser is called")
+  console.log("createUser is called");
 
-    if (username == "" || email == "" || password == "") {
-        console.log("Please input your username, email and password")
-        return
+  if (username == "" || email == "" || password == "") {
+    console.log("Please input your username, email and password");
+    return;
+  }
+
+  // TODO: hash the password
+
+  console.log("this is res", getIndex("users"));
+  getIndex("users").then(
+    function (value) {
+      console.log("this is the returned index", value);
+      console.log("this is userId ATER CALLING", value);
+      set(ref(db, "users/" + value), {
+        userId: value,
+        familyId: "",
+        username: username,
+        email: email,
+        password: password,
+        gender: "",
+        age: "",
+        height: "",
+        weight: "",
+        activityFrequency: "",
+        calorieDetails: [],
+      });
+    },
+    function (error) {
+      console.log("Error: " + error.message);
     }
-
-    console.log("this is res", getIndex("users"))
-    getIndex("users").then(
-        function (value) {
-            console.log("this is the returned index", value)
-            console.log("this is userId ATER CALLING", value);
-            set(ref(db, 'users/' + value), {
-                userId: value,
-                familyId: "",
-                username: username,
-                email: email,
-                password: password,
-                gender: "",
-                age: "",
-                height: "",
-                weight: "",
-                activityFrequency: "",
-                calorieDetails: []
-            });
-        },
-        function (error) {
-            console.log("Error: " + error.message);
-        }
-
-    );
-}
+  );
+};
 
 // creating family table
 export const createFamily = (userId, userName) => {
-    console.log("createFamily is called")
-    if (userId == undefined || userName == undefined) {
-        console.log("Error. Please pass in userId and userName")
-        return
-    }
-    getIndex("families").then(
-        function (value) {
-            console.log("this is the returned index", value)
-            // creating the family table
-            set(ref(db, 'families/' + value), {
-                familyId: value,
-                referralCode: Math.floor(100000 + Math.random() * 900000),
-                users: {
-                    [userId]: {
-                        userId: userId,
-                        userName: userName
-                    }
-                }
-            });
-
-            // updating the field for familyId in the user table
-            update(ref(db, 'users/' + userId), {
-                familyId: value
-            });
-
-            return value;    // this returns the familyId    
+  console.log("createFamily is called");
+  if (userId == undefined || userName == undefined) {
+    console.log("Error. Please pass in userId and userName");
+    return;
+  }
+  getIndex("families").then(
+    function (value) {
+      console.log("this is the returned index", value);
+      // creating the family table
+      set(ref(db, "families/" + value), {
+        familyId: value,
+        referralCode: Math.floor(100000 + Math.random() * 900000),
+        users: {
+          [userId]: {
+            userId: userId,
+            userName: userName,
+          },
         },
-        function (error) {
-            console.log("Error: " + error.message);
-        }
-    );
-}
+      });
+
+      // updating the field for familyId in the user table
+      update(ref(db, "users/" + userId), {
+        familyId: value,
+      });
+
+      return value; // this returns the familyId
+    },
+    function (error) {
+      console.log("Error: " + error.message);
+    }
+  );
+};
 
 // get family table
 export const getFamily = (userId) => {
-    console.log("getFamily is called")
-    if (userId == undefined) {
-        console.log("Error. Please pass in userId")
-        return
-    }
-    return new Promise((resolve, reject) => {
-        const families = ref(db, 'families/');
-        onValue(families, (snapshot) => {
-            const data = snapshot.val();
-            if (data == null) {
-                return reject("no family found")
-            }
-            console.log("this is data", data)
-            for (let j = 0; j < data.length; j++) {
-                let obj = data[j]
-                console.log("this is obj", obj)
-                for (let user of obj.users) {
-                    console.log("this is user", user)
-                    if (user == undefined) {
-                        continue
-                    }
-                    if (user.userId == userId) {
-                        console.log("this is resolved", obj)
-                        return resolve(obj)
-                    }
-                    // console.log('no')
-                }
-                // console.log('end of loop')
-            }
-            // console.log("this is the end")
-            return reject("no family found")
-        });
-    })
-}
+  console.log("getFamily is called");
+  if (userId == undefined) {
+    console.log("Error. Please pass in userId");
+    return;
+  }
+  return new Promise((resolve, reject) => {
+    const families = ref(db, "families/");
+    onValue(families, (snapshot) => {
+      const data = snapshot.val();
+      if (data == null) {
+        return reject("no family found");
+      }
+      console.log("this is data", data);
+      for (let j = 0; j < data.length; j++) {
+        let obj = data[j];
+        console.log("this is obj", obj);
+        for (let user of obj.users) {
+          console.log("this is user", user);
+          if (user == undefined) {
+            continue;
+          }
+          if (user.userId == userId) {
+            console.log("this is resolved", obj);
+            return resolve(obj);
+          }
+          // console.log('no')
+        }
+        // console.log('end of loop')
+      }
+      // console.log("this is the end")
+      return reject("no family found");
+    });
+  });
+};
 
 // addFamilyMember.
 export const addFamilyMember = (userId, userName, familyId) => {
-    console.log("addFamilyMember is called")
-    if (userId == undefined || userName == undefined || familyId == undefined) {
-        console.log("Error. Please pass in userId and familyId")
-        return
-    }
-    set(ref(db, 'families/' + familyId + "/users/" + userId), {
-        userId: userId,
-        userName: userName
-    });
-}
+  console.log("addFamilyMember is called");
+  if (userId == undefined || userName == undefined || familyId == undefined) {
+    console.log("Error. Please pass in userId and familyId");
+    return;
+  }
+  set(ref(db, "families/" + familyId + "/users/" + userId), {
+    userId: userId,
+    userName: userName,
+  });
+};
 
 // updating the fields of the user (height, weight, activityFrequency)
 export const calculateCalories = (userId, height, weight, activityFrequency, dailyCalorieIntake) => {
@@ -669,4 +672,95 @@ export const updateCalories = (userId, calorieConsumed, dailyCalorieIntake, calo
         });
         return resolve(true)
     })
+};
+
+export const saveIngredients = (obj, itemName, quantity, selectedValue) => {
+  console.log("createFridge is called");
+  console.log("retrieveditemname" + obj.itemName);
+  console.log("retrieveditemname" + obj.quantity);
+
+  if (
+    obj.itemName == undefined ||
+    obj.quantity == undefined ||
+    obj.selectedValue == undefined
+  ) {
+    console.log("Error. Please pass in ItemName");
+    return;
+  }
+  getIndex("fridge")
+    .then(function (value) {
+      // creating the family table
+      set(ref(db, "fridge/" + value), {
+        Name: itemName,
+        Quantity: quantity,
+        Type: selectedValue,
+      });
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+  obj.itemName = "";
+  obj.quantity = "";
+  obj.selectedValue = "";
+  // let inputs = document.querySelectorAll('input');
+  // inputs.forEach(input => input.value = "")
+};
+
+export const retrieveIngredients = () => {
+  console.log("retrieveIngredients call");
+
+  return new Promise((resolve, reject) => {
+    const ingredients = ref(db, "fridge/");
+    let retrievedIngredientObject = [];
+    onValue(ingredients, (snapshot) => {
+      const data = snapshot.val();
+      if (data == null) {
+        return reject("no ingredients found");
+      }
+      console.log("this is data" + data + "1");
+      for (let index = 0; index < data.length; index++) {
+        let retrievedObject = data[index];
+        let itemName = retrievedObject.Name;
+        let itemQuantity = retrievedObject.Quantity;
+        let itemType = retrievedObject.Type;
+
+        let ingredientObject = {
+          itemName: itemName,
+          itemType: itemType,
+          itemQuantity: itemQuantity,
+        };
+        retrievedIngredientObject.push(ingredientObject);
+      }
+      resolve(retrievedIngredientObject);
+    });
+  });
+};
+
+//push specific ingredients to user
+export const getUserIngredients = (userId) => {
+  console.log("start retrievedusersingredients promise");
+  retrieveIngredients().then(function (retrievedIngredientsResults) {
+    const retrievedResults = retrievedIngredientsResults;
+    //array of objects
+    console.log("retrievedResults" + JSON.stringify(retrievedResults));
+
+      getUser(userId).then((value) => {
+        getIndex( "users/" + userId + "/assignedIngredients").then((value) => {
+          console.log(value);
+          let updateValue = value;
+        console.log("this is retrieveduserId" + JSON.stringify(value));
+        for (let item of retrievedResults) {
+          update(ref(db, "users/" + userId + "/assignedIngredients"), {
+            [updateValue]: {
+              itemName: item.itemName,
+              quantity: item.itemQuantity,
+              itemType: item.itemType,
+            },
+          });
+          updateValue++;
+        }
+      });
+    });
+  });
 };
