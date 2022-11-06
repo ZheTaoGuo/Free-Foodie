@@ -8,7 +8,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mx-auto">
+        <ul class="navbar-nav">
           <li class="nav-item mx-2">
             <a class="nav-link active" aria-current="page" href="/search">Recipes</a>
           </li>
