@@ -153,7 +153,7 @@
 
 <style scoped>
 *{
-    font-family:sans-serif;
+    /* font-family:sans-serif; */
 }
 
 .background-style{
@@ -175,14 +175,14 @@
     font-weight: 500;
 }
 .receipe-button:hover{
-    box-shadow: 3px 3px 7px #00D1B2!important;
+    box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.3)!important;
     background-color: white!important;
     border-color: #00D1B2!important;
     color: #00D1B2!important;
 }
 
 .receipe-button.active{
-    box-shadow: 3px 3px 7px #00D1B2!important;
+    box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.3)!important;
     background-color: white!important;
     border-color: #00D1B2!important;
     color: #00D1B2!important;

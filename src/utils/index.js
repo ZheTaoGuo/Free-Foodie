@@ -1,5 +1,5 @@
 import { getDatabase, ref, onValue, set, update, push, remove } from "firebase/database";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth'
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from 'firebase/auth'
 import { initializeApp } from 'firebase/app';
 import router from "@/router";
 
@@ -25,14 +25,24 @@ const db = getDatabase(app);
 
 //Authentication Functions
 export const getLoggedInUser = () => {
-    var currentUser = getAuth().currentUser
-    var userId = currentUser.uid;
-    var user = ref(db, 'users/' + userId);
-    onValue(user, (snapshot) => {
-        const data = snapshot.val();
-        var username = data.username
-        console.log(username)
-    });
+    onAuthStateChanged(getAuth(), (currentUser) => {
+        if (currentUser) {
+          // User is signed in, see docs for a list of available properties
+          // https://firebase.google.com/docs/reference/js/firebase.User
+          console.log(currentUser)
+          var userId = currentUser.uid;
+          var user = ref(db, 'users/' + userId);
+          onValue(user, (snapshot) => {
+              const data = snapshot.val();
+              var username = data.username
+              console.log(username)
+          });
+        } 
+        else{
+            console.log(null)
+        }
+    })
+
 }
 export const register = () => {
     console.log("Handling signup")

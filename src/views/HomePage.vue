@@ -180,7 +180,8 @@ export default {
 }
 
 .circleimg:hover{
-  box-shadow: 5px 5px rgba(0, 0, 0, 0.2);
+  box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.3)!important;
+  transition-duration: 0.35s;
 }
 
 .circle-number {
