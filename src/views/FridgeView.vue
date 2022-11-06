@@ -1,8 +1,8 @@
 <template>
+  <h1 class="text-center">My Fridge</h1>
   <TabsWrapper>
 
     <IndividualTab title="All" id="all">
-
         <div class="row">
           <div class="col-2 col-sm-4 card" v-for="item in this.items">
             <div class="card-body">
@@ -14,10 +14,8 @@
             </div>
           </div>
         </div>
-
-
-
     </IndividualTab>
+
     <IndividualTab title="Meat" id="all">
       <div class="row">
           <div class="col-2" v-for="item in this.meat">
@@ -215,7 +213,11 @@ export default {
 
 </script>
 
-<style scoped>
+<style>
+#app {
+  display: flex;
+  flex-direction: column;
+}
 
 .container{
   margin: 5px;
@@ -226,7 +228,7 @@ export default {
 }
 #all {
   font-family: Arial, Helvetica, sans-serif;
-  width: 100%;
+  /* width: 100%; */
 }
 .card {
   margin-left: 10px;

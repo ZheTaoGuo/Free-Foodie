@@ -1,24 +1,20 @@
 <template>
-  <div class="container-fluid tabs">
-    <div class="row tabs-header">
-      <div class="col" v-for="title in tabTitlesSlot"
-        :key="title"
-        :class="{ selected: title == selectedTitle }"
-        @click="selectedTitle = title">
-        {{title}}
-
+    <div class="container-fluid tabs">
+      <div class="row tabs-header gx-2 h-100">
+        <!-- column content-->
+        <div class="col tab-style mx-4 text-center" v-for="title in tabTitlesSlot"
+          :key="title"
+          :class="{ selected: title == selectedTitle }"
+          @click="selectedTitle = title">
+          {{title}}
+        </div>
       </div>
-      <!-- <ul class="tabs-header"> -->
-        
-      <!-- <li
-        v-for="title in tabTitlesSlot"
-        :key="title"
-        :class="{ selected: title == selectedTitle }"
-        @click="selectedTitle = title"
-      > -->
-      </div>
+    </div>
+    <!-- individual content-->
+    <div class="content flex-grow-1">
       <slot />
     </div>
+
 
 </template>
 
@@ -42,19 +38,28 @@ export default {
 .tabs{
   margin: auto;
   width: auto;
+  height: auto;
 }
 
+.tab-style{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: green;
+  border: 1px solid black;
+  padding: 8px;
+  text-align: center;
+  margin-bottom: 30px;
+}
 .tabs-header{
   width: auto;
   margin-bottom: 10px;
   list-style: none;
-  padding: 0;
-  display: flex;
-  justify-content: flex-start;
-  
+  /* display: flex;
+  justify-content: flex-start; */
 }
 
-@media only screen and (max-width: 1023px){
+/* @media only screen and (max-width: 1023px){
 
   .tabs{
     width: auto;
@@ -82,7 +87,7 @@ export default {
   .tabs-header{
     width: auto;
   }
-}
+} */
 .tabs-header li{
   height: 50px;
   width: 150px;
@@ -99,5 +104,10 @@ export default {
 .tabs-header li.selected{
     background-color: green;
     color: white;
+}
+
+.content{
+  padding-left: 30px;
+  padding-right: 30px;
 }
 </style>
