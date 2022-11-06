@@ -124,7 +124,7 @@
                             <div class="image-style" :style="{ background: 'url(' + recipe['image'] + ') no-repeat', backgroundSize: 'cover', backgroundPosition: 'center', height:'35vh'}">
                                 <div class="image-style" style="background-color: rgba(0, 0, 0, 0.5); height:inherit">
                                     <div class="d-flex justify-content-center align-items-center mt-2 p-5 text-white rounded" style="height:inherit">
-                                        <h1 style="font-weight: 800; text-shadow: 2px 2px rgba(0, 0, 0, 0.7)" >{{recipe['recipeName']}}</h1>
+                                        <h1 style="font-weight: 800; text-shadow: 2px 2px rgba(0, 0, 0, 0.7); text-transform: uppercase;" >{{recipe['recipeName']}}</h1>
                                     </div>
                                 </div>
                             </div>
@@ -168,8 +168,8 @@
     font-weight: 600;
 }
 .receipe-button{
-    background-color: #00D1B2!important;
-    border-color: #00D1B2!important;
+    background-color: #2E3440!important;
+    border-color: #2E3440!important;
     color: white;
     font-size: 1em;
     font-weight: 500;
@@ -177,15 +177,15 @@
 .receipe-button:hover{
     box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.3)!important;
     background-color: white!important;
-    border-color: #00D1B2!important;
-    color: #00D1B2!important;
+    border-color: #2E3440!important;
+    color: #2E3440!important;
 }
 
 .receipe-button.active{
     box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.3)!important;
     background-color: white!important;
-    border-color: #00D1B2!important;
-    color: #00D1B2!important;
+    border-color: #2E3440!important;
+    color: #2E3440!important;
 
 }
 </style>
