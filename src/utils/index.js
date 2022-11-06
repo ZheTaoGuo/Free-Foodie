@@ -621,12 +621,12 @@ export const getFamily = (userId) => {
             for (let j = 0; j < data.length; j++) {
                 let obj = data[j];
                 // console.log("this is obj", obj);
-                for (let user of obj.users) {
+                for (let user of Object.keys(obj.users)) {
                     console.log("this is user", user);
                     if (user == undefined) {
                         continue;
                     }
-                    if (user.userId == userId) {
+                    if (user == userId) {
                         console.log("this is resolved", obj);
                         return resolve(obj);
                     }
@@ -737,7 +737,7 @@ export const getUser = (userId) => {
             // console.log("this is data", data)
             for (const content in data) {
                 let obj = data[content]
-                // console.log("this is obj", obj)
+                console.log("this is obj", obj)
                 if (obj == undefined) {
                     continue
                 }
