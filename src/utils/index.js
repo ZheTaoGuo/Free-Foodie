@@ -25,25 +25,32 @@ const db = getDatabase(app);
 
 //Authentication Functions
 export const getLoggedInUser = () => {
-    onAuthStateChanged(getAuth(), (currentUser) => {
+    return new Promise ((resolve) => {
+        onAuthStateChanged(getAuth(), (currentUser) => {
         if (currentUser) {
           // User is signed in, see docs for a list of available properties
           // https://firebase.google.com/docs/reference/js/firebase.User
-          console.log(currentUser)
+          console.log("this is currrentUser",currentUser)
           var userId = currentUser.uid;
           var user = ref(db, 'users/' + userId);
           onValue(user, (snapshot) => {
               const data = snapshot.val();
               var username = data.username
-              console.log(username)
+            //   console.log(username)
+              let returnObj = {
+                    userId: userId,
+                    userName: username,
+              }
+              return resolve(returnObj)
           });
         } 
         else{
             console.log(null)
         }
+        })
     })
-
 }
+
 export const register = () => {
     console.log("Handling signup")
     var email = document.getElementById('email').value;
@@ -492,10 +499,13 @@ function addItem(userId, itemName) {
     })
 }
 
+
+
 // Remove assigned item from missingIngredients, add new item into user's assignedIngredients
 export const assignItem = (userId, itemName) => {
     removeItem(userId, itemName)
     addItem(userId, itemName)
+    
 }
 
 // Profile Functions
@@ -531,8 +541,6 @@ export const createUser = (username, email, password) => {
         console.log("Please input your username, email and password");
         return;
     }
-
-    // TODO: hash the password
 
     console.log("this is res", getIndex("users"));
     getIndex("users").then(
@@ -609,10 +617,10 @@ export const getFamily = (userId) => {
             if (data == null) {
                 return reject("no family found");
             }
-            console.log("this is data", data);
+            // console.log("this is data", data);
             for (let j = 0; j < data.length; j++) {
                 let obj = data[j];
-                console.log("this is obj", obj);
+                // console.log("this is obj", obj);
                 for (let user of obj.users) {
                     console.log("this is user", user);
                     if (user == undefined) {
@@ -726,10 +734,10 @@ export const getUser = (userId) => {
             if (data == null) {
                 return reject("no user found")
             }
-            console.log("this is data", data)
+            // console.log("this is data", data)
             for (const content in data) {
                 let obj = data[content]
-                console.log("this is obj", obj)
+                // console.log("this is obj", obj)
                 if (obj == undefined) {
                     continue
                 }
