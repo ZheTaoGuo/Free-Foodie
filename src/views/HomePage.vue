@@ -52,14 +52,6 @@
           <h2 class="text-white individualtitle">Buy missing ingredients, select a recipe and enjoy!</h2>
         </div>
       </div>
-      
-      <div class="container h-100 d-flex align-items-center justify-content-center">
-        <div class="row justify-content-center">
-          <button type="button" class="btn btn-primary" @click="promptLogin">
-            Order Now
-          </button>
-        </div>
-      </div>
     </div>
     
     <div class="footer d-flex justify-content-center">
@@ -164,9 +156,9 @@ export default {
 .individualtitle {
   font-size: 1.5rem;
   margin: 0 auto;
-  background-color: rgba(0, 128, 0, 0.282);
+  background-color: #187ccde3;
   border-radius: 10px;
-  width: 80%;
+  width: 90%;
   /* height: 80px; */
   padding: 20px;
   
