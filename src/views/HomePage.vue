@@ -6,7 +6,7 @@
       <!--End of NavBar-->
     </div>
     <div class="row " id="carouselStyle ">
-      <div id="foodcarousel" class="carousel slide " data-bs-ride="carousel" style="height:90%">
+      <div id="foodcarousel" class="carousel slide px-0" data-bs-ride="carousel" style="height:90%">
         <div class="carousel-inner text-center">
           <div class="carousel-item active" data-bs-interval="3000">
             <img src="../assets/backgroundpicture1.jpg" class="d-block w-100">
