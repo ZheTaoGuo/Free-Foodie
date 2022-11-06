@@ -1,8 +1,18 @@
 <template>
-    <div class="container tab-content" v-show="title == selectedTitle">
-        <slot/>
-    </div>
+    <div class="container-fluid">
+            <!-- individual tab content-->
+            <div class="tab-content p-4" v-show="title == selectedTitle">
+                <!-- content to be passed in -->
+                    <div class="row">
+                            
+                            <slot></slot>
 
+                    </div>
+            </div>
+        
+    </div>
+    
+    
 </template>
 
 <script>
@@ -22,13 +32,14 @@ export default {
 
 <style scoped>
     .tab-content{
-        background-color: grey;
-        left: 50%;
-        top: 50%;
-        width: 100%;
-        height: 100%;
-        border-radius: 10px;
-        box-shadow: 0 3px 5px 5px rgba(0,0,0,0.05);
+        /* top: 50%;
+        left: 50%; */
+        margin: auto;
+        min-height: 100vh;
+        border-radius: 5px;
+        /* box-shadow: 5px 10px black; */
+        background-color: green;
+        
         
     }
 </style>

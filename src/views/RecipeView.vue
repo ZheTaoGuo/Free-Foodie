@@ -87,7 +87,7 @@
                 this.getFavouriteRecipe()
             } else if(this.queryType == 'past'){
                 this.getPastRecipe()
-            }else {
+             }else {
                 this.getAllRecipe()
             }
 
