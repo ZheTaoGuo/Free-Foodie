@@ -152,9 +152,6 @@
 </template>
 
 <style scoped>
-*{
-    /* font-family:sans-serif; */
-}
 
 .background-style{
     background-color: #343b49;
