@@ -42,6 +42,7 @@
             getUser(1).then((value) => {
                 this.users.push(value)
             })
+            console.log("hello");
             // console.log("this is the output of users" + this.users);
             // console.log("start ingredients");
             // let retrievedUserIngredients = getUserIngredients(this.selectedUser);
