@@ -157,7 +157,7 @@
 }
 
 .background-style{
-    background-color: #2E3440;
+    background-color: #343b49;
 }
 
 .image-style{
@@ -168,8 +168,8 @@
     font-weight: 600;
 }
 .receipe-button{
-    background-color: #2E3440!important;
-    border-color: #2E3440!important;
+    background-color: #343b49!important;
+    border-color: #343b49!important;
     color: white;
     font-size: 1em;
     font-weight: 500;
@@ -177,15 +177,15 @@
 .receipe-button:hover{
     box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.3)!important;
     background-color: white!important;
-    border-color: #2E3440!important;
-    color: #2E3440!important;
+    border-color: #343b49!important;
+    color: #343b49!important;
 }
 
 .receipe-button.active{
     box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.3)!important;
     background-color: white!important;
-    border-color: #2E3440!important;
-    color: #2E3440!important;
+    border-color: #343b49!important;
+    color: #343b49!important;
 
 }
 </style>
