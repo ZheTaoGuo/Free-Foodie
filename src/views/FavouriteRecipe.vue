@@ -89,7 +89,7 @@ const USERID = 1
 
 <style>
 .card:hover{
-    box-shadow: 3px 3px 7px #00D1B2!important;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3)!important;
     transition-duration: 0.35s;
 }
 </style>
