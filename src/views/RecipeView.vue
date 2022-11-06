@@ -140,8 +140,8 @@
                             <Ingredient :name="recipe['recipeName']" :recipeId="recipe['recipeId']" :ingredients="recipe['ingredientDetails']" 
                                 :fridge="fridgeContent" @missing="getMissing"></Ingredient>
                             <hr>
-                            <button class="btn btn-secondary me-2" v-show="queryType !== 'favourite' && queryType !== 'past'">Favourite</button>
-                            <button class="btn btn-secondary" v-show="queryType !== 'favourite' && queryType !== 'past'">Use this recipe</button>
+                            <button class="btn btn-secondary me-2" v-show="queryType !== 'favourite' && queryType !== 'past'" @click="addToFav()">Favourite</button>
+                            <button class="btn btn-secondary" v-show="queryType !== 'favourite' && queryType !== 'past'" @click="callAddToMissing(recipe['recipeId'])">Use this recipe</button>
                             <hr>
                         </div>
                     </div>
