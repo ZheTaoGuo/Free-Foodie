@@ -42,6 +42,7 @@
             getUser(1).then((value) => {
                 this.users.push(value)
             })
+            console.log("hello");
             // console.log("this is the output of users" + this.users);
             // console.log("start ingredients");
             // let retrievedUserIngredients = getUserIngredients(this.selectedUser);
@@ -102,7 +103,7 @@
                 <div class="row">
                     <div class="col-3">
                         <div class="nav nav-pills flex-column" id="v-tab" aria-orientation="vertical">
-                            <i class="fa-light fa-user"></i>
+                            <span><i class="fa-light fa-user"></i> {{users[0]}}</span>
                             <button v-for="user of users" class="nav-link border p-4 my-2"
                                 :class="{ active: users[0] == selectedUser }" id="v-settings-tab" data-bs-toggle="pill"
                                 :data-bs-target="'#v-settings' + users[0].userId" type="button" role="tab"
@@ -130,10 +131,6 @@
     </TabsWrapper>
 
 </template>
-
-<script setup>
-
-</script>
 
 <style>
     .tabs-component {

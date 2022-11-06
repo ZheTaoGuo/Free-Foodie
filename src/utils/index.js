@@ -804,8 +804,6 @@ export const saveIngredients = (obj, itemName, quantity, selectedValue) => {
     obj.itemName = "";
     obj.quantity = "";
     obj.selectedValue = "";
-    // let inputs = document.querySelectorAll('input');
-    // inputs.forEach(input => input.value = "")
 };
 
 export const retrieveIngredients = () => {
