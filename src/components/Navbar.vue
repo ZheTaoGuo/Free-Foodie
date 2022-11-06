@@ -15,7 +15,7 @@
           </li>
           <li class="nav-item">
             <!-- <router-link to="/"> -->
-              <a class="nav-link active fridge-style" href="#">My Fridge</a>
+              <a class="nav-link active fridge-style" href="/fridge">My Fridge</a>
             <!-- </router-link> -->
           </li>
         </ul>

@@ -1,12 +1,17 @@
 <template>
-    <div class="container-fluid individual-border h-100" style="background-color:green;">
+    <div class="container-fluid">
+            <!-- individual tab content-->
+            <div class="tab-content p-4" v-show="title == selectedTitle">
+                <!-- content to be passed in -->
+                    <div class="row">
+                            
+                            <slot></slot>
 
-            <div class="row h-100 tab-content" v-show="title == selectedTitle">
-                <slot/>
+                    </div>
             </div>
         
-        
     </div>
+    
     
 </template>
 
@@ -27,19 +32,14 @@ export default {
 
 <style scoped>
     .tab-content{
-        /* background-color: green; */
-        top: 50%;
-        left: 50%;
+        /* top: 50%;
+        left: 50%; */
         margin: auto;
-        /* width: 100%; */
-        height: 100vh;
+        min-height: 100vh;
         border-radius: 5px;
-        box-shadow: 0 3px 5px 5px rgba(0,0,0,0.05);
+        /* box-shadow: 5px 10px black; */
+        background-color: green;
         
         
-    }
-    .individual-border{
-        /* margin-left: 20px; */
-        margin-right: 20px!important;
     }
 </style>
