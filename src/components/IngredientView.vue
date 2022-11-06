@@ -72,12 +72,15 @@ export default {
     
     <style scoped>
     .ingredientavail{
-        font-size: x-large;
+        font-size: 1.2em;
         font-weight: 500;
         border-right: 2px solid white;
         margin-right: 1.2em;
         text-align: right;
         padding: 0.5em;
+    }
+    .ingredientdesc{
+        font-size: 1.2em;
     }
     
     table{

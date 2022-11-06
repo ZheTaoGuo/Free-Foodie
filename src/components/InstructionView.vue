@@ -20,27 +20,19 @@
 </script>
 
 <template>
-    <!-- <div>
-        <p class="text-light" v-for="step of instructions" style="text-align:left">
-            <div class="stepnum">{{step.number}}&nbsp;</div><div class="stepstep">{{step.step}}</div>
-        </p>
-    </div> -->
-    <div class="text-light">
+    <div class="text-light instructions">
         <table>
             <tr v-for="step of instructions" style="text-align:left">
                 <td class="stepnum">{{step.number}}</td>
                 <td class="stepstep">{{step.step}}</td>
             </tr>
         </table>
-        <!-- <p class="text-light" v-for="step of instructions" style="text-align:left">
-            <div class="stepnum">{{step.number}}&nbsp;</div><div class="stepstep">{{step.step}}</div>
-        </p> -->
     </div>
 </template>
 
 <style scoped>
 
-.instruction-style{
+.instructions{
     font-size: 1.2em;
 }
 .stepnum{
