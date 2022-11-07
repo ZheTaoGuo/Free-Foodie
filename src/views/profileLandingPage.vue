@@ -22,6 +22,7 @@
                 filteredData: [],
                 calorieLimit: 0,
                 userObj: {},
+                referralCode: null,
             }
         },
         methods: {
@@ -32,7 +33,14 @@
                 getFamily(userId).then((value)=>{
                     console.log('getFamilyList is called')
                     console.log("this is getFamilyList", value)
-                    this.familyList = value
+                    this.referralCode = value.referralCode
+                    let final = []
+                    for (let obj of Object.keys(value.users)){
+                        if (obj != userId){
+                            final.push(value.users[obj])
+                        }
+                    }
+                    this.familyList = final
                 }).catch((message)=> {console.log("this is message", message); this.familyList = null })
             },  
             createFamily,
@@ -43,7 +51,7 @@
                     margin = 170,
                     width = svg.attr("width") - margin,
                     height = svg.attr("height") - margin
-
+                
                 var xScale = d3.scaleBand().range([0, width]).padding(0.4),
                     yScale = d3.scaleLinear().range([height, 0]);
 
@@ -122,12 +130,14 @@
                 this.getUser(this.userId).then((user) => {
                     // console.log("this is userObj", user)
                     this.userObj = user
+                    // console.log("tjs is this.userObj", this.userObj)
                     if (user.calorieDetails != null) {
                         this.calorieLimit = Number(user.calorieDetails[Object.keys(user.calorieDetails)[Object.keys(user.calorieDetails).length - 1]].calorieLimit).toFixed(2);
                         for (const property in user.calorieDetails) {
                             // console.log("this is new obj created", { date: user.calorieDetails[property].date, calories: user.calorieDetails[property].dailyCalorieIntake})
                             this.userCaloriesData.push({ date: user.calorieDetails[property].date, calories: user.calorieDetails[property].dailyCalorieIntake})
                         }
+                        console.log("thisss is this.userCaloriesData", this.userCaloriesData)
                         this.renderGraph()
                     }
                 })
@@ -150,8 +160,8 @@
                         <div class="col-4 h-1"><span class="addFamilyMember btn" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">+</span></div>
                     </div>
                     <div class="collapse" id="collapseExample">
-                        <div class="card card-body" v-if=" familyList !== null">    
-                            Your referral code is: <span>{{ familyList.referralCode }}</span>
+                        <div class="card card-body" v-if=" referralCode !== null">    
+                            Your referral code is: <span>{{ referralCode }}</span>
                         </div>
                         <div class="card card-body" v-else>    
                             <span>You do not have a family yet</span>
@@ -167,7 +177,7 @@
                         </div> 
                         <div v-else>
                             <table id="familyMembers" style="width:100%">
-                                <tr v-for="user of familyList.users" v-bind:key="user">
+                                <tr v-for="user of familyList" v-bind:key="user">
                                     <div v-if="user !== undefined" class="row" style="padding:10px">
                                         <td class="col-3"><img src="../assets/user.png" style="width:30px; height:30px"></td>
                                         <td class="col" style="text-align:start"> {{ user.userName }} </td>
@@ -211,12 +221,10 @@
                     <div class="btn btn-secondary">Expand</div>
                 </div>
 
-                <div v-if="userObj.calorieDetails != null" class="d-flex justify-content-center" style="padding:20px">
+                <div class="d-flex justify-content-center" style="padding:20px">
                     <svg width="800" height="400" id="dashboard"></svg>
                 </div>
-                <div v-else class="d-flex justify-content-center" style="padding:30px">
-                    <h2>Click here to start tracking your calories!</h2> 
-                </div>
+                
             </router-link>
             </div>
         </div>

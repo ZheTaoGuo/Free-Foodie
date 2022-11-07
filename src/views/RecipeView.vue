@@ -171,7 +171,7 @@
     color: #343b49!important;
 }
 .receipe-button:hover{
-    box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.3)!important;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3)!important;
     background-color: #343b49!important;
     border-color: #343b49!important;
     color: white!important;
@@ -180,7 +180,7 @@
 }
 
 .receipe-button.active{
-    box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.3)!important;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3)!important;
     background-color: #343b49!important;
     border-color: #343b49!important;
     color: white!important;
