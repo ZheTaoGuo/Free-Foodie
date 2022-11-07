@@ -4,11 +4,10 @@
   </div>
   <div class="container-fluid tabs-wrapper d-flex flex-column w-100">
     <div class="row tabs-header">
-      <div class="col individual-tab-style mx-4 text-center" 
-        v-for="title in tabTitlesSlot" 
-        :key="title" :class="{ selected: title == selectedTitle }"
-        :style="{ 'background-color': title == selectedTitle ? 'green' : 'white' , 'hover': black }"
-        @click="selectedTitle = title">
+      <div class="col individual-tab-style mx-4 text-center" v-for="title in tabTitlesSlot" :key="title"
+        :class="{ selected: title == selectedTitle, active:hover }"
+        :style="{ 'background-color': title == selectedTitle ? 'green' : 'white' }" @click="selectedTitle = title"
+        @mouseover="hover = true">
         {{ title }}
       </div>
     </div>
@@ -22,11 +21,16 @@
 <script>
 import { ref, provide } from "vue"
 export default {
-  computed:{
-    styleObject: function(){
+  data(){
+    return{
+      // hover: false
+    }
+  },
+  computed: {
+    styleObject: function (title) {
       return {
         'background-color': this.title == this.selectedTitle ? 'green' : 'white',
-        'hover': 'black'
+        'focus': black
       }
     }
   },
@@ -49,6 +53,7 @@ export default {
   height: auto;
   min-height: 100vh;
 }
+
 .individual-tab-style {
   display: flex;
   justify-content: center;
@@ -62,9 +67,14 @@ export default {
   width: 100%;
 }
 
-.individual-tab-style:hover{
-  background-color:red;
+.individual-tab-style:hover {
+  background-color: red;
 }
+
+.active {
+  background-color: blue;
+}
+
 .tabs-header {
   width: auto;
   margin-bottom: 10px;
@@ -86,10 +96,11 @@ export default {
   color: white;
 }
 
-.content{
-  width:100%;
+.content {
+  width: 100%;
 }
-.shopping-list-header{
+
+.shopping-list-header {
   background-image: linear-gradient(to bottom right, #7395AE, #379683) !important;
   /* border-radius: 20px; */
   color: #fff !important;

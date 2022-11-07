@@ -683,14 +683,14 @@ export const getFamily = (userId) => {
             // console.log("this isssss data", data);
             for (let j = 0; j < data.length; j++) {
                 let obj = data[j];
-                // console.log("this is obj", obj);
+                // console.log("this isssss obj", obj);
                 for (let user of Object.keys(obj.users)) {
-                    console.log("this is user", user);
+                    // console.log("this is user", user);
                     if (user == undefined) {
                         continue;
                     }
                     if (user == userId) {
-                        console.log("this is resolved", obj);
+                        // console.log("this is resolved", obj);
                         return resolve(obj);
                     }
                     // console.log('no')
