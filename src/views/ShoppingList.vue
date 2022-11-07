@@ -59,9 +59,9 @@
 
         },
         methods: {
-            moveItem(itemName, event) {
-                console.log(itemName, event.target.value);
-                let member = event.target.value
+            moveItem(itemName, memberId) {
+                console.log(itemName, memberId);
+                let member = memberId
                 this.member = member
                 // console.log(member);
                 assignItem(member, itemName)
