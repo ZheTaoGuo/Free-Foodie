@@ -9,7 +9,7 @@
         getFamily,
         assignItem
     } from '../utils'
-    import axios from "axios"
+    import axios from 'axios'
 
     // import {sendMessage} from '../utils/send_sms'
 
@@ -56,7 +56,7 @@
 
             // this.familyMembers = getFamily(this.selectedUser)
             this.callGetFamily()
-            
+
         },
         methods: {
             moveItem(itemName, event) {
@@ -76,12 +76,12 @@
                     this.missingList = value
                 })
             },
-            callGetFamily(){
+            callGetFamily() {
                 getFamily(this.selectedUser).then((value) => {
-                this.familyMembers = value.users
+                    this.familyMembers = value.users
                 })
             },
-            sendMessage(){
+            sendMessage(itemName) {
                 axios.get('https://vue-sms-9655.twil.io/sms')
                     .then(res => {
                         console.log(res);
