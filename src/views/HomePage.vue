@@ -19,7 +19,7 @@
           </div>
         </div>
         <div id="titledetails">
-          <h1 class="title">Recreate the finest food around the world</h1>
+          <h1 class="title ">Recreate the finest food around the world</h1>
           <button type="button" class="btn btn-primary btnstyle">
             Explore Menu
           </button>
