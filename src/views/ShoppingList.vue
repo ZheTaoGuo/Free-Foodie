@@ -91,8 +91,9 @@ export default {
         updateSelectedUser(user) {
             this.selectedUser = user.userId
             console.log("hello");
-        },
+        }
     }
+}
 
 </script>
 
