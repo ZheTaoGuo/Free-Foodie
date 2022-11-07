@@ -64,7 +64,19 @@ export const register = () => {
         return;
     }
     if (password.length < 4) {
-        alert('Please enter a password.');
+        alert('Please enter a valid password.');
+        return;
+    }
+    if (age.length == 0) {
+        alert('Please enter your age.');
+        return;
+    }
+    if (gender.length == 0) {
+        alert('Please enter your gender.');
+        return;
+    }
+    if (name.length == 0) {
+        alert('Please enter your name.');
         return;
     }
     // Create user with email and pass.
@@ -135,6 +147,18 @@ export const googlesignup = () => {
     const gender = document.getElementById('gender').value;
     const familyId = document.getElementById('familyId').value;
     const name = document.getElementById('name').value;
+    if (age.length == 0) {
+        alert('Please enter your age.');
+        return;
+    }
+    if (gender.length == 0) {
+        alert('Please enter your gender.');
+        return;
+    }
+    if (name.length == 0) {
+        alert('Please enter your name.');
+        return;
+    }
     signInWithPopup(getAuth(), provider).then(function (result) {
         console.log(result.user)
         set(ref(db, 'users/' + result.user.uid), {
