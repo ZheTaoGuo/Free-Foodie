@@ -16,15 +16,13 @@
                     <div class="item-information">
                         <div class="title">{{itemName}}</div>
                         <br>
-                        <!-- <div class="quantity">Quantity</div>
-                        <br>
-                        <div class="weight">Weight</div>
-                        <br> -->
                     </div>
 
                     <div class="status">
                         <div class="icon" v-if="title != 'Personal'">
-                            <i class="fa-solid fa-circle-xmark"></i>
+                            <a href="#">
+                                <i class="fa-solid fa-circle-xmark"></i>
+                            </a>
                         </div>
                         <div class="item-status">
                             <select class="form-select" @change="this.$emit('assignItem', itemName, $event)">
