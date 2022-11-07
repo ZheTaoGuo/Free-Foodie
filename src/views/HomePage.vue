@@ -19,7 +19,7 @@
           </div>
         </div>
         <div id="titledetails">
-          <h1 class="title">Recreate the finest food around the world</h1>
+          <h1 class="title ">Welcome, {{userName}}! <br> Cook at home sustainably with us today</h1>
           <button type="button" class="btn btn-primary btnstyle">
             Explore Menu
           </button>
@@ -80,6 +80,7 @@
 <script>
 import Login from "./Login.vue";
 import NavBar from '../components/Navbar.vue'
+import { getLoggedInUser } from "@/utils";
 export default {
   components: {
     NavBar
@@ -87,7 +88,7 @@ export default {
   data() {
     
     return {
-      
+      userName:""
     }
   },
   methods: {
@@ -96,7 +97,13 @@ export default {
         name: "Login",
       });
     },
+    getLoggedInUser,
   },
+  mounted(){
+    this.getLoggedInUser().then((user)=> {
+      this.userName = user.userName 
+    })
+  }
 };
 </script>
 
@@ -232,5 +239,10 @@ a {
   padding: 16px;
   text-align: center;
   margin: 0 auto;
+}
+.carousel-item{
+  filter: blur(2px);
+  -webkit-filter: blur(2px);
+
 }
 </style>

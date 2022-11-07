@@ -236,7 +236,7 @@
     .mainContent {
         height: 100vh;
         padding: 20px 70px;
-        background-color: lightgrey;
+        background-color: rgb(183, 221, 234);
     }
 
     .familyMembers {
