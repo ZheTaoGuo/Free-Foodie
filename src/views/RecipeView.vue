@@ -165,7 +165,7 @@
     font-weight: 600;
 }
 .receipe-button{
-    box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.3)!important;
+    /* box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.3)!important; */
     background-color: white!important;
     border-color: #343b49!important;
     color: #343b49!important;
@@ -186,6 +186,5 @@
     color: white!important;
     font-size: 1em;
     font-weight: 500;
-    
 }
 </style>
