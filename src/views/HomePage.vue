@@ -57,19 +57,26 @@
     <div class="footer d-flex justify-content-center">
       <div class="container">
         <div class="row">
-          <div class="col-lg-6 col-md-12" id="copyright">
-            <p>Copyrights &copy; 2022 - <a href="">FreeFoodie</a>, All Rights Reserved.<br>
-            </p>
-          </div>
-          <div class="col-lg-6 col-md-12">
+          <div class="col-lg-3 col-md-12">
+            <img src="../assets/fflogo.png" width="100px">
             <div class="social-icons">
               <ul>
                 <li><a href="#"><i class="fa fa-facebook"></i></a></li>
                 <li><a href="#"><i class="fa fa-twitter"></i></a></li>
                 <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-                
               </ul>
             </div>
+          </div>
+          <div class="col-lg-3 col-md-12" id="copyright">
+            <p>
+              Directory
+            </p>
+          </div>
+          <div class="col-lg-3 col-md-12" id="copyright">
+            <p>
+              You are now logged in as: {{userName}}
+            </p>
+            <p style="text-decoration: underline;" @click="signout()">Click here to sign out</p>
           </div>
         </div>
       </div>
@@ -80,7 +87,7 @@
 <script>
 import Login from "./Login.vue";
 import NavBar from '../components/Navbar.vue'
-import { getLoggedInUser } from "@/utils";
+import { getLoggedInUser,signout } from "@/utils";
 export default {
   components: {
     NavBar
@@ -98,6 +105,7 @@ export default {
       });
     },
     getLoggedInUser,
+    signout
   },
   mounted(){
     this.getLoggedInUser().then((user)=> {
@@ -243,6 +251,6 @@ a {
 .carousel-item{
   filter: blur(2px);
   -webkit-filter: blur(2px);
-
+  
 }
 </style>
