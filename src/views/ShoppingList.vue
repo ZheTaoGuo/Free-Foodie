@@ -9,6 +9,7 @@
         getFamily,
         assignItem
     } from '../utils'
+    import axios from 'axios'
 
     // import {sendMessage} from '../utils/send_sms'
 
@@ -22,7 +23,8 @@
                 username: "",
                 retrievedUsers: [],
                 missingList: [],
-                familyMembers: []
+                familyMembers: [],
+                member: ''
             }
         },
         computed: {
@@ -54,14 +56,16 @@
 
             // this.familyMembers = getFamily(this.selectedUser)
             this.callGetFamily()
-            
+
         },
         methods: {
             moveItem(itemName, event) {
                 console.log(itemName, event.target.value);
                 let member = event.target.value
+                this.member = member
                 // console.log(member);
                 assignItem(member, itemName)
+                this.sendMessage()
                 // sendMessage(itemName)
                 // adding the bottom line will fix the issue with the selected refreshing... but will to force reload causing the screen flash
                 // window.location.reload()
@@ -72,10 +76,16 @@
                     this.missingList = value
                 })
             },
-            callGetFamily(){
+            callGetFamily() {
                 getFamily(this.selectedUser).then((value) => {
-                this.familyMembers = value.users
-            })
+                    this.familyMembers = value.users
+                })
+            },
+            sendMessage(itemName) {
+                axios.get('https://vue-sms-9655.twil.io/sms')
+                    .then(res => {
+                        console.log(res);
+                    })
             }
         }
 
