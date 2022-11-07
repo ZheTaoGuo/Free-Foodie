@@ -1,7 +1,20 @@
 <script>
     export default {
         props: ['title', 'itemName', 'user', 'familyMembers'],
-        emits: ['assignItem']
+        emits: ['assignItem'],
+        data() {
+            return{
+                famMember: 'Assign to'
+            }
+        },
+        methods: {
+            assignToMember(){
+                let memberId = this.famMember
+                this.famMember = 'Assign to'
+                this.$emit('assignItem', this.itemName, memberId)
+
+            }
+        }
     }
 </script>
 
@@ -16,19 +29,17 @@
                     <div class="item-information">
                         <div class="title">{{itemName}}</div>
                         <br>
-                        <!-- <div class="quantity">Quantity</div>
-                        <br>
-                        <div class="weight">Weight</div>
-                        <br> -->
                     </div>
 
                     <div class="status">
                         <div class="icon" v-if="title != 'Personal'">
-                            <i class="fa-solid fa-circle-xmark"></i>
+                            <a href="#">
+                                <i class="fa-solid fa-circle-xmark"></i>
+                            </a>
                         </div>
                         <div class="item-status">
-                            <select class="form-select" @change="this.$emit('assignItem', itemName, $event)">
-                                <option selected>Open this select menu</option>
+                            <select class="form-select" v-model="famMember" @change="assignToMember()">
+                                <option selected>{{famMember}}</option>
                                 <option v-for="member of familyMembers" :value="member.userId">{{member.userName}}</option>
                             </select>
                         </div>

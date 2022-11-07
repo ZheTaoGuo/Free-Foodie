@@ -30,7 +30,7 @@ export const getLoggedInUser = () => {
         if (currentUser) {
           // User is signed in, see docs for a list of available properties
           // https://firebase.google.com/docs/reference/js/firebase.User
-          console.log("this is currrentUser",currentUser)
+        //   console.log("this is currrentUser",currentUser)
           var userId = currentUser.uid;
           var user = ref(db, 'users/' + userId);
           onValue(user, (snapshot) => {
@@ -41,6 +41,8 @@ export const getLoggedInUser = () => {
                     userId: userId,
                     userName: username,
               }
+            //   console.log("returned object");
+            //   console.log(returnObj);
               return resolve(returnObj)
           });
         } 
@@ -478,20 +480,38 @@ export const addToMissing = (userId, missingItems) => {
 export const getAllMissing = (userId) => {
     return new Promise((resolve, reject) => {
         getFamily(userId).then((value) => {
-            console.log("Start getAllMissing");
+            // console.log("Start getAllMissing");
             let familyId = value.familyId
-            console.log('Family found: ', value.familyId);
+            // console.log('Family found: ', value.familyId);
             // console.log('Item adding: ', itemName);
             const missingListRef = ref(db, 'families/' + familyId + '/missingIngredients')
             onValue(missingListRef, (snapshot) => {
                 const missingList = snapshot.val()
-                console.log(missingList);
-                console.log("End getAllMissing");
+                // console.log(missingList);
+                // console.log("End getAllMissing");
                 return resolve(missingList);
             })
         })
     })
 }
+
+export const getAllAssignedIngredients = (userId) => {
+    // console.log(userId);
+    return new Promise((resolve, reject) => {
+            console.log("Start getAllAssignedIngredients");
+            // console.log('Item adding: ', itemName);
+            const assignedIngredientsRef = ref(db, 'users/' + userId + '/assignedIngredients')
+            console.log(assignedIngredientsRef);
+            onValue(assignedIngredientsRef, (snapshot) => {
+                const assignedList = snapshot.val();
+                // console.log(assignedList);
+                console.log("End getAllAssignedIngredients");
+                return resolve(assignedList);
+            })
+        
+    })
+}
+
 
 // Remove the item from the missingIngrdients list
 function removeItem(userId, itemName) {
@@ -625,7 +645,7 @@ export const createFamily = (userId, userName) => {
 
 // get family table
 export const getFamily = (userId) => {
-    console.log("getFamily is called");
+    // console.log("getFamily is called");
     //   console.log('UserID of: ', userId);
     if (userId == undefined) {
         console.log("Error. Please pass in userId");
@@ -638,7 +658,7 @@ export const getFamily = (userId) => {
             if (data == null) {
                 return reject("no family found");
             }
-            // console.log("this is data", data);
+            // console.log("this isssss data", data);
             for (let j = 0; j < data.length; j++) {
                 let obj = data[j];
                 // console.log("this is obj", obj);
