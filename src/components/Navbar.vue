@@ -35,12 +35,28 @@
 
 
 <script>
-export default {
-  name: 'appNavbar',
-  // props: {
-    //   msg: String
-    // }
-  }
+// import { getLoggedInUser } from "/utils";
+// export default {
+//   data() {
+    
+//     return {
+//       userName:""
+//     }
+//   },
+//   methods: {
+//     promptLogin() {
+//       this.$router.push({
+//         name: "Login",
+//       });
+//     },
+//     getLoggedInUser,
+//   },
+//   mounted(){
+//     this.getLoggedInUser().then((user)=> {
+//       this.userName = user.userName 
+//     })
+//   }
+// };
 </script>
 
 <style scoped>

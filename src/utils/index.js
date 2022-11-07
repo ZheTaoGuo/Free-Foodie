@@ -67,16 +67,16 @@ export const register = () => {
         alert('Please enter a valid password.');
         return;
     }
+    if (name.length == 0) {
+        alert('Please enter your name.');
+        return;
+    }
     if (age.length == 0) {
         alert('Please enter your age.');
         return;
     }
     if (gender.length == 0) {
         alert('Please enter your gender.');
-        return;
-    }
-    if (name.length == 0) {
-        alert('Please enter your name.');
         return;
     }
     // Create user with email and pass.
@@ -147,16 +147,16 @@ export const googlesignup = () => {
     const gender = document.getElementById('gender').value;
     const familyId = document.getElementById('familyId').value;
     const name = document.getElementById('name').value;
+    if (name.length == 0) {
+        alert('Please enter your name.');
+        return;
+    }
     if (age.length == 0) {
         alert('Please enter your age.');
         return;
     }
     if (gender.length == 0) {
         alert('Please enter your gender.');
-        return;
-    }
-    if (name.length == 0) {
-        alert('Please enter your name.');
         return;
     }
     signInWithPopup(getAuth(), provider).then(function (result) {
