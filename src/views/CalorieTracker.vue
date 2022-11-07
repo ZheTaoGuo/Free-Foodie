@@ -559,8 +559,9 @@ export default {
 .mainContent {
     padding: 20px;
     z-index: -1;
-    background-color: lightgrey;
+    background-color: rgb(183, 221, 234);
     overflow-x: hidden;
+    height: 100vh;
 }
 
 .textBox {
