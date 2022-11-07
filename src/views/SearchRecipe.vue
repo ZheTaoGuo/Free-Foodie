@@ -110,7 +110,7 @@
                     <option selected>Diets</option>
                     <option value="gluten free">Gluten Free</option>
                     <option value="dairy free">Dairy Free</option>
-                    <option value="lacto ovo vegetarian">Vegitarian</option>
+                    <option value="lacto ovo vegetarian">Vegetarian</option>
                     </select>
             </div>
             <!--End of filter Bar-->

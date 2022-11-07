@@ -80,6 +80,7 @@
 <script>
 import Login from "./Login.vue";
 import NavBar from '../components/Navbar.vue'
+import { getLoggedInUser } from "@/utils";
 export default {
   components: {
     NavBar
@@ -87,7 +88,7 @@ export default {
   data() {
     
     return {
-      
+      userName:""
     }
   },
   methods: {
@@ -96,7 +97,13 @@ export default {
         name: "Login",
       });
     },
+    getLoggedInUser,
   },
+  mounted(){
+    this.getLoggedInUser().then((user)=> {
+      this.userName = user.userName 
+    })
+  }
 };
 </script>
 
