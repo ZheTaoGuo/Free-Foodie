@@ -523,13 +523,10 @@ function addItem(userId, itemName) {
     })
 }
 
-
-
 // Remove assigned item from missingIngredients, add new item into user's assignedIngredients
 export const assignItem = (userId, itemName) => {
     removeItem(userId, itemName)
     addItem(userId, itemName)
-    
 }
 
 // Profile Functions
