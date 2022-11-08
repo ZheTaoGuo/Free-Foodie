@@ -35,19 +35,19 @@
     </div>
     
     <div class="row g-4" id="works">
-      <div class="col-lg-4 col-md-6">
+      <div class="col-lg-4 col-md-12">
         <div class="text-center p-2 p-xl-5">
           <img class="img-fluid mb-5 circleimg" src="../assets/roundimage1.jpeg" />
           <h2 class="text-white individualtitle">Manage your existing ingredients on the go</h2>
         </div>
       </div>
-      <div class="col-lg-4 col-md-6">
+      <div class="col-lg-4 col-md-12">
         <div class="text-center p-2 p-xl-5">
           <img class="img-fluid mb-5 circleimg " src="../assets/roundimage2.jpg" />
           <h2 class="text-white individualtitle">We show the best recipes for what you have on hand</h2>
         </div>
       </div>
-      <div class="col-lg-4 col-md-6">
+      <div class="col-lg-4 col-md-12">
         <div class="text-center p-2 p-xl-5">
           <img class="img-fluid mb-5 circleimg " src="../assets/roundimage3.jpg" />
           <h2 class="text-white individualtitle">Buy missing ingredients, select a recipe and enjoy!</h2>
