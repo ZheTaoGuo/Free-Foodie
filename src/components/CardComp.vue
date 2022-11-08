@@ -50,8 +50,8 @@
 
 <style>
 .card{
-    border-color: #343b49;
-    color: #343b49;
+    border-color: rgba(0, 0, 0, 0.5);
+    color: black;
 }
 .card:hover{
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3)!important;
