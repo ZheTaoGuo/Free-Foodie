@@ -59,7 +59,7 @@ export default {
                     return food.itemName == item.originalName
                 })">👍 </span>
                 <span v-else-if="fridge.find(food => {
-                    if (food.itemName != item.originalName) this.missingIngredient.push(item.originalName)
+                    if (food.itemName != item.originalName) this.missingIngredient.push({name: item.originalName, image: item.image})
                     return true
                 })">👎 </span></td>
                 <td class="ingredientdesc"><span v-if="Number.isInteger(item.amount)">{{item.amount}}&nbsp</span> 
