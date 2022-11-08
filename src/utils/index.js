@@ -28,9 +28,6 @@ export const getLoggedInUser = () => {
     return new Promise ((resolve) => {
         onAuthStateChanged(getAuth(), (currentUser) => {
         if (currentUser) {
-          // User is signed in, see docs for a list of available properties
-          // https://firebase.google.com/docs/reference/js/firebase.User
-        //   console.log("this is currrentUser",currentUser)
           var userId = currentUser.uid;
           var user = ref(db, 'users/' + userId);
           onValue(user, (snapshot) => {
@@ -61,24 +58,24 @@ export const register = () => {
     var gender = document.getElementById('gender').value;
     var familyId = document.getElementById('familyId').value;
     const name = document.getElementById('name').value;
+    var alertstr = '';
     if (email.length < 4) {
-        alert('Please enter an email address.');
-        return;
+        alertstr += 'Please enter an email address.' + '\n';
     }
     if (password.length < 4) {
-        alert('Please enter a valid password.');
-        return;
+        alertstr += 'Please enter a valid password.' + '\n';
     }
     if (name.length == 0) {
-        alert('Please enter your name.');
-        return;
+        alertstr += 'Please enter your name.' + '\n';
     }
     if (age.length == 0) {
-        alert('Please enter your age.');
-        return;
+        alertstr += 'Please enter your age.' + '\n';
     }
-    if (gender.length == 0) {
-        alert('Please enter your gender.');
+    if (gender == 'Gender') {
+        alertstr += 'Please enter your gender.' + '\n';
+    }
+    if (alertstr.length>0){
+        alert(alertstr)
         return;
     }
     // Create user with email and pass.
@@ -162,16 +159,18 @@ export const googlesignup = () => {
     const gender = document.getElementById('gender').value;
     const familyId = document.getElementById('familyId').value;
     const name = document.getElementById('name').value;
+    var alertstr = '';
     if (name.length == 0) {
-        alert('Please enter your name.');
-        return;
+        alertstr += 'Please enter your name.' + '\n';
     }
     if (age.length == 0) {
-        alert('Please enter your age.');
-        return;
+        alertstr += 'Please enter your age.' + '\n';
     }
-    if (gender.length == 0) {
-        alert('Please enter your gender.');
+    if (gender == 'Gender') {
+        alertstr += 'Please enter your gender.' + '\n';
+    }
+    if (alertstr.length>0){
+        alert(alertstr)
         return;
     }
     signInWithPopup(getAuth(), provider).then(function (result) {
