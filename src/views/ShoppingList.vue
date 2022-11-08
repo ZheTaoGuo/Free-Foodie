@@ -3,6 +3,7 @@
     import TabsWrapper from '../components/TabsWrapperShoppingList.vue'
     import ShoppingItem from '../components/ShoppingItem.vue'
     import NavBar from '../components/Navbar.vue'
+    import Footer from '../components/Footer.vue'
     import {
         getUser,
         getUserIngredients,
@@ -30,7 +31,8 @@
             IndividualTab,
             TabsWrapper,
             ShoppingItem,
-            NavBar
+            NavBar,
+            Footer
         },
         async mounted() {
 
@@ -160,6 +162,7 @@
 
 
     </TabsWrapper>
+    <Footer></Footer>
 
 </template>
 

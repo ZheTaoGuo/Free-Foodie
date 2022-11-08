@@ -2,11 +2,14 @@
     <NavBar></NavBar>
     <TabsWrapper @closeMe="loadIngredients">
 
-        <IndividualTab title="All" id="all">
+        <IndividualTab title="All">
             <div class="col-12 col-sm-6 col-md-4 col-lg-3 p-2" v-for="item in this.items">
                 <div class="card">
                     <div class="card-body text-center w-100">
-                        <button type="button" class="btn btn-primary" @click="this.deleteIngredients(item)">Delete</button>
+                        <a class="cross-icon" @click="this.deleteIngredients(item)">
+                            <i class="fa-solid fa-circle-xmark fa-lg"></i>
+                        </a>
+
                         <h5 class="card-title">{{ item.itemName }}</h5>
                         <h6 class="card-subtitle text-muted">{{ item.itemType }}</h6>
                         <p class="card-text">
@@ -17,10 +20,13 @@
             </div>
         </IndividualTab>
 
-        <IndividualTab title="Meat" id="all">
+        <IndividualTab title="Meat">
             <div class="col-12 col-sm-6 col-md-4 col-lg-3 p-2" v-for="item in this.meat">
                 <div class="card">
                     <div class="card-body text-center w-100">
+                        <a class="cross-icon" @click="this.deleteIngredients(item)">
+                            <i class="fa-solid fa-circle-xmark fa-lg"></i>
+                        </a>
                         <h5 class="card-title">{{ item.itemName }}</h5>
                         <h6 class="card-subtitle text-muted">{{ item.itemType }}</h6>
                         <p class="card-text">
@@ -31,10 +37,13 @@
             </div>
         </IndividualTab>
 
-        <IndividualTab title="Carbohydrates" id="all">
+        <IndividualTab title="Carbohydrates">
             <div class="col-12 col-sm-6 col-md-4 col-lg-3 p-2" v-for="item in this.carbohydrates">
                 <div class="card">
                     <div class="card-body text-center w-100">
+                        <a class="cross-icon" @click="this.deleteIngredients(item)">
+                            <i class="fa-solid fa-circle-xmark fa-lg"></i>
+                        </a>
                         <h5 class="card-title">{{ item.itemName }}</h5>
                         <h6 class="card-subtitle text-muted">{{ item.itemType }}</h6>
                         <p class="card-text">
@@ -45,10 +54,13 @@
             </div>
         </IndividualTab>
 
-        <IndividualTab title="Sauces" id="all">
+        <IndividualTab title="Sauces">
             <div class="col-12 col-sm-6 col-md-4 col-lg-3 p-2" v-for="item in this.sauces">
                 <div class="card">
                     <div class="card-body text-center w-100">
+                        <a class="cross-icon" @click="this.deleteIngredients(item)">
+                            <i class="fa-solid fa-circle-xmark fa-lg"></i>
+                        </a>
                         <h5 class="card-title">{{ item.itemName }}</h5>
                         <h6 class="card-subtitle text-muted">{{ item.itemType }}</h6>
                         <p class="card-text">
@@ -59,10 +71,13 @@
             </div>
         </IndividualTab>
 
-        <IndividualTab title="Condiments" id="all">
+        <IndividualTab title="Condiments">
             <div class="col-12 col-sm-6 col-md-4 col-lg-3 p-2" v-for="item in this.condiments">
                 <div class="card">
                     <div class="card-body text-center w-100">
+                        <a class="cross-icon" @click="this.deleteIngredients(item)">
+                            <i class="fa-solid fa-circle-xmark fa-lg"></i>
+                        </a>
                         <h5 class="card-title">{{ item.itemName }}</h5>
                         <h6 class="card-subtitle text-muted">{{ item.itemType }}</h6>
                         <p class="card-text">
@@ -73,10 +88,13 @@
             </div>
         </IndividualTab>
 
-        <IndividualTab title="Fresh Produce" id="all">
+        <IndividualTab title="Fresh Produce">
             <div class="col-12 col-sm-6 col-md-4 col-lg-3 p-2" v-for="item in this.freshProduce">
                 <div class="card">
                     <div class="card-body text-center w-100">
+                        <a class="cross-icon" @click="this.deleteIngredients(item)">
+                            <i class="fa-solid fa-circle-xmark fa-lg"></i>
+                        </a>
                         <h5 class="card-title">{{ item.itemName }}</h5>
                         <h6 class="card-subtitle text-muted">{{ item.itemType }}</h6>
                         <p class="card-text">
@@ -171,16 +189,20 @@
     .container {
         margin: 5px;
     }
-
     .bottom {
         margin-top: 10px;
     }
-
-
     .card {
-        /* margin-left: 10px;
-  margin-top: 10px; */
         text-align: left;
-
+    }
+    .card-body{
+        position: relative;
+    }
+    .cross-icon{
+        position: absolute;
+        right: 0;
+        top: 2%;
+        margin-right:5px;
+        color:black;
     }
 </style>

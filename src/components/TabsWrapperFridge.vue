@@ -8,7 +8,8 @@
     <div class="row tabs-header">
       <!-- column content-->
       <div class="col individual-tab-style mx-4 text-center" v-for="title in tabTitlesSlot" :key="title"
-        :class="{ selected: title == selectedTitle }" @click="selectedTitle = title">
+        :class="{ selected: title == selectedTitle }" @click="selectedTitle = title"
+        :style="{'background-color': title == selectedTitle ? 'green' : 'white'}">
         {{ title }}
       </div>
     </div>
@@ -21,8 +22,14 @@
 
     <div class="bottom">
 
+      <div class="fab-container">
+        <div class="button iconbutton">
+          <span type="button" id="plus" data-bs-toggle="modal" data-bs-target="#itemModal">Add Ingredient</span>
+        </div>
+      </div>
+
       <!-- Button trigger modal -->
-      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#itemModal">
+      <button type="button" class="btn btn-primary ingredient-button" data-bs-toggle="modal" data-bs-target="#itemModal">
         Add New Ingredient
       </button>
 
@@ -32,25 +39,25 @@
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="itemModal">Add New Ingredient</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
             </div>
             <div class="modal-body">
               <div class="form-group">
-                <label for="ItemName">ItemName</label>
+                <label for="ItemName" class="d-flex justify-content-start p-2">ItemName</label>
                 <input type="text" class="form-control" id="ItemName" placeholder="Enter Ingredient" v-model="itemName"
                   required />
               </div>
 
               <div class="form-group">
-                <label for="Quantity">Quantity</label>
+                <label for="Quantity" class="d-flex justify-content-start p-2">Quantity</label>
                 <input type="text" class="form-control" id="Quantity" placeholder="Enter Quantity" v-model="quantity"
                   required />
               </div>
 
               <div class="form-group">
-                <label for="Category">Category</label>
+                <label for="Category" class="d-flex justify-content-start p-2">Category</label>
                 <select class="form-select" v-model="selectedValue" required>
-                  <option disabled value="Please select one"></option>
+                  <option disabled selected></option>
                   <option value="Meat">Meat</option>
                   <option value="Carbohydrates">Carbohydrates</option>
                   <option value="Condiments">Condiments</option>
@@ -62,7 +69,7 @@
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="$emit('closeMe')">Close</button>
               <button type="button" class="btn btn-primary"
-                @click="saveIngredients(this, itemName, quantity, selectedValue)">Save changes</button>
+                @click="handleSaveClick()">Save</button>
             </div>
           </div>
         </div>
@@ -70,6 +77,7 @@
     </div>
   </div>
 
+  <Footer></Footer>
 
 
 
@@ -78,6 +86,7 @@
 <script>
 import { ref, provide } from "vue"
 import { saveIngredients} from '../utils';
+import Footer from '../components/Footer.vue'
 export default {
   data(){
     return{
@@ -92,14 +101,41 @@ export default {
       freshProduce: []
     }
   },
-  methods:{
-    saveIngredients,
-    callSaveIngredients(){
-        
-    }
+  components:{
+    Footer
   },
-  mounted(){
-    
+  methods:{
+    handleSaveClick(){
+        let alertMsg = ""
+      if(this.itemName == "" && this.quantity == "" && this.selectedValue == ""){
+        alertMsg += "Please fill out all fields";
+      }
+      else{
+        var letters = /^[A-Za-z]+$/
+        if (!letters.test(this.itemName) && this.itemName !== ""){
+          alertMsg += "Item Name must only contain letters" + "\n"
+        }
+        else if (this.itemName == ""){
+          alertMsg += "Please fill in the Item Name field" + "\n"
+        }
+
+        if(!isNaN(this.quantity) && this.quantity !== ""){
+          alertMsg += "Quantity must only contain numbers" + "\n"
+        }
+        else if(this.quantity == ""){
+          alertMsg += "Please fill in the Quantity field" + "\n"
+        }
+
+        if(this.selectedValue == "" && this.selectedValue == null){
+          alertMsg += "Please select a category" + "\n"
+        }
+        else if(this.selectedValue == ""){
+          alertMsg += "Please fill in the Category field" + "\n"
+        }
+      }
+      alert(alertMsg);
+      saveIngredients(this, this.itemName, this.quantity, this.selectedValue)
+    }
   },
   setup(props, { slots }) {
     const tabTitlesSlot = ref(slots.default().map((tab) => tab.props.title))
@@ -162,12 +198,38 @@ export default {
 .content {
   width: 100%;
 }
-
 .fridge-header {
   background-image: linear-gradient(to bottom right, #7395AE, #379683) !important;
   /* border-radius: 20px; */
   color: #fff !important;
   box-shadow: 0 0 40px 0 rgba(94, 92, 154, .06);
   margin-bottom: 5px;
+}
+
+.fab-container{
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  cursor: pointer;
+}
+
+#plus{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  margin: 0 auto;
+}
+.button{
+  width: 80px;
+  height: 70px;
+  padding: 10px;
+  border-radius: 10%;
+  background: lightblue;
+}
+
+.ingredient-button{
+  margin-right:11px;
+  float:right;
 }
 </style>

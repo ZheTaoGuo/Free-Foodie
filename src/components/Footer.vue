@@ -1,5 +1,4 @@
 <template>
-    <hr>
     <div class="footer d-flex justify-content-center" style="background-color:rgb(183, 221, 234)">
         <div class="container">
             <div class="row">

@@ -1,5 +1,14 @@
 <script>
 import { register, googlesignup } from '../utils'
+var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+  return new bootstrap.Tooltip(tooltipTriggerEl, {
+    delay: {
+      'show': 0,
+      'hide': 0
+    }},
+  )
+});
 
 export default{
   name: 'appSignup',
@@ -28,21 +37,22 @@ export default{
                 <label for="name">Name</label>
               </div>
               <div class="form-floating mx-auto mb-3 col-6">
-                <input type="number" class="form-control" id="age" placeholder="Input your age">
+                <input type="number" class="form-control" id="age" placeholder="Input your age" min="1" max="99">
                 <label for="age">Age</label>
               </div>
 
               <div class="form-floating mx-auto mb-3 col-6">
                 <select class="form-select" id="gender">
-                  <option selected>Gender</option>
+                  <option disabled>Gender</option>
                   <option value="female">Female</option>
                   <option value="male">Male</option>
                 </select>
               </div>
 
               <div class="form-floating mx-auto mb-3 col-6">
-                <input class="form-control" id="familyId" placeholder="Input your family ID (optional)">
+                <input class="form-control" id="familyId" placeholder="Input your family ID (optional)"/>
                 <label for="familyId">Family ID (optional)</label>
+                <img src="/info-svgrepo-com.svg" alt="info" class="icon-image" data-bs-delay="0" data-bs-trigger="hover focus" data-bs-toggle="tooltip" data-bs-placement="top" title="If you are a new user, please leave this field blank. You can retrieve your family referral code on your profile">
               </div>
               
               <!-- <hr> -->
@@ -87,13 +97,51 @@ export default{
         </div>
       </div>
     </div>
-    
-    
   </div>
   
 </template>
 
 
 <style scoped>
+
+familyId{
+  position:relative;
+}
+  .icon-image {
+    position: absolute;
+    top: 32%;
+    margin-right: 5px;
+    right: 0;
+    width: 20px;
+    height: 20px;
+
+
+  }
+/* .tooltip{
+  position:relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext{
+  position:absolute;
+  top: 0;
+  right: 0;
+  margin-top: 10px;
+  margin-right: 10px;
+  font-size: 20px;
+  background-color: black;
+  visibility: hidden;
+  width: 120px;
+  padding: 5px 0;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 1s;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+} */
 
 </style>

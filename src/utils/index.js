@@ -61,9 +61,28 @@ export const register = () => {
     var alertstr = '';
     if (email.length < 4) {
         alertstr += 'Please enter an email address.' + '\n';
+    }else{
+        if (
+            !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)
+        ) {
+            alertstr += 'Email address is invalid.' + '\n';
+        }
     }
     if (password.length < 6) {
         alertstr += 'Please enter a valid password.' + '\n';
+    } else{
+        if(password.length < 8){
+            alertstr += 'Password must be at least 8 characters long.' + '\n';
+        }
+        if(!/[A-Z]/.test(password) || !/[a-z]/.test(password)){
+            alertstr += 'Password must contain at least one uppercase and lowercase letter.' + '\n';
+        }
+        if(!/[^0-9a-zA-Z]/.test(password)){
+            alertstr += 'Password must be aplanumeric' + '\n';
+        }
+        if(!/[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(password)){
+            alertstr += 'Password must contain at least one special character.' + '\n';
+        }
     }
     if (name.length == 0) {
         alertstr += 'Please enter your name.' + '\n';
@@ -901,9 +920,7 @@ export const updateCalories = (userId, calorieConsumed, dailyCalorieIntake, calo
 };
 
 export const saveIngredients = (obj, itemName, quantity, selectedValue) => {
-    console.log("createFridge is called");
-    console.log("retrieveditemname" + obj.itemName);
-    console.log("retrieveditemname" + obj.quantity);
+    
     let wordArr = itemName.split(' ')
     for (let i = 0; i < wordArr.length; i++) {
         wordArr[i] = wordArr[i][0].toUpperCase() + wordArr[i].substr(1);
