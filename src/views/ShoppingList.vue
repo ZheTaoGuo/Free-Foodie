@@ -103,14 +103,14 @@ export default {
     <NavBar></NavBar>
     <TabsWrapper>
 
-        <IndividualTab title="Personal" id="personal-style">
+        <IndividualTab title="Unassigned" id="personal-style">
             <div v-for="item of missingList">
                 <ShoppingItem :title="'Personal'" :itemName="item.name" :user="selectedUser" :familyMembers="familyMembers"
                     @assignItem="moveItem" :itemImage="item.image"></ShoppingItem>
             </div>
 
         </IndividualTab>
-        <IndividualTab title="Family" id="family-style">
+        <IndividualTab title="Assigned" id="family-style">
 
             <div class="container-fluid">
                 <div class="row">
