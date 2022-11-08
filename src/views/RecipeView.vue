@@ -4,14 +4,20 @@
     import router from '../router'
     import Instruction from '../components/InstructionView.vue'
     import Ingredient from '../components/IngredientView.vue'
+    import NavBar from '../components/Navbar.vue'
     import {
-        getFavourite, getPast, getAll, addToFavourite, retrieveIngredients, addToMissing
+        getFavourite,
+        getPast,
+        getAll,
+        addToFavourite,
+        retrieveIngredients,
+        addToMissing
     } from '../utils'
 
     const USERID = 1
 
     export default {
-        data(){
+        data() {
             return {
                 queryType: '',
                 selectedRecipe: 0,
@@ -23,6 +29,7 @@
         components: {
             Instruction,
             Ingredient,
+            NavBar,
         },
         methods: {
             getFavouriteRecipe() {
@@ -54,7 +61,7 @@
                 })
                 console.log('end methods');
             },
-            addToFav(){
+            addToFav() {
                 console.log('Start addToFav');
 
                 addToFavourite(USERID, this.selectedRecipe)
@@ -62,7 +69,7 @@
 
                 console.log('End addToFav');
             },
-            getAllFridgeIngredient(){
+            getAllFridgeIngredient() {
                 console.log('Start getAllFridgeIngredient');
 
                 retrieveIngredients().then((value) => {
@@ -70,11 +77,11 @@
                 })
                 console.log('End getAllFridgeIngredient');
             },
-            getMissing(missingIngredient, recipeId){
+            getMissing(missingIngredient, recipeId) {
                 // console.log(missingIngredient, recipeId);
                 this.shoppingList[recipeId] = missingIngredient
             },
-            callAddToMissing(recipeId){
+            callAddToMissing(recipeId) {
                 // console.log(this.shoppingList[recipeId]);
                 addToMissing(USERID, this.shoppingList[recipeId])
             }
@@ -85,63 +92,92 @@
             console.log(this.queryType);
             if (this.queryType == 'favourite') {
                 this.getFavouriteRecipe()
-            } else if(this.queryType == 'past'){
+            } else if (this.queryType == 'past') {
                 this.getPastRecipe()
-             }else {
+            } else {
                 this.getAllRecipe()
             }
 
-           this.getAllFridgeIngredient()
-           console.log(this.shoppingList);
+            this.getAllFridgeIngredient()
+            console.log(this.shoppingList);
         }
     }
-    
-
 </script>
 
 <template>
+    <!-- Modal popup to notifiy of missing ingredients add -->
+    <div class="modal fade" id="itemModal" tabindex="-1" aria-labelledby="itemModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="itemModal">Added New Ingredient</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h6>
+                        All missing ingredients have been added to your shopping list!
+                    </h6>
+                </div>
+            </div>
+        </div>
+    </div> <!-- End of Modal -->
 
-    <div class="container-fluid align-items-start">
+    <NavBar></NavBar>
+    <div class="container-fluid align-items-start mt-2">
         <div class="row">
             <div class="col-3">
                 <div class="nav nav-pills flex-column me-3" id="v-tab" role="tablist" aria-orientation="vertical">
                     <!-- eslint-disable-next-line -->
                     <button v-for="recipe of recipes" class="nav-link border p-4 my-2 receipe-button"
-                        :class="{active: recipe['recipeId'] == selectedRecipe}" id="v-settings-tab" data-bs-toggle="pill"
-                        :data-bs-target="'#v-settings'+recipe['recipeId']" type="button" role="tab" aria-controls="v-settings"
+                        :class="{active: recipe['recipeId'] == selectedRecipe}" id="v-settings-tab"
+                        data-bs-toggle="pill" :data-bs-target="'#v-settings'+recipe['recipeId']" type="button"
+                        role="tab" aria-controls="v-settings"
                         :aria-selected="recipe['recipeId'] == selectedRecipe">{{recipe['recipeName']}}
                     </button>
                 </div>
             </div>
             <div class="col-9 position-relative">
-                <div class="tab-content position-sticky top-0 background-style" id="v-pills-tabContent" style="overflow-y: auto; max-height: 100vh;">
+                <div class="tab-content position-sticky top-0 background-style" id="v-pills-tabContent"
+                    style="overflow-y: auto; max-height: 100vh;">
                     <!-- eslint-disable-next-line -->
-                    <div v-for="recipe of recipes" class="tab-pane fade" 
+                    <div v-for="recipe of recipes" class="tab-pane fade"
                         :class="{active: recipe['recipeId'] == selectedRecipe, show: recipe['recipeId'] == selectedRecipe}"
-                        :id="'v-settings'+recipe['recipeId']" role="tabpanel" :aria-labelledby="'recipe'+recipe['recipeId']"
-                        tabindex="0">
+                        :id="'v-settings'+recipe['recipeId']" role="tabpanel"
+                        :aria-labelledby="'recipe'+recipe['recipeId']" tabindex="0">
                         <div class="container-fluid mt-3 px-4">
-                            <div class="image-style" :style="{ background: 'url(' + recipe['image'] + ') no-repeat', backgroundSize: 'cover', backgroundPosition: 'center', height:'35vh'}">
+                            <div class="image-style"
+                                :style="{ background: 'url(' + recipe['image'] + ') no-repeat', backgroundSize: 'cover', backgroundPosition: 'center', height:'35vh'}">
                                 <div class="image-style" style="background-color: rgba(0, 0, 0, 0.5); height:inherit">
-                                    <div class="d-flex justify-content-center align-items-center mt-2 p-5 text-white rounded" style="height:inherit">
-                                        <h1 style="font-weight: 800; text-shadow: 2px 2px rgba(0, 0, 0, 0.7)" >{{recipe['recipeName']}}</h1>
+                                    <div class="d-flex justify-content-center align-items-center mt-2 p-5 text-white rounded"
+                                        style="height:inherit">
+                                        <h1 style="font-weight: 800; text-shadow: 2px 2px rgba(0, 0, 0, 0.7)">
+                                            {{recipe['recipeName']}}</h1>
                                     </div>
                                 </div>
                             </div>
-                       
+
                             <div class="p-3 text-white rounded">
                                 <h2 class="instructions-style">Instructions</h2>
                             </div>
-                            <Instruction :name="recipe['recipeName']" :recipeId="recipe['recipeId']" :instructions="recipe['instructions'][0]['steps']"></Instruction>
-            
+                            <Instruction :name="recipe['recipeName']" :recipeId="recipe['recipeId']"
+                                :instructions="recipe['instructions'][0]['steps']"></Instruction>
+
                             <div class="p-3 text-white rounded">
                                 <h2 class="instructions-style">Ingredients</h2>
                             </div>
-                            <Ingredient :name="recipe['recipeName']" :recipeId="recipe['recipeId']" :ingredients="recipe['ingredientDetails']" 
-                                :fridge="fridgeContent" @missing="getMissing"></Ingredient>
+                            <Ingredient :name="recipe['recipeName']" :recipeId="recipe['recipeId']"
+                                :ingredients="recipe['ingredientDetails']" :fridge="fridgeContent"
+                                @missing="getMissing"></Ingredient>
                             <hr>
-                            <button class="btn btn-secondary me-2" v-show="queryType !== 'favourite' && queryType !== 'past'" @click="addToFav()">Favourite</button>
-                            <button class="btn btn-secondary" v-show="queryType !== 'favourite' && queryType !== 'past'" @click="callAddToMissing(recipe['recipeId'])">Use this recipe</button>
+                            <button class="btn btn-secondary me-2"
+                                v-show="queryType !== 'favourite' && queryType !== 'past'"
+                                @click="addToFav()">Favourite</button>
+                            <!-- <button class="btn btn-secondary" v-show="queryType !== 'favourite' && queryType !== 'past'"
+                                @click="callAddToMissing(recipe['recipeId'])">Use this recipe</button> -->
+                            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" v-show="queryType !== 'favourite' && queryType !== 'past'"
+                                data-bs-target="#itemModal"  @click="callAddToMissing(recipe['recipeId'])">
+                                Use this recipe
+                            </button>
                             <hr>
                         </div>
                     </div>
@@ -152,39 +188,40 @@
 </template>
 
 <style scoped>
+    .background-style {
+        background-color: #343b49;
+    }
 
-.background-style{
-    background-color: #343b49;
-}
+    .image-style {
+        border-radius: 20px;
+    }
 
-.image-style{
-    border-radius: 20px;
-}
+    .instructions-style {
+        font-weight: 600;
+    }
 
-.instructions-style{
-    font-weight: 600;
-}
-.receipe-button{
-    /* box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.3)!important; */
-    background-color: white!important;
-    border-color: #343b49!important;
-    color: #343b49!important;
-}
-.receipe-button:hover{
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3)!important;
-    background-color: #343b49!important;
-    border-color: #343b49!important;
-    color: white!important;
-    font-size: 1em;
-    font-weight: 500;
-}
+    .receipe-button {
+        /* box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.3)!important; */
+        background-color: white !important;
+        border-color: #343b49 !important;
+        color: #343b49 !important;
+    }
 
-.receipe-button.active{
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3)!important;
-    background-color: #343b49!important;
-    border-color: #343b49!important;
-    color: white!important;
-    font-size: 1em;
-    font-weight: 500;
-}
+    .receipe-button:hover {
+        box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3) !important;
+        background-color: #343b49 !important;
+        border-color: #343b49 !important;
+        color: white !important;
+        font-size: 1em;
+        font-weight: 500;
+    }
+
+    .receipe-button.active {
+        box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3) !important;
+        background-color: #343b49 !important;
+        border-color: #343b49 !important;
+        color: white !important;
+        font-size: 1em;
+        font-weight: 500;
+    }
 </style>
