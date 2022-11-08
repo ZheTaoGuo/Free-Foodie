@@ -53,37 +53,18 @@
         </div>
       </div>
     </div>
-    
-    <div class="footer d-flex justify-content-center">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-6 col-md-12" id="copyright">
-            <p>Copyrights &copy; 2022 - <a href="">FreeFoodie</a>, All Rights Reserved.<br>
-            </p>
-          </div>
-          <div class="col-lg-6 col-md-12">
-            <div class="social-icons">
-              <ul>
-                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-                
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <Footer></Footer>
   </div>
 </template>
 
 <script>
-import Login from "./Login.vue";
 import NavBar from '../components/Navbar.vue'
-import { getLoggedInUser } from "@/utils";
+import Footer from '../components/Footer.vue'
+import { getLoggedInUser,signout } from "@/utils";
 export default {
   components: {
-    NavBar
+    NavBar,
+    Footer
   },
   data() {
     
@@ -98,6 +79,7 @@ export default {
       });
     },
     getLoggedInUser,
+    signout
   },
   mounted(){
     this.getLoggedInUser().then((user)=> {
@@ -128,7 +110,7 @@ export default {
 
 .title {
   font-weight: bold;
-  text-shadow: 2px 2.5px rgba(0, 0, 0, 0.8);
+  text-shadow: 2px 2.5px 2px rgba(0, 0, 0, 0.8);
   color: rgb(255, 255, 255);
   /* background: rgba(255, 255, 255, 0.5); */
   padding: 10px;
@@ -243,6 +225,6 @@ a {
 .carousel-item{
   filter: blur(2px);
   -webkit-filter: blur(2px);
-
+  
 }
 </style>

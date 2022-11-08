@@ -1,5 +1,5 @@
 import { getDatabase, ref, onValue, set, update, push, remove } from "firebase/database";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from 'firebase/auth'
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from 'firebase/auth'
 import { initializeApp } from 'firebase/app';
 import router from "@/router";
 
@@ -102,9 +102,13 @@ export const register = () => {
             // Handle Errors here.
             var errorCode = error.code;
             var errorMessage = error.message;
-            if (errorCode == 'auth/weak-password') {
-                alert('The password is too weak.');
-            } else {
+            if (errorCode === "auth/wrong-password") {
+                alert("Incorrect password!");
+            } 
+            else if (errorCode === "email-already-in-use") {
+                alert("Use a different email!");
+            } 
+            else {
                 alert(errorMessage);
             }
             console.log(error);
@@ -134,9 +138,13 @@ export const signin = () => {
             // Handle Errors here.
             var errorCode = error.code;
             var errorMessage = error.message;
-            if (errorCode === 'auth/wrong-password') {
-                alert('Incorrect password!');
-            } else {
+            if (errorCode === "auth/wrong-password") {
+                alert("Incorrect password!");
+            } 
+            else if (errorCode === "auth/user-not-found") {
+                alert("User not found! Please enter a valid email address");
+            } 
+            else {
                 alert(errorMessage);
             }
             console.log(error);
@@ -179,8 +187,8 @@ export const googlesignup = () => {
     }).catch(function (error) {
         var errorCode = error.code;
         var errorMessage = error.message;
-        if (errorCode === 'auth/wrong-password') {
-            alert('Incorrect password!');
+        if (errorCode === 'auth/popup-closed-by-user'){
+            alert('Please try again! Do not close the popup before logging in');
         } else {
             alert(errorMessage);
         }
@@ -216,13 +224,27 @@ export const googlesignin = () => {
         .catch(function (error) {
             var errorCode = error.code;
             var errorMessage = error.message;
-            if (errorCode === "auth/wrong-password") {
-                alert("Incorrect password!");
-            } else {
+            if (errorCode === 'auth/popup-closed-by-user'){
+                alert('Please try again! Do not close the popup before logging in');}
+            else if (errorCode === "email-already-in-use") {
+                alert("Use a different email!");
+            } 
+            else {
                 alert(errorMessage);
             }
             console.log(error);
         });
+};
+
+export const signout = ()=>{
+    signOut(getAuth())
+    .then(() => {
+        console.log('Signed Out');
+        router.push('/Login')
+    })
+    .catch(e=>{
+        console.error('Sign Out Error', e);
+    });
 };
 
 // Getting all the recipe from the DB for display in SearchRecipe.vue
@@ -662,14 +684,14 @@ export const getFamily = (userId) => {
             // console.log("this isssss data", data);
             for (let j = 0; j < data.length; j++) {
                 let obj = data[j];
-                // console.log("this is obj", obj);
+                // console.log("this isssss obj", obj);
                 for (let user of Object.keys(obj.users)) {
-                    console.log("this is user", user);
+                    // console.log("this is user", user);
                     if (user == undefined) {
                         continue;
                     }
                     if (user == userId) {
-                        console.log("this is resolved", obj);
+                        // console.log("this is resolved", obj);
                         return resolve(obj);
                     }
                     // console.log('no')

@@ -1,4 +1,5 @@
 <template>
+  <NavBar></NavBar>
   <TabsWrapper>
 
     <IndividualTab title="All" id="all">
@@ -100,7 +101,7 @@ import TabsWrapper from '../components/TabsWrapperFridge.vue';
 
 <script>
 import { saveIngredients, retrieveIngredients } from '../utils'
-
+import NavBar from '../components/Navbar.vue';
 
 
 export default {
@@ -116,6 +117,9 @@ export default {
       sauces: [],
       freshProduce: []
     }
+  },
+  components:{
+    NavBar
   },
   methods: {
     saveIngredients
