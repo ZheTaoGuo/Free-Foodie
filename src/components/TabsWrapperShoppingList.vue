@@ -5,9 +5,9 @@
   <div class="container-fluid tabs-wrapper d-flex flex-column w-100">
     <div class="row tabs-header">
       <div class="col individual-tab-style mx-4 text-center" v-for="title in tabTitlesSlot" :key="title"
-        :class="{ selected: title == selectedTitle, active:hover }"
-        :style="{ 'background-color': title == selectedTitle ? 'green' : 'white' }" @click="selectedTitle = title"
-        @mouseover="hover = true">
+        :class="{ selected: title == selectedTitle }"
+        :style="{ 'background-color': title == selectedTitle ? 'green' : (hover == true && hoverTitle == title) ? 'blue' : 'white' }" @click="onClickEffect($event)"
+        @mouseenter="onHoverEffect($event)" @mouseleave="outHoverEffect($event)">
         {{ title }}
       </div>
     </div>
@@ -23,16 +23,17 @@ import { ref, provide } from "vue"
 export default {
   data(){
     return{
-      // hover: false
+      hover: false,
+      hoverTitle: ""
     }
   },
   computed: {
-    styleObject: function (title) {
-      return {
-        'background-color': this.title == this.selectedTitle ? 'green' : 'white',
-        'focus': black
-      }
-    }
+    // styleObject: function (title) {
+    //   return {
+    //     'background-color': this.title == this.selectedTitle ? 'green' : 'white',
+    //     'focus': black
+    //   }
+    // }
   },
   setup(props, { slots }) {
     const tabTitlesSlot = ref(slots.default().map((tab) => tab.props.title))
@@ -44,6 +45,25 @@ export default {
       tabTitlesSlot
     }
   },
+  methods: {
+    onHoverEffect(event){
+      console.log("this is event", event)
+      // event.path[0].style.backgroundColor = "green"
+      this.hover = true
+      this.hoverTitle = event.path[0].innerText
+    },
+    outHoverEffect(event){
+      // event.path[0].style.backgroundColor = "white"
+      // event.path[0].innerText
+      this.hover = false
+      this.hoverTitle = ""
+    },
+    onClickEffect(event) {
+      this.selectedTitle = event.path[0].innerText
+      console.log("this is event", event)
+      event.path[0].style.backgroundColor = "green"
+    }
+  }
 }
 </script>
 <style scoped>
@@ -67,13 +87,13 @@ export default {
   width: 100%;
 }
 
-.individual-tab-style:hover {
+/* .individual-tab-style:hover {
   background-color: red;
-}
+} */
 
-.active {
+/* .active {
   background-color: blue;
-}
+} */
 
 .tabs-header {
   width: auto;
