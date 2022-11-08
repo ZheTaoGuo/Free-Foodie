@@ -34,11 +34,6 @@ const routes = [
         component: () => import('../views/CalorieTracker.vue')
     },
     {
-        path: '/homeview',
-        name: 'HomeView',
-        component: HomeView
-    },
-    {
         path: '/past',
         name: 'Past',
         component: () => import('../views/PastRecipe.vue')

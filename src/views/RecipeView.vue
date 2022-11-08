@@ -10,11 +10,12 @@
         getPast,
         getAll,
         addToFavourite,
+        addToPast,
         retrieveIngredients,
-        addToMissing
+        addToMissing,
+        getLoggedInUser,
     } from '../utils'
 
-    const USERID = 1
 
     export default {
         data() {
@@ -24,6 +25,7 @@
                 recipes: [],
                 fridgeContent: [],
                 shoppingList: {},
+                loggedInUser: 0,
             }
         },
         components: {
@@ -31,10 +33,32 @@
             Ingredient,
             NavBar,
         },
+        async mounted() {
+            
+
+            const currentUser = await getLoggedInUser();
+            this.loggedInUser = currentUser.userId
+            console.log('Current UserId: ', this.loggedInUser);
+
+            this.queryType = this.$route.query.type;
+            this.selectedRecipe = this.$route.query.recipeId;
+            console.log(this.queryType);
+            if (this.queryType == 'favourite') {
+                this.getFavouriteRecipe()
+            } else if (this.queryType == 'past') {
+                this.getPastRecipe()
+            } else {
+                this.getAllRecipe()
+            }
+
+            this.getAllFridgeIngredient()
+            console.log(this.shoppingList);
+
+        },
         methods: {
             getFavouriteRecipe() {
                 console.log('start method');
-                getFavourite(USERID).then((value) => {
+                getFavourite(this.loggedInUser).then((value) => {
                     console.log(value);
                     this.recipes = value
                 }).catch((message) => {
@@ -44,7 +68,7 @@
             },
             getPastRecipe() {
                 console.log('start method');
-                getPast(USERID).then((value) => {
+                getPast(this.loggedInUser).then((value) => {
                     console.log(value);
                     this.recipes = value
                 }).catch((message) => {
@@ -64,7 +88,7 @@
             addToFav() {
                 console.log('Start addToFav');
 
-                addToFavourite(USERID, this.selectedRecipe)
+                addToFavourite(this.loggedInUser, this.selectedRecipe)
                 router.push('/favourite')
 
                 console.log('End addToFav');
@@ -83,23 +107,9 @@
             },
             callAddToMissing(recipeId) {
                 // console.log(this.shoppingList[recipeId]);
-                addToMissing(USERID, this.shoppingList[recipeId])
+                addToPast(this.loggedInUser, this.selectedRecipe)
+                addToMissing(this.loggedInUser, this.shoppingList[recipeId])
             }
-        },
-        mounted() {
-            this.queryType = this.$route.query.type;
-            this.selectedRecipe = this.$route.query.recipeId;
-            console.log(this.queryType);
-            if (this.queryType == 'favourite') {
-                this.getFavouriteRecipe()
-            } else if (this.queryType == 'past') {
-                this.getPastRecipe()
-            } else {
-                this.getAllRecipe()
-            }
-
-            this.getAllFridgeIngredient()
-            console.log(this.shoppingList);
         }
     }
 </script>

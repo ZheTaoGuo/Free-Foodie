@@ -97,6 +97,11 @@ export const register = () => {
                 activityFrequency: "",
                 calorieDetails: []
             });
+            if (familyId == ''){
+                createFamily(result.user.uid,name)
+            }else{
+                addFamilyMember(result.user.uid, name, familyId)
+            }
             router.push('/')
         }).catch(function (error) {
             // Handle Errors here.
@@ -183,6 +188,7 @@ export const googlesignup = () => {
             activityFrequency: "",
             calorieDetails: []
         });
+        addFamilyMember(result.user.uid, name, familyId)
         router.push('/')
     }).catch(function (error) {
         var errorCode = error.code;
@@ -240,7 +246,7 @@ export const signout = ()=>{
     signOut(getAuth())
     .then(() => {
         console.log('Signed Out');
-        router.push('/Login')
+        router.push('/')
     })
     .catch(e=>{
         console.error('Sign Out Error', e);
@@ -267,8 +273,49 @@ export const getAll = () => {
     })
 }
 
+export const filterBar = (selectedCuisine, selectedDiet, selectedDish) => {
+    if(selectedCuisine != 'Cuisines' && selectedDiet == 'Diet' && selectedDish == 'Dish' ){
+        console.log('Only have cuisine');
+        return checkCuisine(selectedCuisine)
+    }else if (selectedCuisine == 'Cuisines' && selectedDiet != 'Diet' && selectedDish == 'Dish' ){
+        console.log('Only have diet');
+        return checkDiet(selectedDiet)
+    }else if (selectedCuisine == 'Cuisines' && selectedDiet == 'Diet' && selectedDish != 'Dish' ){
+        console.log('Only have dish');
+        return checkDish(selectedDish)
+    }else{
+        if (selectedCuisine == 'Cuisines'){
+            selectedCuisine = ''
+        }
+        if (selectedDiet == 'Diet'){
+            selectedDiet = ''
+        }
+        if (selectedDish == 'Dish'){
+            selectedDish = ''
+        }
+        return new Promise((resolve, reject) => {
+            console.log('start promise');
+            var recipeFound = []
+            // eslint-disable-next-line
+            const recipes = ref(db, 'recipes');
+            onValue(recipes, (snapshot) => {
+                const data = snapshot.val();
+                for (const obj of data) {
+                    if (('cuisines' in obj && 'diets' in obj && 'dishTypes' in obj) && (obj.cuisines.includes(selectedCuisine) && obj.diets.includes(selectedDiet) && obj.dishTypes.includes(selectedDish)) && !recipeFound.includes(obj)) {
+                        recipeFound.push(obj)
+                    }
+                }
+                // console.log(recipeFound);
+                return resolve(recipeFound)
+            })
+            console.log('end promises');
+            console.log('this is recipefound', recipeFound);
+        })
+    }
+}
+
 // Filter by Cuisine
-export const checkCuisine = (phrase) => {
+function checkCuisine(phrase) {
     return new Promise((resolve, reject) => {
         console.log('start promise');
         var recipeFound = []
@@ -290,7 +337,7 @@ export const checkCuisine = (phrase) => {
 }
 
 // Filter bu Diet
-export const checkDiet = (phrase) => {
+function checkDiet(phrase){
     return new Promise((resolve, reject) => {
         console.log('start promise');
         var recipeFound = []
@@ -312,7 +359,7 @@ export const checkDiet = (phrase) => {
 }
 
 // Filter by Dish Type
-export const checkDish = (phrase) => {
+function checkDish(phrase) {
     return new Promise((resolve, reject) => {
         console.log('start promise');
         var recipeFound = []
@@ -483,6 +530,17 @@ export const addToFavourite = (userid, recipeId) => {
     console.log('End addToFavourite');
 }
 
+// Adding a recipe from recipe page to user's Past list [Takes in USERID, recipeId]
+export const addToPast = (userid, recipeId) => {
+    console.log('Start addToFavourite');
+
+    console.log(userid, recipeId);
+    const userFavList = ref(db, "users/" + userid + "/PastRecipes/" + recipeId)
+    set(userFavList, Number(recipeId))
+
+    console.log('End addToFavourite');
+}
+
 // Adding missing items to family list of missing ingredients
 export const addToMissing = (userId, missingItems) => {
     getFamily(userId).then((value) => {
@@ -541,12 +599,12 @@ function removeItem(userId, itemName) {
     return new Promise((resolve, reject) => {
         getFamily(userId).then((value) => {
             let familyId = value.familyId
-            // console.log('Item adding: ', itemName);
+            console.log('Item adding: ', itemName);
             const missingListRef = ref(db, 'families/' + familyId + '/missingIngredients')
             onValue(missingListRef, (snapshot) => {
                 const missingList = snapshot.val()
                 for (const item in missingList) {
-                    if (missingList[item] == itemName) {
+                    if (missingList[item].name == itemName) {
                         remove(ref(db, 'families/' + familyId + '/missingIngredients/' + item))
                     }
                 }
@@ -557,19 +615,20 @@ function removeItem(userId, itemName) {
 }
 
 // Add item into the user's assignedIngredients
-function addItem(userId, itemName) {
+function addItem(userId, itemName, itemImage) {
     const newUserItem = ref(db, 'users/' + userId + '/assignedIngredients')
     push(newUserItem, {
         itemName: itemName,
         itemType: 'NA',
-        quantity: 1
+        quantity: 1,
+        image: itemImage,
     })
 }
 
 // Remove assigned item from missingIngredients, add new item into user's assignedIngredients
-export const assignItem = (userId, itemName) => {
+export const assignItem = (userId, itemName, itemImage) => {
     removeItem(userId, itemName)
-    addItem(userId, itemName)
+    addItem(userId, itemName, itemImage)
 }
 
 // Profile Functions
@@ -598,38 +657,38 @@ async function getIndex(table) {
 
 
 // creating a new user account
-export const createUser = (username, email, password) => {
-    console.log("createUser is called");
+// export const createUser = (username, email, password) => {
+//     console.log("createUser is called");
 
-    if (username == "" || email == "" || password == "") {
-        console.log("Please input your username, email and password");
-        return;
-    }
+//     if (username == "" || email == "" || password == "") {
+//         console.log("Please input your username, email and password");
+//         return;
+//     }
 
-    console.log("this is res", getIndex("users"));
-    getIndex("users").then(
-        function (value) {
-            console.log("this is the returned index", value);
-            console.log("this is userId ATER CALLING", value);
-            set(ref(db, "users/" + value), {
-                userId: value,
-                familyId: "",
-                username: username,
-                email: email,
-                password: password,
-                gender: "",
-                age: "",
-                height: "",
-                weight: "",
-                activityFrequency: "",
-                calorieDetails: [],
-            });
-        },
-        function (error) {
-            console.log("Error: " + error.message);
-        }
-    );
-};
+//     console.log("this is res", getIndex("users"));
+//     getIndex("users").then(
+//         function (value) {
+//             console.log("this is the returned index", value);
+//             console.log("this is userId ATER CALLING", value);
+//             set(ref(db, "users/" + value), {
+//                 userId: value,
+//                 familyId: "",
+//                 username: username,
+//                 email: email,
+//                 password: password,
+//                 gender: "",
+//                 age: "",
+//                 height: "",
+//                 weight: "",
+//                 activityFrequency: "",
+//                 calorieDetails: [],
+//             });
+//         },
+//         function (error) {
+//             console.log("Error: " + error.message);
+//         }
+//     );
+// };
 
 // creating family table
 export const createFamily = (userId, userName) => {
@@ -642,9 +701,10 @@ export const createFamily = (userId, userName) => {
         function (value) {
             console.log("this is the returned index", value);
             // creating the family table
-            set(ref(db, "families/" + value), {
-                familyId: value,
-                referralCode: Math.floor(100000 + Math.random() * 900000),
+            let code = Math.floor(100000 + Math.random() * 900000)
+            set(ref(db, "families/" + code), {
+                familyId: code,
+                referralCode: code,
                 users: {
                     [userId]: {
                         userId: userId,
@@ -655,7 +715,7 @@ export const createFamily = (userId, userName) => {
 
             // updating the field for familyId in the user table
             update(ref(db, "users/" + userId), {
-                familyId: value,
+                familyId: code,
             });
 
             return value; // this returns the familyId
@@ -682,7 +742,8 @@ export const getFamily = (userId) => {
                 return reject("no family found");
             }
             // console.log("this isssss data", data);
-            for (let j = 0; j < data.length; j++) {
+            console.log('outside');
+            for (let j in data) {
                 let obj = data[j];
                 // console.log("this isssss obj", obj);
                 for (let user of Object.keys(obj.users)) {
@@ -698,6 +759,7 @@ export const getFamily = (userId) => {
                 }
                 // console.log('end of loop')
             }
+            console.log('after');
             // console.log("this is the end")
             return reject("no family found");
         });
@@ -843,7 +905,12 @@ export const saveIngredients = (obj, itemName, quantity, selectedValue) => {
     console.log("createFridge is called");
     console.log("retrieveditemname" + obj.itemName);
     console.log("retrieveditemname" + obj.quantity);
-
+    let wordArr = itemName.split(' ')
+    for (let i = 0; i < wordArr.length; i++) {
+        wordArr[i] = wordArr[i][0].toUpperCase() + wordArr[i].substr(1);
+    }
+    itemName = wordArr.join(' ')
+    console.log(itemName);
     if (
         obj.itemName == undefined ||
         obj.quantity == undefined ||
@@ -870,6 +937,21 @@ export const saveIngredients = (obj, itemName, quantity, selectedValue) => {
     obj.selectedValue = "";
 };
 
+export const deleteFromFridge = (item) => {
+    return new Promise((resolve, reject) => {
+        const ingredients = ref(db, "fridge/");
+        onValue(ingredients, (snapshot) => {
+            const data = snapshot.val();
+            for (let index in data){
+                // console.log(items);
+                if(data[index].Name == item.itemName){
+                    remove(ref(db, 'fridge/' + index))
+                }
+            }
+        })
+    })
+}
+
 export const retrieveIngredients = () => {
     console.log("retrieveIngredients call");
 
@@ -882,7 +964,7 @@ export const retrieveIngredients = () => {
                 return reject("no ingredients found");
             }
             //   console.log("this is data" + data + "1");
-            for (let index = 0; index < data.length; index++) {
+            for (let index in data) {
                 let retrievedObject = data[index];
                 let itemName = retrievedObject.Name;
                 let itemQuantity = retrievedObject.Quantity;

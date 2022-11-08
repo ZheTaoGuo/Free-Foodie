@@ -2,9 +2,8 @@
     import Card from '../components/CardComp.vue'
     import NavBar from '../components/Navbar.vue'
     import data from '../recipes.json'
-    import {getPast, searchFavPast } from '../utils'
+    import {getPast, searchFavPast, getLoggedInUser } from '../utils'
 
-    const USERID = 1
 
     export default {
         components: {
@@ -16,12 +15,13 @@
                 recipes: [],
                 recipeFiltered: [],
                 searchPhrase: '',
+                loggedInUser: 0,
             }
         },
         methods: {
             getPastRecipe() {
                 console.log('start method');
-                getPast(USERID).then((value) => {
+                getPast(this.loggedInUser).then((value) => {
                     this.recipes = value
                 }).catch((message) => {
                     this.recipes = message
@@ -30,7 +30,7 @@
             },
             getFavouriteSearchResult() {
                 console.log('start method');
-                searchFavPast(USERID, this.searchPhrase, 'past').then((value) => {
+                searchFavPast(this.loggedInUser, this.searchPhrase, 'past').then((value) => {
                     this.recipeFiltered = value
                 }).catch((message) => {
                     this.recipeFiltered = message
@@ -38,11 +38,14 @@
                 console.log('end methods');
             }
         },
-        mounted() {
+        async mounted() {
+            const currentUser = await getLoggedInUser();
+            this.loggedInUser = currentUser.userId
+            console.log('Current UserId: ', this.loggedInUser);
+
             console.log('start mounted');
             this.getPastRecipe()
             console.log('end mounted');
-            
         }
     }
 </script>
@@ -51,6 +54,10 @@
     <!--Start of NavBar-->
     <NavBar></NavBar>
     <!--End of NavBar-->
+    <div class="shopping-list-header">
+        <h1 class="text-center">Past Recipes</h1>
+    </div>
+
     <div class="container">
 
         <div class="row">
@@ -87,5 +94,11 @@
 </template>
 
 <style>
-
+.shopping-list-header {
+  background-image: linear-gradient(to bottom right, #7395AE, #379683) !important;
+  /* border-radius: 20px; */
+  color: #fff !important;
+  box-shadow: 0 0 40px 0 rgba(94, 92, 154, .06);
+  margin-bottom: 5px;
+}
 </style>

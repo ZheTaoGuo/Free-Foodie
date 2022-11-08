@@ -60,7 +60,7 @@
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="$emit('closeMe')">Close</button>
               <button type="button" class="btn btn-primary"
                 @click="saveIngredients(this, itemName, quantity, selectedValue)">Save changes</button>
             </div>
@@ -93,7 +93,10 @@ export default {
     }
   },
   methods:{
-    saveIngredients
+    saveIngredients,
+    callSaveIngredients(){
+        
+    }
   },
   mounted(){
     

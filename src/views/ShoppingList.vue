@@ -1,102 +1,107 @@
 <script>
-import IndividualTab from '../components/IndividualTab.vue';
-import TabsWrapper from '../components/TabsWrapperShoppingList.vue'
-import ShoppingItem from '../components/ShoppingItem.vue'
-import NavBar from '../components/Navbar.vue'
-import {
-    getUser,
-    getUserIngredients,
-    getAllMissing,
-    getFamily,
-    assignItem, getLoggedInUser, getAllAssignedIngredients
-} from '../utils'
-// import {sendMessage} from '../utils/send_sms'
-export default {
-    data() {
-        return {
-            selectedUser: 0,
-            users: [],
-            familyUsers: [],
-            missingList: [],
-            assignedList: [],
-            familyMembers: []
-        }
-    },
-    computed: {
+    import IndividualTab from '../components/IndividualTab.vue';
+    import TabsWrapper from '../components/TabsWrapperShoppingList.vue'
+    import ShoppingItem from '../components/ShoppingItem.vue'
+    import NavBar from '../components/Navbar.vue'
+    import {
+        getUser,
+        getUserIngredients,
+        getAllMissing,
+        getFamily,
+        assignItem,
+        getLoggedInUser,
+        getAllAssignedIngredients
+    } from '../utils'
+    import axios from 'axios'
 
-
-    },
-    components: {
-        IndividualTab,
-        TabsWrapper,
-        ShoppingItem,
-        NavBar
-    },
-    async mounted() {
-        this.callGetAllMissing();
-        this.callGetFamily();
-
-        const loggedInUser = await getLoggedInUser();
-        const family = await getFamily(loggedInUser.userId);
-        console.log(family);
-
-        for (let user of Object.values(family.users)) {
-            this.familyUsers.push({
-                userId: user.userId,
-                userName: user.userName,
-                assignedList: []
-            })
-        }
-        // this.familyUsers = Object.values(family.users);
-
-        console.log(this.familyUsers);
-
-        this.getAssignedIngredientPerUser();
-
-    },
-    methods: {
-        moveItem(itemName, event) {
-            // console.log(itemName, event.target.value);
-            let member = event.target.value
-            // console.log(member);
-            assignItem(member, itemName)
-            // sendMessage(itemName)
-            // adding the bottom line will fix the issue with the selected refreshing... but will to force reload causing the screen flash
-            // window.location.reload()
-            this.callGetAllMissing()
+    export default {
+        data() {
+            return {
+                loggedInUser: 0,
+                users: [],
+                familyUsers: [],
+                missingList: [],
+                assignedList: [],
+                familyMembers: [],
+                member: ''
+            }
         },
-        callGetAllMissing() {
-            getAllMissing(this.selectedUser).then((value) => {
-                this.missingList = value
-            })
+        components: {
+            IndividualTab,
+            TabsWrapper,
+            ShoppingItem,
+            NavBar
         },
-        callGetFamily() {
-            getFamily(this.selectedUser).then((value) => {
-                this.familyMembers = value.users
-            })
-        },
-        getAssignedIngredientPerUser() {
-            console.log('START same family userID');
-            console.log(this.familyUsers)
-            console.log('END same family userID');
+        async mounted() {
 
-            for (let obj of this.familyUsers) {
-                console.log(obj);
-                getAllAssignedIngredients(obj.userId).then((value) => {
-                    obj.assignedList = value;
+            const currentUser = await getLoggedInUser();
+            this.loggedInUser = currentUser.userId
+            console.log('Current UserId: ', this.loggedInUser);
+            const family = await getFamily(currentUser.userId);
+            console.log(family);
+
+            for (let user of Object.values(family.users)) {
+                this.familyUsers.push({
+                    userId: user.userId,
+                    userName: user.userName,
+                    assignedList: []
                 })
             }
-            console.log("START ASSIGNED family");
+            // this.familyUsers = Object.values(family.users);
+
             console.log(this.familyUsers);
-            console.log("END ASSIGNED family");
+            this.callGetAllMissing();
+            this.callGetFamily();
+            this.getAssignedIngredientPerUser();
+
         },
-        updateSelectedUser(user) {
-            this.selectedUser = user.userId
-            console.log("hello");
+        methods: {
+            moveItem(itemName, memberId, itemImage) {
+                console.log(itemName, memberId);
+                let member = memberId
+                // console.log(member);
+                assignItem(member, itemName, itemImage)
+                this.sendMessage()
+                this.callGetAllMissing()
+                this.getAssignedIngredientPerUser();
+            },
+            callGetAllMissing() {
+                getAllMissing(this.loggedInUser).then((value) => {
+                    this.missingList = value
+                })
+            },
+            callGetFamily() {
+                getFamily(this.loggedInUser).then((value) => {
+                    this.familyMembers = value.users
+                })
+            },
+            getAssignedIngredientPerUser() {
+                console.log('START same family userID');
+                console.log(this.familyUsers)
+                console.log('END same family userID');
+
+                for (let obj of this.familyUsers) {
+                    console.log(obj);
+                    getAllAssignedIngredients(obj.userId).then((value) => {
+                        obj.assignedList = value;
+                    })
+                }
+                console.log("START ASSIGNED family");
+                console.log(this.familyUsers);
+                console.log("END ASSIGNED family");
+            },
+            updateSelectedUser(user) {
+                this.loggedInUser = user.userId
+                console.log("hello");
+            },
+            sendMessage() {
+                axios.get('https://vue-sms-9655.twil.io/sms')
+                    .then(res => {
+                        console.log(res);
+                    })
+            }
         }
     }
-}
-
 </script>
 
 <template>
@@ -105,8 +110,8 @@ export default {
 
         <IndividualTab title="Unassigned" id="personal-style">
             <div v-for="item of missingList">
-                <ShoppingItem :title="'Personal'" :itemName="item.name" :user="selectedUser" :familyMembers="familyMembers"
-                    @assignItem="moveItem" :itemImage="item.image"></ShoppingItem>
+                <ShoppingItem :title="'Personal'" :itemName="item.name" :user="loggedInUser"
+                    :familyMembers="familyMembers" @assignItem="moveItem" :itemImage="item.image"></ShoppingItem>
             </div>
 
         </IndividualTab>
@@ -117,7 +122,7 @@ export default {
                     <div class="col-3">
                         <div class="nav nav-pills flex-column text-center" id="v-tab" aria-orientation="vertical">
                             <button v-for="user of familyUsers" class="nav-link border p-4 my-2" style="color: black;"
-                                :class="{ active: user.userId == selectedUser }" id="v-settings-tab"
+                                :class="{ active: user.userId == loggedInUser }" id="v-settings-tab"
                                 data-bs-toggle="pill" :data-bs-target="'#v-settings' + users.userId" type="button"
                                 role="tab" aria-controls="v-settings" :aria-selected="users.userId == selectedUser"
                                 @click="updateSelectedUser(user)">
@@ -131,16 +136,17 @@ export default {
                     <div class="col-9">
                         <div class="tab-content" id="v-pills-tabContent">
                             <div v-for="user of familyUsers" class="tab-pane-fade"
-                                :class="{ active: users.userId == selectedUser, show: users.userId == selectedUser }"
-                                :id="'v-settings' + users.userId" :aria-labelledby="users.userId == selectedUser"
+                                :class="{ active: users.userId == loggedInUser, show: users.userId == loggedInUser }"
+                                :id="'v-settings' + users.userId" :aria-labelledby="users.userId == loggedInUser"
                                 role="tabpanel" tabindex="0">
-                                <div v-if="user.userId == selectedUser">
+                                <div v-if="user.userId == loggedInUser">
                                     <div v-if="user.assignedList == null || user.assignedList == undefined">
                                         <h3 class="text-center">No items assigned to you</h3>
                                     </div>
                                     <div v-else>
                                         <ShoppingItem v-for="item of user.assignedList" :title="'Family'"
-                                            :itemName="item.itemName" :user="selectedUser" :familyMembers="familyUsers"
+                                            :itemName="item.itemName" :user="loggedInUser" 
+                                            :familyMembers="familyUsers" :itemImage="item.image"
                                             @assignItem="moveItem">
                                         </ShoppingItem>
                                     </div>
@@ -158,7 +164,7 @@ export default {
 </template>
 
 <style>
-.tabs-component {
-    color: green;
-}
+    .tabs-component {
+        color: green;
+    }
 </style>

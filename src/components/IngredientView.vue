@@ -56,15 +56,15 @@ export default {
         <table>
             <tr v-for="item of ingredients" style="text-align:left">
                 <td class="ingredientavail"><span v-if="fridge.find(food => {
-                    return food.itemName == item.originalName
+                    return food.itemName == item.name
                 })">👍 </span>
                 <span v-else-if="fridge.find(food => {
-                    if (food.itemName != item.originalName) this.missingIngredient.push({name: item.originalName, image: item.image})
+                    if (food.itemName != item.name) this.missingIngredient.push({name: item.name, image: item.image})
                     return true
                 })">👎 </span></td>
                 <td class="ingredientdesc"><span v-if="Number.isInteger(item.amount)">{{item.amount}}&nbsp</span> 
                     <span v-else>{{item.amount.toFixed(2)}}&nbsp</span>
-                    <span v-if="item.unit">{{item.unit}} of </span> <span>{{item.originalName}}</span></td>
+                    <span v-if="item.unit">{{item.unit}} of </span> <span>{{item.name}}</span></td>
                 </tr>
             </table>
         </div>
