@@ -166,13 +166,13 @@
                                 </div>
                             </div>
 
-                            <div class="p-3 text-white rounded">
+                            <div class="p-3 text-dark rounded">
                                 <h2 class="instructions-style">Instructions</h2>
                             </div>
                             <Instruction :name="recipe['recipeName']" :recipeId="recipe['recipeId']"
                                 :instructions="recipe['instructions'][0]['steps']"></Instruction>
 
-                            <div class="p-3 text-white rounded">
+                            <div class="p-3 text-dark rounded">
                                 <h2 class="instructions-style">Ingredients</h2>
                             </div>
                             <Ingredient :name="recipe['recipeName']" :recipeId="recipe['recipeId']"
@@ -199,7 +199,7 @@
 
 <style scoped>
     .background-style {
-        background-color: #343b49;
+        background-color: rgb(183, 221, 234);
     }
 
     .image-style {
@@ -213,25 +213,24 @@
     .receipe-button {
         /* box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.3)!important; */
         background-color: white !important;
-        border-color: #343b49 !important;
-        color: #343b49 !important;
+        border-color: rgba(0, 0, 0, 0.5) !important;
+        color: black !important;
+        font-weight: 500;
     }
 
     .receipe-button:hover {
         box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3) !important;
-        background-color: #343b49 !important;
-        border-color: #343b49 !important;
-        color: white !important;
-        font-size: 1em;
+        background-color: rgb(183, 221, 234) !important;
+        border-color: white !important;
+        color: black !important;
         font-weight: 500;
     }
 
     .receipe-button.active {
         box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3) !important;
-        background-color: #343b49 !important;
-        border-color: #343b49 !important;
-        color: white !important;
-        font-size: 1em;
+        background-color: rgb(183, 221, 234) !important;
+        border-color: white !important;
+        color: black !important;
         font-weight: 500;
     }
 </style>

@@ -52,7 +52,7 @@ export default {
 </script>
 
 <template>
-    <div class="text-light">
+    <div class="text-dark">
         <table>
             <tr v-for="item of ingredients" style="text-align:left">
                 <td class="ingredientavail"><span v-if="fridge.find(food => {
@@ -74,7 +74,7 @@ export default {
     .ingredientavail{
         font-size: 1.2em;
         font-weight: 500;
-        border-right: 2px solid white;
+        border-right: 2px solid black;
         margin-right: 1.2em;
         text-align: right;
         padding: 0.5em;

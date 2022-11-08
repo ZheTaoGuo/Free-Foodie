@@ -126,7 +126,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: green;
+  background-color: rgb(183, 221, 234);
   border: 1px solid black;
   padding-bottom: 5px;
   text-align: center;
@@ -155,7 +155,7 @@ export default {
 }
 
 .tabs-header li.selected {
-  background-color: green;
+  background-color: rgb(183, 221, 234);
   color: white;
 }
 

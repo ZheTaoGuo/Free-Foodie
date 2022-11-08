@@ -6,7 +6,7 @@
     <div class="row tabs-header">
       <div class="col individual-tab-style mx-4 text-center" v-for="title in tabTitlesSlot" :key="title"
         :class="{ selected: title == selectedTitle, active:hover }"
-        :style="{ 'background-color': title == selectedTitle ? 'green' : 'white' }" @click="selectedTitle = title"
+        :style="{ 'background-color': title == selectedTitle ? 'rgb(183, 221, 234)' : 'white' }" @click="selectedTitle = title"
         @mouseover="hover = true">
         {{ title }}
       </div>

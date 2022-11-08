@@ -37,6 +37,6 @@ export default {
         min-height: 100vh;
         border-radius: 5px;
         /* box-shadow: 5px 10px black; */
-        background-color: green;
+        background-color: rgb(183, 221, 234);
     }
 </style>

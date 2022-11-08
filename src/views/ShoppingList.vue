@@ -165,6 +165,6 @@
 
 <style>
     .tabs-component {
-        color: green;
+        color: rgb(183, 221, 234);
     }
 </style>
