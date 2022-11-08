@@ -62,7 +62,7 @@ export const register = () => {
     if (email.length < 4) {
         alertstr += 'Please enter an email address.' + '\n';
     }
-    if (password.length < 4) {
+    if (password.length < 6) {
         alertstr += 'Please enter a valid password.' + '\n';
     }
     if (name.length == 0) {
