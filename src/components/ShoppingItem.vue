@@ -1,10 +1,11 @@
 <script>
     export default {
-        props: ['title', 'itemName', 'user', 'familyMembers'],
+        props: ['title', 'itemName', 'user', 'familyMembers', 'itemImage'],
         emits: ['assignItem'],
         data() {
             return{
-                famMember: 'Assign to'
+                famMember: 'Assign to',
+                testLink: 'https://engzongwei.github.io/assets/' + this.itemImage,
             }
         },
         methods: {
@@ -13,8 +14,9 @@
                 this.famMember = 'Assign to'
                 this.$emit('assignItem', this.itemName, memberId)
 
-            }
-        }
+            },
+            
+        },
     }
 </script>
 
@@ -22,12 +24,12 @@
     <div class="container-fluid">
         <div class="row justify-content-start">
             <div class="col-3">
-                <img src="../assets/logo.png" style="width: 500; height: 500;" />
+                <img :src="testLink" style="width: 500; height: 500;" />
             </div>
             <div class="col-9">
                 <div class="item-component">
                     <div class="item-information">
-                        <div class="title">{{itemName}}</div>
+                        <div class="title">{{itemName.charAt(0).toUpperCase() + itemName.slice(1)}}</div>
                         <br>
                     </div>
 

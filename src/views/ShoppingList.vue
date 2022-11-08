@@ -109,8 +109,8 @@
 
         <IndividualTab title="Personal" id="personal-style">
             <div v-for="item of missingList">
-                <ShoppingItem :title="'Personal'" :itemName="item" :user="selectedUser" :familyMembers="familyMembers"
-                    @assignItem="moveItem"></ShoppingItem>
+                <ShoppingItem :title="'Personal'" :itemName="item.name" :user="selectedUser" :familyMembers="familyMembers"
+                    @assignItem="moveItem" :itemImage="item.image"></ShoppingItem>
             </div>
 
         </IndividualTab>

@@ -321,6 +321,7 @@ export const searchContent = (phrase) => {
         onValue(recipes, (snapshot) => {
             const data = snapshot.val();
             for (const obj of data) {
+                console.log(obj);
                 if (obj.recipeName.toLowerCase().includes(phrase) && !recipeFound.includes(obj)) {
                     recipeFound.push(obj)
                 }
@@ -351,8 +352,8 @@ export const searchFavPast = (userid, phrase, type) => {
                     location = value.PastRecipes
                 }
                 recipeIds = location;
-                // console.log(recipeIds);
-                for (let id of recipeIds) {
+                console.log(recipeIds);
+                for (let id in recipeIds) {
                     // eslint-disable-next-line
                     const recipes = ref(db, "recipes");
                     onValue(recipes, (snapshot) => {
