@@ -24,7 +24,7 @@
     <div class="container-fluid">
         <div class="row justify-content-start">
             <div class="col-3">
-                <img :src="testLink" style="width: 500; height: 500;" />
+                <img class="img-fluid" :src="testLink" style="width: 500; height: 500;" />
             </div>
             <div class="col-9">
                 <div class="item-component">
