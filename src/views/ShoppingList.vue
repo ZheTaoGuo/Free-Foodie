@@ -2,6 +2,7 @@
 import IndividualTab from '../components/IndividualTab.vue';
 import TabsWrapper from '../components/TabsWrapperShoppingList.vue'
 import ShoppingItem from '../components/ShoppingItem.vue'
+import NavBar from '../components/Navbar.vue'
 import {
     getUser,
     getUserIngredients,
@@ -28,7 +29,8 @@ export default {
     components: {
         IndividualTab,
         TabsWrapper,
-        ShoppingItem
+        ShoppingItem,
+        NavBar
     },
     async mounted() {
         this.callGetAllMissing();
@@ -98,6 +100,7 @@ export default {
 </script>
 
 <template>
+    <NavBar></NavBar>
     <TabsWrapper>
 
         <IndividualTab title="Personal" id="personal-style">
