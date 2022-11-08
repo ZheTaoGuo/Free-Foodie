@@ -6,7 +6,7 @@
     <div class="row tabs-header">
       <div class="col individual-tab-style mx-4 text-center" v-for="title in tabTitlesSlot" :key="title"
         :class="{ selected: title == selectedTitle }"
-        :style="{ 'background-color': title == selectedTitle ? 'green' : (hover == true && hoverTitle == title) ? 'lightgreen' : 'white' }" @click="onClickEffect($event)"
+        :style="{ 'background-color': title == selectedTitle ? 'green' : (hover == true && hoverTitle == title) ? 'blue' : 'white' }" @click="onClickEffect($event)"
         @mouseenter="onHoverEffect($event)" @mouseleave="outHoverEffect($event)">
         {{ title }}
       </div>
