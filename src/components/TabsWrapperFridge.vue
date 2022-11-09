@@ -115,11 +115,14 @@ export default {
           alertMsg += "Please fill in the Item Name field" + "\n"
         }
 
-        if((Number.isFinite(this.quantity)) && this.quantity !== ""){
+        if((Number.isFinite(this.quantity) == false) && this.quantity !== ""){
           alertMsg += "Quantity must only contain numbers" + "\n"
         }
         else if(this.quantity == ""){
           alertMsg += "Please fill in the Quantity field" + "\n"
+        }
+        else if(Number.isFinite(this.quantity) == false){
+          alertMsg += "Quantity must only contain numbers" + "\n"
         }
 
         if(this.selectedValue == "" && this.selectedValue == null){
