@@ -89,10 +89,10 @@
             </div>
             <!--End of Search Bar-->
         </div>
-        <div class="row my-3 g-3 justify-content-between">
+        <div class="row mb-3 g-3 justify-content-between">
             <div class="col-1"></div>
             <!--Start of filter Bar-->
-            <div class="col-3">
+            <div class="col-12 col-md-3">
                 <select class="form-select" aria-label="Cuisine" v-model="selectedCuisine"
                     @change="filterSearch(selectedCuisine, selectedDiet, selectedDish)">
                     <option value="Cuisines">Cuisines</option>
@@ -103,7 +103,7 @@
             </div>
             <!--End of filter Bar-->
             <!--Start of filter Bar-->
-            <div class="col-3">
+            <div class="col-12 col-md-3">
                 <select class="form-select" aria-label="Diets" v-model="selectedDiet"
                     @change="filterSearch(selectedCuisine, selectedDiet, selectedDish)">
                     <option value="Diet">Diets</option>
@@ -114,7 +114,7 @@
             </div>
             <!--End of filter Bar-->
             <!--Start of filter Bar-->
-            <div class="col-3">
+            <div class="col-12 col-md-3">
                 <select class="form-select" aria-label="Dish Type" v-model="selectedDish"
                     @change="filterSearch(selectedCuisine, selectedDiet, selectedDish)">
                     <option value="Dish">Dish Type</option>
