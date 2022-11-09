@@ -564,13 +564,7 @@ export default {
     height: 100vh;
 }
 
-.textBox {
-    background-image: url('../assets/logo.png');
-    background-size: 30px;
-    background-position: left;
-    background-repeat: no-repeat;
-    background-position: 30px;
-}
+
 
 
 select.moreMinimal {
