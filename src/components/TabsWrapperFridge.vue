@@ -114,7 +114,12 @@ export default {
         else if (this.itemName == ""){
           alertMsg += "Please fill in the Item Name field" + "\n"
         }
+<<<<<<< HEAD
         if((Number.isFinite(this.quantity) == false) && this.quantity !== ""){
+=======
+
+        if((Number.isFinite(this.quantity)) && this.quantity !== ""){
+>>>>>>> 82de19c (fix modalStyle)
           alertMsg += "Quantity must only contain numbers" + "\n"
         }
         else if(this.quantity == ""){

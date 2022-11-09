@@ -589,12 +589,15 @@ export default {
     overflow-x: hidden;
 }
 
+<<<<<<< HEAD
 @media (max-width: 991px) {
         .dashboard {
             margin-top: 10px;
         }
     }
 
+=======
+>>>>>>> 82de19c (fix modalStyle)
 select.moreMinimal {
     background-image:
         linear-gradient(45deg, transparent 50%, gray 50%),
