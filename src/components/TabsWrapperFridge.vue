@@ -117,7 +117,6 @@ export default {
         }
 
         if((Number.isFinite(this.quantity)) && this.quantity !== ""){
-
           alertMsg += "Quantity must only contain numbers" + "\n"
         }
         else if(this.quantity == ""){
