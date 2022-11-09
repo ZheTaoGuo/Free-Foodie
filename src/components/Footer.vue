@@ -7,14 +7,20 @@
                     <p class="fw-bold">
                         Directory
                     </p>
-                    <p>
-                        <a href="/CalorieTracker">Calorie Tracker</a>
-                    </p>
-                    <p><a href="/favourite">Favourite Recipes</a></p>
-                    <p><a href="/past">Past Recipes</a></p>
-                    <p><a href="/profile">Profile</a></p>
-                    <p><a href="/search">Recipes</a></p>
-                    <p><a href="/shoppingList">Shopping List</a></p>
+                    <table style="text-align:center; width: 100%;" >
+                        <tr>
+                            <td><a href="/CalorieTracker">Calorie Tracker</a></td>
+                            <td><a href="/favourite">Favourite Recipes</a></td>
+                        </tr>
+                        <tr>
+                            <td><a href="/past">Past Recipes</a></td>
+                            <td><a href="/profile">Profile</a></td>
+                        </tr>
+                        <tr>
+                            <td><a href="/search">Recipes</a></td>
+                            <td><a href="/shoppingList">Shopping List</a></td>
+                        </tr>
+                    </table>
                 </div>
                 <div class="col-lg-4 col-md-12">
                     <img src="../assets/fflogo.png" width="200px">
