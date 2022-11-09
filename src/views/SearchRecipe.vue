@@ -80,7 +80,7 @@
                     <nav class="navbar">
                         <div class="d-flex my-3 my-lg-2 w-75 mx-auto">
                             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"
-                                v-model="searchPhrase">
+                                v-model="searchPhrase" @keyup.enter="getAllSearchResult()">
                             <button class="btn btn-outline-primary ms-2 my-sm-0" type="submit"
                                 @click="getAllSearchResult()">Search</button>
                         </div>
