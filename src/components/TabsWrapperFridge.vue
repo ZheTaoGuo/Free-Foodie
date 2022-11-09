@@ -47,6 +47,7 @@
               <div class="form-group">
                 <label for="Quantity" class="d-flex justify-content-start p-2">Quantity</label>
                 <input type="number" class="form-control" id="Quantity" placeholder="Enter Quantity" v-model="quantity"
+                <input type="number" class="form-control" id="Quantity" placeholder="Enter Quantity" v-model="quantity"
                   required />
               </div>
 
@@ -114,12 +115,13 @@ export default {
         else if (this.itemName == ""){
           alertMsg += "Please fill in the Item Name field" + "\n"
         }
-<<<<<<< HEAD
+
         if((Number.isFinite(this.quantity) == false) && this.quantity !== ""){
-=======
 
         if((Number.isFinite(this.quantity)) && this.quantity !== ""){
->>>>>>> 82de19c (fix modalStyle)
+
+        console.log(this.quantity, typeof(this.quantity));
+        if((Number.isFinite(this.quantity) == false) && this.quantity !== ""){
           alertMsg += "Quantity must only contain numbers" + "\n"
         }
         else if(this.quantity == ""){
