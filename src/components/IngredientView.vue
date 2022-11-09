@@ -34,21 +34,10 @@ const props = defineProps({
     },
 })
 
+const emit = defineEmits(['missing'])
+emit('missing', props.missingIngredient, props.recipeId)
 </script>
 
-<script>
-
-export default {
-    data() {
-        return {
-            missingIngredient: []
-        }
-    },
-    mounted() {
-        this.$emit('missing', this.missingIngredient, this.recipeId)
-    }
-}
-</script>
 
 <template>
     <div class="text-dark">
@@ -58,7 +47,7 @@ export default {
                     return food.itemName.toLowerCase() == item.name.toLowerCase()
                 })">👍 </span>
                 <span v-else-if="fridge.find(food => {
-                    if (food.itemName.toLowerCase() != item.name.toLowerCase()) this.missingIngredient.push({name: item.name, image: item.image})
+                    if (food.itemName.toLowerCase() != item.name.toLowerCase()) missingIngredient.push({name: item.name, image: item.image})
                     return true
                 })">👎 </span></td>
                 <td class="ingredientdesc"><span v-if="Number.isInteger(item.amount)">{{item.amount}}&nbsp</span> 
