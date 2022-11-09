@@ -43,7 +43,7 @@ export default{
 
               <div class="form-floating mx-auto mb-3 col-6">
                 <select class="form-select" id="gender">
-                  <option disabled>Gender</option>
+                  <option selected disabled>Gender</option>
                   <option value="female">Female</option>
                   <option value="male">Male</option>
                 </select>
