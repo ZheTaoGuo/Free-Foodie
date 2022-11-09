@@ -1,6 +1,6 @@
 <template>
   <div class="content" style = "margin-top: 80px;">
-    <div class="container">
+    <div class="container-fluid">
       <div class="row align-items-stretch no-gutters contact-wrap">
         <div class="col-md-12">
           <div class="form h-100">
