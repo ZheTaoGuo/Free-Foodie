@@ -2,7 +2,7 @@
     import Card from '../components/CardComp.vue'
     import NavBar from '../components/Navbar.vue'
     import data from '../recipes.json'
-    import {getPast, searchFavPast, getLoggedInUser } from '../utils'
+    import {getPast, searchFavPast, getLoggedInUser, isLoggedIn } from '../utils'
 
 
     export default {
@@ -19,6 +19,7 @@
             }
         },
         methods: {
+            isLoggedIn,
             getPastRecipe() {
                 console.log('start method');
                 getPast(this.loggedInUser).then((value) => {
@@ -52,7 +53,7 @@
 
 <template>
     <!--Start of NavBar-->
-    <NavBar></NavBar>
+    <NavBar @checkLogin="isLoggedIn()"></NavBar>
     <!--End of NavBar-->
     <div class="shopping-list-header">
         <h1 class="text-center">Past Recipes</h1>

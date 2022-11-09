@@ -1,6 +1,6 @@
 <script>
     import { RouterLink } from 'vue-router'
-    import { getFamily, createFamily, addFamilyMember, getUser, getLoggedInUser } from '../utils'
+    import { getFamily, createFamily, addFamilyMember, getUser, getLoggedInUser, isLoggedIn } from '../utils'
     import * as d3 from "d3";
     // import plot from "@/components/plotWithXandYaxis.vue";
     import NavBar from '../components/Navbar.vue'
@@ -26,6 +26,7 @@
             }
         },
         methods: {
+            isLoggedIn,
             getLoggedInUser,
             // createUser,
             getUser,
@@ -150,7 +151,7 @@
 
 <template>
     <!--Start of NavBar-->
-    <NavBar></NavBar>
+    <NavBar @checkLogin="isLoggedIn()"></NavBar>
     <!--End of NavBar-->
     <div class="mainContent">
         <div class="row">

@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <div class="row">
       <!--Start of NavBar-->
-      <NavBar></NavBar>
+      <NavBar @checkLogin="isLoggedIn()"></NavBar>
       <!--End of NavBar-->
     </div>
     <div class="row " id="carouselStyle ">
@@ -61,7 +61,7 @@
 <script>
 import NavBar from '../components/Navbar.vue'
 import Footer from '../components/Footer.vue'
-import { getLoggedInUser,signout } from "@/utils";
+import { getLoggedInUser,signout, isLoggedIn } from "@/utils";
 export default {
   components: {
     NavBar,
@@ -83,7 +83,8 @@ export default {
     signout,
     callSignOut(){
         this.userName = ''
-    }
+    },
+    isLoggedIn
   },
   mounted(){
     this.getLoggedInUser().then((user)=> {

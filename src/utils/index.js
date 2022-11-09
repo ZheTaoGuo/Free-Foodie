@@ -24,6 +24,17 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
 //Authentication Functions
+export const isLoggedIn = () => {
+    onAuthStateChanged(getAuth(), (currentUser) => {
+        if (currentUser!=null) {
+            router.push('/Profile')
+            return true
+        } else {
+            router.push('/Login')
+            return false
+        }
+    })
+}
 export const getLoggedInUser = () => {
     return new Promise ((resolve) => {
         onAuthStateChanged(getAuth(), (currentUser) => {

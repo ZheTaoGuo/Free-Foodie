@@ -4,7 +4,8 @@
     import {
         getAll,
         searchContent,
-        filterBar
+        filterBar,
+        isLoggedIn
     } from '../utils'
 
     export default {
@@ -23,6 +24,7 @@
             }
         },
         methods: {
+            isLoggedIn,
             getAllRecipe() {
                 console.log('start method');
                 getAll().then((value) => {
@@ -64,7 +66,7 @@
 
 <template>
     <!--Start of NavBar-->
-    <NavBar></NavBar>
+    <NavBar @checkLogin="isLoggedIn()"></NavBar>
     <!--End of NavBar-->
     <div class="shopping-list-header">
         <h1 class="text-center">Recipe Finder</h1>

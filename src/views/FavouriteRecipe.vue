@@ -1,7 +1,7 @@
 <script>
     import Card from '../components/CardComp.vue'
     import NavBar from '../components/Navbar.vue'
-    import { getFavourite, searchFavPast, getLoggedInUser } from '../utils'
+    import { getFavourite, searchFavPast, getLoggedInUser, isLoggedIn } from '../utils'
 
     export default {
         components: {
@@ -17,6 +17,7 @@
             }
         },
         methods: {
+            isLoggedIn,
             getFavouriteRecipe() {
                 console.log('start method');
                 getFavourite(this.loggedInUser).then((value) => {
@@ -50,7 +51,7 @@
 
 <template>
     <!--Start of NavBar-->
-    <NavBar></NavBar>
+    <NavBar @checkLogin="isLoggedIn()"></NavBar>
     <!--End of NavBar-->
     <div class="shopping-list-header">
         <h1 class="text-center">Favourite Recipes</h1>
