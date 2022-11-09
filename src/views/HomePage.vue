@@ -21,9 +21,12 @@
         <div id="titledetails">
             <h1 class="title " v-if="userName != ''">Welcome, {{userName}}! <br> Cook at home sustainably with us today</h1>
             <h1 class="title " v-else>Welcome! <br> Cook at home sustainably with us today</h1>
-          <button type="button" class="btn btn-primary btnstyle">
-            Explore Menu
-          </button>
+            <router-link to="/search">
+              <button type="button" class="btn btn-primary btnstyle">
+                Explore Menu
+              </button>
+            </router-link>
+    
         </div>
       </div>
       
