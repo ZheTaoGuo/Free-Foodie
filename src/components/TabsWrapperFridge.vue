@@ -114,8 +114,8 @@ export default {
         else if (this.itemName == ""){
           alertMsg += "Please fill in the Item Name field" + "\n"
         }
-
-        if((Number.isFinite(this.quantity)) && this.quantity !== ""){
+        console.log(this.quantity, typeof(this.quantity));
+        if((Number.isFinite(this.quantity) == false) && this.quantity !== ""){
           alertMsg += "Quantity must only contain numbers" + "\n"
         }
         else if(this.quantity == ""){
