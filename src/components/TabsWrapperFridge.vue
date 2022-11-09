@@ -115,7 +115,7 @@ export default {
           alertMsg += "Please fill in the Item Name field" + "\n"
         }
 
-        if((Number.isFinite(this.quantity) == false) && this.quantity !== ""){
+        if((Number.isFinite(this.quantity)) && this.quantity !== ""){
           alertMsg += "Quantity must only contain numbers" + "\n"
         }
         else if(this.quantity == ""){
