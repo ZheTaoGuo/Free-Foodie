@@ -624,13 +624,6 @@ export default {
 }
 
 
-
-@media (max-width: 991px) {
-        .dashboard {
-            margin-top: 10px;
-        }
-    }
-
 select.moreMinimal {
     background-image:
         linear-gradient(45deg, transparent 50%, gray 50%),
