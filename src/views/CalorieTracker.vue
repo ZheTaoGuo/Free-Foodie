@@ -620,7 +620,10 @@ export default {
     z-index: -1;
     background-color: rgb(183, 221, 234);
     overflow-x: hidden;
+    height: 100vh;
 }
+
+
 
 @media (max-width: 991px) {
         .dashboard {
