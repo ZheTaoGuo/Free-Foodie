@@ -564,6 +564,8 @@ export default {
     overflow-x: hidden;
     height: 100vh;
 }
+
+
 select.moreMinimal {
     background-image:
         linear-gradient(45deg, transparent 50%, gray 50%),
