@@ -1001,10 +1001,17 @@ export const retrieveIngredients = () => {
             if (data == null) {
                 return reject("no ingredients found");
             }
+<<<<<<< HEAD
             console.log("This is the ingredients in the fridge: " + data);
             for (let index in data) {
                 console.log('This are the indiv items: ', data[index]);
                 let retrievedObject = data[index];
+=======
+            // console.log("This is the ingredients in the fridge: " + data);
+            for (let index of data) {
+                // console.log('This are the indiv items: ', index);
+                let retrievedObject = index;
+>>>>>>> 96f92f5 (Updated how ingredients list check fridge items)
                 let itemName = retrievedObject.Name;
                 let itemQuantity = retrievedObject.Quantity;
                 let itemType = retrievedObject.Type;

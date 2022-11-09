@@ -115,12 +115,15 @@ export default {
         else if (this.itemName == ""){
           alertMsg += "Please fill in the Item Name field" + "\n"
         }
+<<<<<<< HEAD
 
         if((Number.isFinite(this.quantity) == false) && this.quantity !== ""){
 
         if((Number.isFinite(this.quantity)) && this.quantity !== ""){
 
         console.log(this.quantity, typeof(this.quantity));
+=======
+>>>>>>> 96f92f5 (Updated how ingredients list check fridge items)
         if((Number.isFinite(this.quantity) == false) && this.quantity !== ""){
           alertMsg += "Quantity must only contain numbers" + "\n"
         }
