@@ -21,12 +21,9 @@
         <div id="titledetails">
             <h1 class="title " v-if="userName != ''">Welcome, {{userName}}! <br> Cook at home sustainably with us today</h1>
             <h1 class="title " v-else>Welcome! <br> Cook at home sustainably with us today</h1>
-            <router-link to="/search">
-              <button type="button" class="btn btn-primary btnstyle">
-                Explore Menu
-              </button>
-            </router-link>
-    
+          <button type="button" class="btn btn-primary btnstyle" @click="$router.push('/search')">
+            Explore Menu
+          </button>
         </div>
       </div>
       
