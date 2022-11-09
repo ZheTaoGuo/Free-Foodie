@@ -91,7 +91,6 @@
                 console.log('Start addToFav');
 
                 addToFavourite(this.loggedInUser, this.selectedRecipe)
-                router.push('/favourite')
 
                 console.log('End addToFav');
             },
@@ -184,8 +183,6 @@
                             <button class="btn btn-secondary me-2"
                                 v-show="queryType !== 'favourite' && queryType !== 'past'"
                                 @click="addToFav()">Favourite</button>
-                            <!-- <button class="btn btn-secondary" v-show="queryType !== 'favourite' && queryType !== 'past'"
-                                @click="callAddToMissing(recipe['recipeId'])">Use this recipe</button> -->
                             <button type="button" class="btn btn-secondary" data-bs-toggle="modal" v-show="queryType !== 'favourite' && queryType !== 'past'"
                                 data-bs-target="#itemModal"  @click="callAddToMissing(recipe['recipeId'])">
                                 Use this recipe
