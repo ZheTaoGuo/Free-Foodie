@@ -11,7 +11,8 @@
         getFamily,
         assignItem,
         getLoggedInUser,
-        getAllAssignedIngredients
+        getAllAssignedIngredients,
+        isLoggedIn
     } from '../utils'
     import axios from 'axios'
 
@@ -58,6 +59,7 @@
 
         },
         methods: {
+            isLoggedIn,
             moveItem(itemName, memberId, itemImage) {
                 console.log(itemName, memberId);
                 let member = memberId
@@ -107,7 +109,7 @@
 </script>
 
 <template>
-    <NavBar></NavBar>
+    <NavBar @checkLogin="isLoggedIn()"></NavBar>
     <TabsWrapper>
 
         <IndividualTab title="Unassigned Items" id="personal-style">

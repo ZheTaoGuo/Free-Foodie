@@ -14,6 +14,7 @@
         retrieveIngredients,
         addToMissing,
         getLoggedInUser,
+        isLoggedIn
     } from '../utils'
 
 
@@ -56,6 +57,7 @@
 
         },
         methods: {
+            isLoggedIn,
             getFavouriteRecipe() {
                 console.log('start method');
                 getFavourite(this.loggedInUser).then((value) => {
@@ -132,7 +134,7 @@
         </div>
     </div> <!-- End of Modal -->
 
-    <NavBar></NavBar>
+    <NavBar @checkLogin="isLoggedIn()"></NavBar>
     <div class="container-fluid align-items-start mt-2">
         <div class="row">
             <div class="col-3">

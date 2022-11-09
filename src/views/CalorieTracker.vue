@@ -1,6 +1,6 @@
 <script>
 // import { RouterLink } from 'vue-router'
-import { calculateCalories, getUser, updateCalories, getLoggedInUser } from '../utils'
+import { calculateCalories, getUser, updateCalories, getLoggedInUser, isLoggedIn } from '../utils'
 import * as d3 from "d3";
 import plot from "@/components/plotWithXandYaxis.vue";
 // import calorieSearchModal from '../components/calorieSearchModal.vue';
@@ -48,6 +48,7 @@ export default {
         }
     },
     methods: {
+        isLoggedIn,
         getLoggedInUser,
         calculateCalories,
         calculateCaloriesAndUpdate(userId, height, weight, activityFrequency, dailyCalorieIntake) {
@@ -427,7 +428,7 @@ export default {
 
 <template>
     <!--Start of NavBar-->
-    <NavBar></NavBar>
+    <NavBar @checkLogin="isLoggedIn()"></NavBar>
     <!--End of NavBar-->
     <div class="mainContent">
 

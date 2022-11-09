@@ -21,7 +21,7 @@
             </a>
           </li>
           <li class="nav-item mx-2">
-            <a class="nav-link active" href="/profile" style="color:white">Profile</a>
+            <a class="nav-link active" style="color:white" @click="$emit('checkLogin')" >Profile</a>
           </li>
         </ul>
       </div>
@@ -31,34 +31,15 @@
 
 
 <script>
-// import { getLoggedInUser } from "/utils";
-// export default {
-//   data() {
-    
-//     return {
-//       userName:""
-//     }
-//   },
-//   methods: {
-//     promptLogin() {
-//       this.$router.push({
-//         name: "Login",
-//       });
-//     },
-//     getLoggedInUser,
-//   },
-//   mounted(){
-//     this.getLoggedInUser().then((user)=> {
-//       this.userName = user.userName 
-//     })
-//   }
-// };
 </script>
 
 <style scoped>
 nav {
   margin: 0;
   padding: 0;
+}
+img{
+  height: 75px!important;
 }
 .nav-item{
   font-size: larger;
@@ -71,7 +52,4 @@ nav {
 .bi:hover{
   box-shadow: 2px 2px rgba(0, 0, 0, 0.2);
 }
-
-
-
 </style>

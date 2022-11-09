@@ -1,5 +1,5 @@
 <template>
-    <NavBar></NavBar>
+    <NavBar @checkLogin="isLoggedIn()"></NavBar>
     <TabsWrapper @closeMe="loadIngredients">
 
         <IndividualTab title="All">
@@ -119,7 +119,8 @@ import TabsWrapper from '../components/TabsWrapperFridge.vue';
 import {
     saveIngredients,
     retrieveIngredients,
-    deleteFromFridge
+    deleteFromFridge,
+    isLoggedIn
 } from '../utils'
 import NavBar from '../components/Navbar.vue';
 
@@ -142,6 +143,7 @@ export default {
         NavBar
     },
     methods: {
+        isLoggedIn,
         saveIngredients,
         loadIngredients() {
             const retrievedIngredientsObject = retrieveIngredients();
