@@ -12,7 +12,7 @@
             assignToMember(){
                 let memberId = this.famMember
                 this.famMember = 'Assign to'
-                this.$emit('assignItem', this.itemName, memberId)
+                this.$emit('assignItem', this.itemName, memberId, this.itemImage)
 
             },
             
@@ -23,13 +23,13 @@
 <template>
     <div class="container-fluid">
         <div class="row justify-content-start">
-            <div class="col-3">
-                <img class="img-fluid" :src="testLink" style="width: 500; height: 500;" />
+            <div class="col-3" >
+                <img class="img-fluid rounded" height="150" width="150" :src="'https://engzongwei.github.io/assets/' + this.itemImage" />
             </div>
             <div class="col-9">
                 <div class="item-component">
                     <div class="item-information">
-                        <div class="title">{{itemName.charAt(0).toUpperCase() + itemName.slice(1)}}</div>
+                        <div class="title">{{String(itemName).charAt(0).toUpperCase() + String(itemName).slice(1)}}</div>
                         <br>
                     </div>
 

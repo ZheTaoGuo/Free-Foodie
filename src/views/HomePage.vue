@@ -19,7 +19,8 @@
           </div>
         </div>
         <div id="titledetails">
-          <h1 class="title ">Welcome, {{userName}}! <br> Cook at home sustainably with us today</h1>
+            <h1 class="title " v-if="userName != ''">Welcome, {{userName}}! <br> Cook at home sustainably with us today</h1>
+            <h1 class="title " v-else>Welcome! <br> Cook at home sustainably with us today</h1>
           <button type="button" class="btn btn-primary btnstyle">
             Explore Menu
           </button>
@@ -34,26 +35,26 @@
     </div>
     
     <div class="row g-4" id="works">
-      <div class="col-lg-4 col-md-6">
+      <div class="col-lg-4 col-md-12">
         <div class="text-center p-2 p-xl-5">
           <img class="img-fluid mb-5 circleimg" src="../assets/roundimage1.jpeg" />
           <h2 class="text-white individualtitle">Manage your existing ingredients on the go</h2>
         </div>
       </div>
-      <div class="col-lg-4 col-md-6">
+      <div class="col-lg-4 col-md-12">
         <div class="text-center p-2 p-xl-5">
           <img class="img-fluid mb-5 circleimg " src="../assets/roundimage2.jpg" />
           <h2 class="text-white individualtitle">We show the best recipes for what you have on hand</h2>
         </div>
       </div>
-      <div class="col-lg-4 col-md-6">
+      <div class="col-lg-4 col-md-12">
         <div class="text-center p-2 p-xl-5">
           <img class="img-fluid mb-5 circleimg " src="../assets/roundimage3.jpg" />
           <h2 class="text-white individualtitle">Buy missing ingredients, select a recipe and enjoy!</h2>
         </div>
       </div>
     </div>
-    <Footer></Footer>
+    <Footer @signOut="callSignOut()"></Footer>
   </div>
 </template>
 
@@ -79,7 +80,10 @@ export default {
       });
     },
     getLoggedInUser,
-    signout
+    signout,
+    callSignOut(){
+        this.userName = ''
+    }
   },
   mounted(){
     this.getLoggedInUser().then((user)=> {

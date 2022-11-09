@@ -20,7 +20,7 @@
 </script>
 
 <template>
-    <div class="text-light instructions">
+    <div class="text-dark instructions">
         <table>
             <tr v-for="step of instructions" style="text-align:left">
                 <td class="stepnum">{{step.number}}</td>
@@ -38,7 +38,7 @@
 .stepnum{
     font-size: x-large;
     font-weight: 500;
-    border-right: 2px solid white;
+    border-right: 2px solid black;
     margin-right: 1.2em;
     text-align: right;
     padding: 0.5em;

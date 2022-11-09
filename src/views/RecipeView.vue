@@ -10,11 +10,12 @@
         getPast,
         getAll,
         addToFavourite,
+        addToPast,
         retrieveIngredients,
-        addToMissing
+        addToMissing,
+        getLoggedInUser,
     } from '../utils'
 
-    const USERID = 1
 
     export default {
         data() {
@@ -24,6 +25,7 @@
                 recipes: [],
                 fridgeContent: [],
                 shoppingList: {},
+                loggedInUser: 0,
             }
         },
         components: {
@@ -31,10 +33,32 @@
             Ingredient,
             NavBar,
         },
+        async mounted() {
+            
+
+            const currentUser = await getLoggedInUser();
+            this.loggedInUser = currentUser.userId
+            console.log('Current UserId: ', this.loggedInUser);
+
+            this.queryType = this.$route.query.type;
+            this.selectedRecipe = this.$route.query.recipeId;
+            console.log(this.queryType);
+            if (this.queryType == 'favourite') {
+                this.getFavouriteRecipe()
+            } else if (this.queryType == 'past') {
+                this.getPastRecipe()
+            } else {
+                this.getAllRecipe()
+            }
+
+            this.getAllFridgeIngredient()
+            console.log(this.shoppingList);
+
+        },
         methods: {
             getFavouriteRecipe() {
                 console.log('start method');
-                getFavourite(USERID).then((value) => {
+                getFavourite(this.loggedInUser).then((value) => {
                     console.log(value);
                     this.recipes = value
                 }).catch((message) => {
@@ -44,7 +68,7 @@
             },
             getPastRecipe() {
                 console.log('start method');
-                getPast(USERID).then((value) => {
+                getPast(this.loggedInUser).then((value) => {
                     console.log(value);
                     this.recipes = value
                 }).catch((message) => {
@@ -64,7 +88,7 @@
             addToFav() {
                 console.log('Start addToFav');
 
-                addToFavourite(USERID, this.selectedRecipe)
+                addToFavourite(this.loggedInUser, this.selectedRecipe)
                 router.push('/favourite')
 
                 console.log('End addToFav');
@@ -83,23 +107,9 @@
             },
             callAddToMissing(recipeId) {
                 // console.log(this.shoppingList[recipeId]);
-                addToMissing(USERID, this.shoppingList[recipeId])
+                addToPast(this.loggedInUser, this.selectedRecipe)
+                addToMissing(this.loggedInUser, this.shoppingList[recipeId])
             }
-        },
-        mounted() {
-            this.queryType = this.$route.query.type;
-            this.selectedRecipe = this.$route.query.recipeId;
-            console.log(this.queryType);
-            if (this.queryType == 'favourite') {
-                this.getFavouriteRecipe()
-            } else if (this.queryType == 'past') {
-                this.getPastRecipe()
-            } else {
-                this.getAllRecipe()
-            }
-
-            this.getAllFridgeIngredient()
-            console.log(this.shoppingList);
         }
     }
 </script>
@@ -156,13 +166,13 @@
                                 </div>
                             </div>
 
-                            <div class="p-3 text-white rounded">
+                            <div class="p-3 text-dark rounded">
                                 <h2 class="instructions-style">Instructions</h2>
                             </div>
                             <Instruction :name="recipe['recipeName']" :recipeId="recipe['recipeId']"
                                 :instructions="recipe['instructions'][0]['steps']"></Instruction>
 
-                            <div class="p-3 text-white rounded">
+                            <div class="p-3 text-dark rounded">
                                 <h2 class="instructions-style">Ingredients</h2>
                             </div>
                             <Ingredient :name="recipe['recipeName']" :recipeId="recipe['recipeId']"
@@ -189,7 +199,7 @@
 
 <style scoped>
     .background-style {
-        background-color: #343b49;
+        background-color: rgb(183, 221, 234);
     }
 
     .image-style {
@@ -203,25 +213,24 @@
     .receipe-button {
         /* box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.3)!important; */
         background-color: white !important;
-        border-color: #343b49 !important;
-        color: #343b49 !important;
+        border-color: rgba(0, 0, 0, 0.5) !important;
+        color: black !important;
+        font-weight: 500;
     }
 
     .receipe-button:hover {
         box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3) !important;
-        background-color: #343b49 !important;
-        border-color: #343b49 !important;
-        color: white !important;
-        font-size: 1em;
+        background-color: rgb(183, 221, 234) !important;
+        border-color: white !important;
+        color: black !important;
         font-weight: 500;
     }
 
     .receipe-button.active {
         box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3) !important;
-        background-color: #343b49 !important;
-        border-color: #343b49 !important;
-        color: white !important;
-        font-size: 1em;
+        background-color: rgb(183, 221, 234) !important;
+        border-color: white !important;
+        color: black !important;
         font-weight: 500;
     }
 </style>

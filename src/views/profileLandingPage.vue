@@ -1,6 +1,6 @@
 <script>
     import { RouterLink } from 'vue-router'
-    import { createUser, getFamily, createFamily, addFamilyMember, getUser, getLoggedInUser } from '../utils'
+    import { getFamily, createFamily, addFamilyMember, getUser, getLoggedInUser } from '../utils'
     import * as d3 from "d3";
     // import plot from "@/components/plotWithXandYaxis.vue";
     import NavBar from '../components/Navbar.vue'
@@ -27,7 +27,7 @@
         },
         methods: {
             getLoggedInUser,
-            createUser,
+            // createUser,
             getUser,
             getFamilyList(userId) {
                 getFamily(userId).then((value)=>{
@@ -41,6 +41,7 @@
                         }
                     }
                     this.familyList = final
+                    console.log('familyyyyyyyyyyy', this.familyList);
                 }).catch((message)=> {console.log("this is message", message); this.familyList = null })
             },  
             createFamily,

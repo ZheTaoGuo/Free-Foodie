@@ -1,9 +1,7 @@
 <script>
     import Card from '../components/CardComp.vue'
     import NavBar from '../components/Navbar.vue'
-    import { getFavourite, searchFavPast } from '../utils'
-
-const USERID = 1
+    import { getFavourite, searchFavPast, getLoggedInUser } from '../utils'
 
     export default {
         components: {
@@ -15,12 +13,13 @@ const USERID = 1
                 recipes: [],
                 recipeFiltered: [],
                 searchPhrase: '',
+                loggedInUser: 0,
             }
         },
         methods: {
             getFavouriteRecipe() {
                 console.log('start method');
-                getFavourite(USERID).then((value) => {
+                getFavourite(this.loggedInUser).then((value) => {
                     this.recipes = value
                 }).catch((message) => {
                     this.recipes = message
@@ -29,7 +28,7 @@ const USERID = 1
             },
             getFavouriteSearchResult() {
                 console.log('start method');
-                searchFavPast(USERID, this.searchPhrase, 'fav').then((value) => {
+                searchFavPast(this.loggedInUser, this.searchPhrase, 'fav').then((value) => {
                     this.recipeFiltered = value
                 }).catch((message) => {
                     this.recipeFiltered = message
@@ -37,7 +36,11 @@ const USERID = 1
                 console.log('end methods');
             }
         },
-        mounted() {
+        async mounted() {
+            const currentUser = await getLoggedInUser();
+            this.loggedInUser = currentUser.userId
+            console.log('Current UserId: ', this.loggedInUser);
+
             console.log('start mounted');
             this.getFavouriteRecipe()
             console.log('end mounted');
@@ -49,6 +52,10 @@ const USERID = 1
     <!--Start of NavBar-->
     <NavBar></NavBar>
     <!--End of NavBar-->
+    <div class="shopping-list-header">
+        <h1 class="text-center">Favourite Recipes</h1>
+    </div>
+
     <div class="container">
 
         <div class="row">
@@ -91,5 +98,13 @@ const USERID = 1
 .card:hover{
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3)!important;
     transition-duration: 0.35s;
+}
+
+.shopping-list-header {
+  background-image: linear-gradient(to bottom right, #7395AE, #379683) !important;
+  /* border-radius: 20px; */
+  color: #fff !important;
+  box-shadow: 0 0 40px 0 rgba(94, 92, 154, .06);
+  margin-bottom: 5px;
 }
 </style>
