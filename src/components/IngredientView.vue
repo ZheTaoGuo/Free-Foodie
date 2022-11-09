@@ -63,11 +63,7 @@ export default {
                     return food.itemName.toLowerCase() == item.name.toLowerCase()
                 })">👍 </span>
                 <span v-else-if="fridge.find(food => {
-<<<<<<< HEAD
                     if (food.itemName.toLowerCase() != item.name.toLowerCase()) missingIngredient.push({name: item.name, image: item.image})
-=======
-                    if (food.itemName.toLowerCase() != item.name.toLowerCase()) this.missingIngredient.push({name: item.name, image: item.image})
->>>>>>> 96f92f5 (Updated how ingredients list check fridge items)
                     return true
                 })">👎 </span></td>
                 <td class="ingredientdesc"><span v-if="Number.isInteger(item.amount)">{{item.amount}}&nbsp</span> 
