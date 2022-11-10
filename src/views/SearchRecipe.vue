@@ -72,7 +72,7 @@
         <h1 class="text-center">Recipe Finder</h1>
     </div>
 
-    <div class="container-fluid">
+    <div class="container-fluid px-5">
         <div class="row">
             <!--Start of Search Bar-->
             <div class="col">

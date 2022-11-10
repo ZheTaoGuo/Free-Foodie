@@ -6,25 +6,29 @@ import plot from "@/components/plotWithXandYaxis.vue";
 // import calorieSearchModal from '../components/calorieSearchModal.vue';
 // import * as axios from "axios";
 import axios from 'axios'
-import AutoComplete from 'primevue/autocomplete';
-import Modal from "@/components/Modal.vue";
+// import AutoComplete from 'primevue/autocomplete';
+// import Modal from "@/components/Modal.vue";
 import { ref, toRaw } from "vue";
 import NavBar from '../components/Navbar.vue'
+
 
 
 export default {
     components: {
         plot,
-        AutoComplete,
-        Modal,
+        // AutoComplete,
+        // Modal,
         NavBar
     },
     setup() {
-        const modalActive = ref(false);
-        const toggleModal = () => {
-            modalActive.value = !modalActive.value;
-        };
-        return { modalActive, toggleModal };
+        // const modalActive = ref(false);
+        // const toggleModal = () => {
+        //     modalActive.value = !modalActive.value;
+        // };
+        // // let userSearch = ref('')
+        
+        // return { modalActive, toggleModal };
+        
     },
     data() {
         return {
@@ -39,7 +43,7 @@ export default {
             age: "",
             userCalorieDetails: "",
             userSearch: "",
-            isCalorieSearchModalVisible: false,
+            // isCalorieSearchModalVisible: false,
             searchResults: [],
             dailyCalorieIntake: 0,
             userCaloriesData: [],
@@ -59,6 +63,7 @@ export default {
         },
         getUser,
         getUserDetails(userId){
+            console.log("getuserDetails is called")
             this.getUser(userId).then((user) => {
                 this.userObj = user
                 this.height = user.height;
@@ -67,7 +72,16 @@ export default {
                 // console.log("this is userc calroei deiasl", user.calorieDetails[Object.keys(user.calorieDetails)[Object.keys(user.calorieDetails).length-1]])
                 if (user.calorieDetails != null){
                     this.calorieLimit = Number(user.calorieDetails[Object.keys(user.calorieDetails)[Object.keys(user.calorieDetails).length - 1]].calorieLimit).toFixed(2);
-                    this.dailyCalorieIntake = user.calorieDetails[Object.keys(user.calorieDetails)[Object.keys(user.calorieDetails).length - 1]].dailyCalorieIntake;
+                    // converting the data to the format in firebase
+                    let date = new Date()
+                    let todayDateFormatted = date.getDate() + " " + date.getMonth() + " " + date.getFullYear()
+                    if (user.calorieDetails[todayDateFormatted] == null) {  // checking if there has already been a entry for today
+                        // console.log("this has been no entry for today")
+                        this.dailyCalorieIntake = 0
+                    } else {
+                        this.dailyCalorieIntake = user.calorieDetails[todayDateFormatted].dailyCalorieIntake
+                        // console.log("this is the retrievde daily calorie intake", this.dailyCalorieIntake)
+                    }
                     this.userCaloriesData = [];
                     for (const property in user.calorieDetails) {
                         // console.log("this is new obj created", { date: user.calorieDetails[property].date, calories: user.calorieDetails[property].dailyCalorieIntake})
@@ -83,14 +97,15 @@ export default {
                 this.age = user.age;
             })
         },
-        showModal() {
-            this.isCalorieSearchModalVisible = true;
-        },
-        closeModal() {
-            this.isCalorieSearchModalVisible = false;
-        },
+        // showModal() {
+        //     this.isCalorieSearchModalVisible = true;
+        // },
+        // closeModal() {
+        //     this.isCalorieSearchModalVisible = false;
+        // },
         async searchFood() {
             console.log("searchFood() called")
+            console.log("this is usersearch", this.userSearch)
             let foodOrBrand = this.userSearch
             const options = {
                 method: 'GET',
@@ -125,13 +140,11 @@ export default {
             this.searchResults = searchResults
             console.log("this isthis.results", this.searchResults)
         },
-        async addFood(addFoodEvent) {
+        async addFood() {
             console.log("addFoodEvent is called")
-            let foodInfo = addFoodEvent.path[2][0].value
-            console.log("this is foodInfo", foodInfo)
             const options = {
                 method: 'GET',
-                url: `https://nutritionix-api.p.rapidapi.com/v1_1/search/${foodInfo}`,
+                url: `https://nutritionix-api.p.rapidapi.com/v1_1/search/${this.userSearch}`,
                 params: {
                     fields: 'item_name,item_id,brand_name,nf_calories,nf_total_fat',
                 },
@@ -146,13 +159,15 @@ export default {
             console.log("this is failyCalorieIntake", dailyCalorieIntake)
             await axios.request(options).then(response => {
                 console.log("this is response data", response.data);
-                let calorieDetails = response.data.hits[0].fields.nf_calories
+                let calorieDetails = response.data.hits[3].fields.nf_calories
+                console.log("this is the calorie intake of new item", calorieDetails)
                 updateCalories(this.userId, calorieDetails, dailyCalorieIntake, calorieLimit).then(response => {
                     console.log("this is response", response)
                     // calling on the method getUserDetails 
                     this.dailyCalorieIntake = dailyCalorieIntake
                     this.getUserDetails(this.userId)
                 })
+                console.log("this is the amount i hvae eaten", dailyCalorieIntake)
                 dailyCalorieIntake = calorieDetails + dailyCalorieIntake
             }).catch(function (error) {
                 console.error(error);
@@ -437,15 +452,19 @@ export default {
             <div class="container" style="margin-bottom:20px">
                 <form class="row g-1 d-flex justify-content-center">
                     <div class="col-6">
-                        <AutoComplete v-model="userSearch" @complete="searchFood()"
+                        <!-- <AutoComplete v-model="userSearch" @complete="searchFood()"
                             placeholder="Enter your meal details here to track your calories!"
                             style="width:100%; padding-left: 90px;" :suggestions="searchResults" input-class="form-control"
-                            panel-class="bg-white pt-1" :empty-selection-message="''" empty-search-message=""
+                            panel-class="bg-white pt-1" :emptySelectionMessage="''" empty-search-message=""
                             search-message="" selection-message="" optionLabel="label">
-                        </AutoComplete>
+                        </AutoComplete> -->
+                        <div class="mb-3">
+                            <input type="text" class="form-control" id="search" placeholder="Enter your meal details here to track your calories!" v-model="userSearch" @input="searchFood">
+                        </div>
+
                     </div>
                     <div class="col-1">
-                        <Modal @close="toggleModal" :modalActive="modalActive">
+                        <!-- <Modal @close="toggleModal" :modalActive="modalActive">
                             <div class="modal-content" style="border:none">
                                 <div v-if="userSearch != ''">
                                     <h2 style="font-weight:bold; text-align:start">You have eaten:</h2>
@@ -464,8 +483,47 @@ export default {
                                     <h2 style="font-weight:bold">Please select a food entry first.</h2>
                                 </div>
                             </div>
-                        </Modal>
-                        <div class="btn btn-secondary mb-3" v-on:click="addFood($event)" @click="toggleModal">Add</div>
+                        </Modal> -->
+
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            Add
+                        </button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">New Food Entry</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div v-if="userSearch != ''">
+                                    <h2 style="font-weight:bold; text-align:start">You have chosen:</h2>
+                                    <br>
+                                    <p style="font-size:20px"> <span
+                                            style="font-weight:bold">{{ searchResults[3].item_name }}</span> from <span
+                                            style="font-weight:bold">{{ searchResults[3].brand_name }}</span></p>
+                                    <p style="font-size:20px">
+                                        It has {{ searchResults[3].calories }} calories. <br>
+                                        You will have <span style="font-weight:bold">{{ Number(calorieLimit -
+                                                dailyCalorieIntake).toFixed(2)
+                                        }} calories left</span> for today.
+                                    </p>
+                                </div>
+                                <div v-else>
+                                    <h2 style="font-weight:bold">Please select a food entry first.</h2>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" v-on:click="addFood($event)" data-bs-dismiss="modal">Add</button>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+
                     </div>
                 </form>
             </div>
@@ -562,7 +620,6 @@ export default {
     z-index: -1;
     background-color: rgb(183, 221, 234);
     overflow-x: hidden;
-    height: 100vh;
 }
 
 select.moreMinimal {
