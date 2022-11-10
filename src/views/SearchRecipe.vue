@@ -4,7 +4,8 @@
     import {
         getAll,
         searchContent,
-        filterBar
+        filterBar,
+        isLoggedIn
     } from '../utils'
 
     export default {
@@ -23,6 +24,7 @@
             }
         },
         methods: {
+            isLoggedIn,
             getAllRecipe() {
                 console.log('start method');
                 getAll().then((value) => {
@@ -64,13 +66,13 @@
 
 <template>
     <!--Start of NavBar-->
-    <NavBar></NavBar>
+    <NavBar @checkLogin="isLoggedIn()"></NavBar>
     <!--End of NavBar-->
     <div class="shopping-list-header">
         <h1 class="text-center">Recipe Finder</h1>
     </div>
 
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
             <!--Start of Search Bar-->
             <div class="col">
@@ -78,7 +80,7 @@
                     <nav class="navbar">
                         <div class="d-flex my-3 my-lg-2 w-75 mx-auto">
                             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"
-                                v-model="searchPhrase">
+                                v-model="searchPhrase" @keyup.enter="getAllSearchResult()">
                             <button class="btn btn-outline-primary ms-2 my-sm-0" type="submit"
                                 @click="getAllSearchResult()">Search</button>
                         </div>
@@ -87,10 +89,10 @@
             </div>
             <!--End of Search Bar-->
         </div>
-        <div class="row my-3 g-3 justify-content-between">
+        <div class="row mb-3 g-3 justify-content-between">
             <div class="col-1"></div>
             <!--Start of filter Bar-->
-            <div class="col-3">
+            <div class="col-12 col-md-3">
                 <select class="form-select" aria-label="Cuisine" v-model="selectedCuisine"
                     @change="filterSearch(selectedCuisine, selectedDiet, selectedDish)">
                     <option value="Cuisines">Cuisines</option>
@@ -101,7 +103,7 @@
             </div>
             <!--End of filter Bar-->
             <!--Start of filter Bar-->
-            <div class="col-3">
+            <div class="col-12 col-md-3">
                 <select class="form-select" aria-label="Diets" v-model="selectedDiet"
                     @change="filterSearch(selectedCuisine, selectedDiet, selectedDish)">
                     <option value="Diet">Diets</option>
@@ -112,7 +114,7 @@
             </div>
             <!--End of filter Bar-->
             <!--Start of filter Bar-->
-            <div class="col-3">
+            <div class="col-12 col-md-3">
                 <select class="form-select" aria-label="Dish Type" v-model="selectedDish"
                     @change="filterSearch(selectedCuisine, selectedDiet, selectedDish)">
                     <option value="Dish">Dish Type</option>

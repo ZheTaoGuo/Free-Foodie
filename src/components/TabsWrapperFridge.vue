@@ -22,16 +22,12 @@
 
     <div class="bottom">
 
+      <!-- Button trigger modal -->
       <div class="fab-container">
         <div class="button iconbutton">
-          <span type="button" id="plus" data-bs-toggle="modal" data-bs-target="#itemModal">Add Ingredient</span>
+          <span type="button" id="plus" data-bs-toggle="modal" data-bs-target="#itemModal">Add New Ingredient</span>
         </div>
       </div>
-
-      <!-- Button trigger modal -->
-      <button type="button" class="btn btn-primary ingredient-button" data-bs-toggle="modal" data-bs-target="#itemModal">
-        Add New Ingredient
-      </button>
 
       <!-- Modal -->
       <div class="modal fade" id="itemModal" tabindex="-1" aria-labelledby="itemModal" aria-hidden="true">
@@ -50,7 +46,7 @@
 
               <div class="form-group">
                 <label for="Quantity" class="d-flex justify-content-start p-2">Quantity</label>
-                <input type="text" class="form-control" id="Quantity" placeholder="Enter Quantity" v-model="quantity"
+                <input type="number" class="form-control" id="Quantity" placeholder="Enter Quantity" v-model="quantity"
                   required />
               </div>
 
@@ -111,19 +107,21 @@ export default {
         alertMsg += "Please fill out all fields";
       }
       else{
-        var letters = /^[A-Za-z]+$/
+        var letters = /^[A-Za-z ]+$/
         if (!letters.test(this.itemName) && this.itemName !== ""){
           alertMsg += "Item Name must only contain letters" + "\n"
         }
         else if (this.itemName == ""){
           alertMsg += "Please fill in the Item Name field" + "\n"
         }
-
-        if(!isNaN(this.quantity) && this.quantity !== ""){
+        if((Number.isFinite(this.quantity) == false) && this.quantity !== ""){
           alertMsg += "Quantity must only contain numbers" + "\n"
         }
         else if(this.quantity == ""){
           alertMsg += "Please fill in the Quantity field" + "\n"
+        }
+        else if(Number.isFinite(this.quantity) == false){
+          alertMsg += "Quantity must only contain numbers" + "\n"
         }
 
         if(this.selectedValue == "" && this.selectedValue == null){
@@ -133,7 +131,12 @@ export default {
           alertMsg += "Please fill in the Category field" + "\n"
         }
       }
-      alert(alertMsg);
+      if(alertMsg !== ""){
+        alert(alertMsg);
+      }
+      else{
+        alert("Your ingredeint has been added to your fridge!");
+      }
       saveIngredients(this, this.itemName, this.quantity, this.selectedValue)
     }
   },
@@ -221,11 +224,12 @@ export default {
   margin: 0 auto;
 }
 .button{
-  width: 80px;
-  height: 70px;
+  width: 160px;
+  height: 40px;
   padding: 10px;
-  border-radius: 10%;
+  border-radius: 10px;
   background: lightblue;
+  border: 1px solid black;
 }
 
 .ingredient-button{

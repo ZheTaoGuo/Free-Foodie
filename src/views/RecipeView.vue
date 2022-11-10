@@ -14,6 +14,7 @@
         retrieveIngredients,
         addToMissing,
         getLoggedInUser,
+        isLoggedIn
     } from '../utils'
 
 
@@ -56,6 +57,7 @@
 
         },
         methods: {
+            isLoggedIn,
             getFavouriteRecipe() {
                 console.log('start method');
                 getFavourite(this.loggedInUser).then((value) => {
@@ -89,7 +91,6 @@
                 console.log('Start addToFav');
 
                 addToFavourite(this.loggedInUser, this.selectedRecipe)
-                router.push('/favourite')
 
                 console.log('End addToFav');
             },
@@ -116,7 +117,7 @@
 
 <template>
     <!-- Modal popup to notifiy of missing ingredients add -->
-    <div class="modal fade" id="itemModal" tabindex="-1" aria-labelledby="itemModal" aria-hidden="true">
+    <div class="modal fade" id="missingModal" tabindex="-1" aria-labelledby="itemModal" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -132,7 +133,24 @@
         </div>
     </div> <!-- End of Modal -->
 
-    <NavBar></NavBar>
+    <!-- Modal popup to notifiy that recipe was added to favourite -->
+    <div class="modal fade" id="favouriteModal" tabindex="-1" aria-labelledby="itemModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="itemModal">Added New Recipe</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h6>
+                        Recipe has been added to Favourite
+                    </h6>
+                </div>
+            </div>
+        </div>
+    </div> <!-- End of Modal -->
+
+    <NavBar @checkLogin="isLoggedIn()"></NavBar>
     <div class="container-fluid align-items-start mt-2">
         <div class="row">
             <div class="col-3">
@@ -179,13 +197,12 @@
                                 :ingredients="recipe['ingredientDetails']" :fridge="fridgeContent"
                                 @missing="getMissing"></Ingredient>
                             <hr>
-                            <button class="btn btn-secondary me-2"
-                                v-show="queryType !== 'favourite' && queryType !== 'past'"
-                                @click="addToFav()">Favourite</button>
-                            <!-- <button class="btn btn-secondary" v-show="queryType !== 'favourite' && queryType !== 'past'"
-                                @click="callAddToMissing(recipe['recipeId'])">Use this recipe</button> -->
-                            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" v-show="queryType !== 'favourite' && queryType !== 'past'"
-                                data-bs-target="#itemModal"  @click="callAddToMissing(recipe['recipeId'])">
+                            <button type="button" class="btn btn-secondary me-2" data-bs-toggle="modal" v-show="queryType !== 'favourite' && queryType !== 'past'"
+                                data-bs-target="#favouriteModal" @click="addToFav()">
+                                Favourite
+                            </button>
+                            <button type="button" class="btn btn-secondary ms-2" data-bs-toggle="modal" v-show="queryType !== 'favourite' && queryType !== 'past'"
+                                data-bs-target="#missingModal"  @click="callAddToMissing(recipe['recipeId'])">
                                 Use this recipe
                             </button>
                             <hr>

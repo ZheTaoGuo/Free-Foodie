@@ -24,6 +24,17 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
 //Authentication Functions
+export const isLoggedIn = () => {
+    onAuthStateChanged(getAuth(), (currentUser) => {
+        if (currentUser!=null) {
+            router.push('/Profile')
+            return true
+        } else {
+            router.push('/Login')
+            return false
+        }
+    })
+}
 export const getLoggedInUser = () => {
     return new Promise ((resolve) => {
         onAuthStateChanged(getAuth(), (currentUser) => {
@@ -979,9 +990,10 @@ export const retrieveIngredients = () => {
             if (data == null) {
                 return reject("no ingredients found");
             }
-            //   console.log("this is data" + data + "1");
-            for (let index in data) {
-                let retrievedObject = data[index];
+            // console.log("This is the ingredients in the fridge: " + data);
+            for (let index of data) {
+                // console.log('This are the indiv items: ', index);
+                let retrievedObject = index;
                 let itemName = retrievedObject.Name;
                 let itemQuantity = retrievedObject.Quantity;
                 let itemType = retrievedObject.Type;
