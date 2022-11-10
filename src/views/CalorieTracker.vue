@@ -13,6 +13,7 @@ import NavBar from '../components/Navbar.vue'
 import Footer from '../components/Footer.vue'
 
 
+
 export default {
     components: {
         plot,
@@ -22,6 +23,14 @@ export default {
         Footer
     },
     setup() {
+        // const modalActive = ref(false);
+        // const toggleModal = () => {
+        //     modalActive.value = !modalActive.value;
+        // };
+        // // let userSearch = ref('')
+        
+        // return { modalActive, toggleModal };
+        
         // const modalActive = ref(false);
         // const toggleModal = () => {
         //     modalActive.value = !modalActive.value;
@@ -73,6 +82,16 @@ export default {
                 // console.log("this is userc calroei deiasl", user.calorieDetails[Object.keys(user.calorieDetails)[Object.keys(user.calorieDetails).length-1]])
                 if (user.calorieDetails != null){
                     this.calorieLimit = Number(user.calorieDetails[Object.keys(user.calorieDetails)[Object.keys(user.calorieDetails).length - 1]].calorieLimit).toFixed(2);
+                    // converting the data to the format in firebase
+                    let date = new Date()
+                    let todayDateFormatted = date.getDate() + " " + date.getMonth() + " " + date.getFullYear()
+                    if (user.calorieDetails[todayDateFormatted] == null) {  // checking if there has already been a entry for today
+                        // console.log("this has been no entry for today")
+                        this.dailyCalorieIntake = 0
+                    } else {
+                        this.dailyCalorieIntake = user.calorieDetails[todayDateFormatted].dailyCalorieIntake
+                        // console.log("this is the retrievde daily calorie intake", this.dailyCalorieIntake)
+                    }
                     // converting the data to the format in firebase
                     let date = new Date()
                     let todayDateFormatted = date.getDate() + " " + date.getMonth() + " " + date.getFullYear()
@@ -589,15 +608,12 @@ export default {
     overflow-x: hidden;
 }
 
-<<<<<<< HEAD
 @media (max-width: 991px) {
         .dashboard {
             margin-top: 10px;
         }
     }
 
-=======
->>>>>>> 82de19c (fix modalStyle)
 select.moreMinimal {
     background-image:
         linear-gradient(45deg, transparent 50%, gray 50%),
