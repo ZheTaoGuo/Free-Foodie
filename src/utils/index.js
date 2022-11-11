@@ -645,6 +645,7 @@ function removeItem(userId, itemName) {
 
 // Add item into the user's assignedIngredients
 function addItem(userId, itemName, itemImage) {
+    console.log("addItem is called")
     const newUserItem = ref(db, 'users/' + userId + '/assignedIngredients')
     push(newUserItem, {
         itemName: itemName,
@@ -656,8 +657,38 @@ function addItem(userId, itemName, itemImage) {
 
 // Remove assigned item from missingIngredients, add new item into user's assignedIngredients
 export const assignItem = (userId, itemName, itemImage) => {
-    removeItem(userId, itemName)
+    removeItem(userId, itemName)  
     addItem(userId, itemName, itemImage)
+}
+
+// removing item from assigned list 
+export const unassignItem = (userId, itemName) => {
+    console.log("unassignItem is called");
+    return new Promise((resolve) => {
+        console.log('Item to add to unassigned list: ', itemName);
+        const missingListRef = ref(db, 'users/' + userId + '/assignedIngredients')
+            onValue(missingListRef, (snapshot) => {
+                const missingList = snapshot.val()
+                // console.log("this is missing list", missingList)
+                for (const index in missingList) {
+                    if (missingList[index].itemName == itemName) {
+                        remove(ref(db, 'users/' + userId + '/assignedIngredients/' + index))
+                    }
+                }
+                return resolve(true);
+        })
+    })
+}
+
+// change the assignment of item from one person to the other 
+export const changeAssignment = (userId, item, newMember) => {
+    console.log("changeAssignment is called");
+    console.log("this is item in changeAssignment", item);
+    return new Promise((resolve) => {
+        addItem(newMember, item.name, item.image) 
+        unassignItem(userId, item.name)
+        return resolve(true)
+    })
 }
 
 // Profile Functions
