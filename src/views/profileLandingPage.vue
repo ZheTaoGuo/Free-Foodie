@@ -216,7 +216,7 @@
             </div>
 
             <!-- mini dashboard -->
-            <div class="col-lg-8 calorieTracker ">
+            <div class="col-lg-8 calorieTracker" style="padding-bottom:40px">
             <router-link to="/CalorieTracker" style="text-decoration:none">
                 <div class="d-flex justify-content-between">
                     <h5 style="text-align:start; color:black; padding-top:5px">My Dashboard</h5>
@@ -261,7 +261,6 @@
         align-items: center;
         align-content: center;
         gap:10px;
-        margin-bottom: 20px;
     }
 
     .addFamilyMember {
@@ -275,7 +274,7 @@
         text-align: start;
         /* width: 100%; */
         padding: 20px 10px 0 20px;
-        height: 500px;
+        height: 540px;
     }
 
     a {
