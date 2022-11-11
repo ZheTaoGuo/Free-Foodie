@@ -14,7 +14,8 @@
         getAllAssignedIngredients,
         isLoggedIn,
         unassignItem,
-        changeAssignment
+        changeAssignment,
+        removeItem
     } from '../utils'
     import axios from 'axios'
 
@@ -102,6 +103,7 @@
             },
             updateSelectedUser(user) {
                 this.loggedInUser = user.userId
+                console.log("this is now this.loggedInUser: ", this.loggedInUser);
                 console.log("hello");
             },
             sendMessage() {
@@ -113,7 +115,7 @@
             unassignItem,
             cancelItem(item) {
                 console.log("this is emitted item", item)
-                this.unassignItem(this.loggedInUser, item, this.familyId).then(response => {
+                this.unassignItem(this.loggedInUser, item.name).then(response => {
                     console.log(response)
                     this.getAssignedIngredientPerUser()
                 })
@@ -125,6 +127,14 @@
                     console.log("inside changeAssignmentOfItem", response)
                     this.callGetAllMissing()
                     this.getAssignedIngredientPerUser();
+                })
+            },
+            cancelIngredientFromUnassigned(item){
+                console.log("cancelIngredientFromUnassigned is called")
+                console.log("this is emitted item from cancelIngredient", item)
+                removeItem(this.loggedInUser, item.name).then(response => {
+                    console.log(response)
+                    this.callGetAllMissing()
                 })
             }
         }
@@ -138,7 +148,8 @@
         <IndividualTab title="Unassigned Items" id="personal-style">
             <div v-for="item of missingList">
                 <ShoppingItem :title="'Personal'" :itemName="item.name" :user="loggedInUser"
-                    :familyMembers="familyMembers" @assignItem="moveItem" :itemImage="item.image"></ShoppingItem>
+                    :familyMembers="familyMembers" @assignItem="moveItem" :itemImage="item.image"
+                    @cancelIngredientFromUnassigned="cancelIngredientFromUnassigned"></ShoppingItem>
             </div>
 
         </IndividualTab>

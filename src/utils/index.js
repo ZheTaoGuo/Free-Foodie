@@ -624,7 +624,7 @@ export const getAllAssignedIngredients = (userId) => {
 
 
 // Remove the item from the missingIngrdients list
-function removeItem(userId, itemName) {
+export const removeItem = (userId, itemName) => {
     return new Promise((resolve, reject) => {
         getFamily(userId).then((value) => {
             let familyId = value.familyId
