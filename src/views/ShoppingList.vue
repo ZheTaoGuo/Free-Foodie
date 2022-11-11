@@ -12,7 +12,9 @@
         assignItem,
         getLoggedInUser,
         getAllAssignedIngredients,
-        isLoggedIn
+        isLoggedIn,
+        unassignItem,
+        changeAssignment
     } from '../utils'
     import axios from 'axios'
 
@@ -25,7 +27,9 @@
                 missingList: [],
                 assignedList: [],
                 familyMembers: [],
-                member: ''
+                member: '',
+                familyId: "",
+                user: {},
             }
         },
         components: {
@@ -64,7 +68,8 @@
                 console.log(itemName, memberId);
                 let member = memberId
                 // console.log(member);
-                assignItem(member, itemName, itemImage)
+                assignItem(member, itemName, itemImage) // removing the item from the unassigned list 
+                // mmoving item to the person 
                 this.sendMessage()
                 this.callGetAllMissing()
                 this.getAssignedIngredientPerUser();
@@ -76,6 +81,7 @@
             },
             callGetFamily() {
                 getFamily(this.loggedInUser).then((value) => {
+                    this.familyId = value.familyId
                     this.familyMembers = value.users
                 })
             },
@@ -83,7 +89,7 @@
                 console.log('START same family userID');
                 console.log(this.familyUsers)
                 console.log('END same family userID');
-
+                
                 for (let obj of this.familyUsers) {
                     console.log(obj);
                     getAllAssignedIngredients(obj.userId).then((value) => {
@@ -103,6 +109,23 @@
                     .then(res => {
                         console.log(res);
                     })
+            },
+            unassignItem,
+            cancelItem(item) {
+                console.log("this is emitted item", item)
+                this.unassignItem(this.loggedInUser, item, this.familyId).then(response => {
+                    console.log(response)
+                    this.getAssignedIngredientPerUser()
+                })
+            },
+            changeAssignmentOfItem(item, member){
+                console.log("this is emitted item", item)
+                console.log("this is member", member)
+                changeAssignment(this.loggedInUser, item, member).then(response => {
+                    console.log("inside changeAssignmentOfItem", response)
+                    this.callGetAllMissing()
+                    this.getAssignedIngredientPerUser();
+                })
             }
         }
     }
@@ -128,7 +151,7 @@
                             <button v-for="user of familyUsers" class="nav-link border p-4 my-2" style="color: black;"
                                 :class="{ active: user.userId == loggedInUser }" id="v-settings-tab"
                                 data-bs-toggle="pill" :data-bs-target="'#v-settings' + users.userId" type="button"
-                                role="tab" aria-controls="v-settings" :aria-selected="users.userId == selectedUser"
+                                role="tab" aria-controls="v-settings" :aria-selected="users.userId == loggedInUser"
                                 @click="updateSelectedUser(user)">
                                 <!-- requery database-->
                                 <i class="fas fa-solid fa-user"></i>
@@ -151,7 +174,7 @@
                                         <ShoppingItem v-for="item of user.assignedList" :title="'Family'"
                                             :itemName="item.itemName" :user="loggedInUser" 
                                             :familyMembers="familyUsers" :itemImage="item.image"
-                                            @assignItem="moveItem">
+                                            @assignItem="moveItem" @cancelItem="cancelItem" @changeAssignment="changeAssignmentOfItem">
                                         </ShoppingItem>
                                     </div>
                                 </div>
