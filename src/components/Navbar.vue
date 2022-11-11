@@ -51,5 +51,8 @@ img{
 }
 .bi:hover{
   box-shadow: 2px 2px rgba(0, 0, 0, 0.2);
+} 
+a:hover{
+  cursor:pointer;
 }
 </style>

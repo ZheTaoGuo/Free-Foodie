@@ -517,7 +517,7 @@ export default {
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                                 <button type="button" class="btn btn-primary" v-on:click="addFood($event)" data-bs-dismiss="modal">Add</button>
                             </div>
                             </div>
@@ -529,7 +529,7 @@ export default {
             </div>
         </div>
         <div class="row justify-content-around ">
-            <div class="col-lg-3 col-md-12 mb-3">
+            <div class="col-lg-3 col-md-12">
                 <div class="box pt-3 px-4">
                     <h2 style="text-align:start">Personal Details</h2>
                     <!-- letting user key in the fields of details of themselves -->
@@ -565,7 +565,7 @@ export default {
                             v-on:click="calculateCaloriesAndUpdate(userId, height, weight, activityFrequency, dailyCalorieIntake)">Calculate</div>
                     </div>
                 </div>
-                <div class="box pt-3 px-4 mt-3">
+                <div class="box pt-4 px-4 mt-3" style="padding: 102px;">
                     <!-- personal details -->
                     <div class="row" style="text-align:start;">
                         <div style="text-align:center;" class="mx-auto mt-4" v-if="calorieLimit != 0">
