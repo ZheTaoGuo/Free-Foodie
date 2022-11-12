@@ -29,6 +29,11 @@
                 return screen.width * 60/100
             } 
         },
+        computed: {
+            graphWidth(){
+                return screen.width * 60/100
+            } 
+        },
         data() {
             return {
                 userId: "",
