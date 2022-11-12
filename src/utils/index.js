@@ -89,7 +89,7 @@ export const register = () => {
             alertstr += 'Password must contain at least one uppercase and lowercase letter.' + '\n';
         }
         if(!/[^0-9a-zA-Z]/.test(password)){
-            alertstr += 'Password must be aplanumeric' + '\n';
+            alertstr += 'Password must be alphanumeric' + '\n';
         }
         if(!/[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(password)){
             alertstr += 'Password must contain at least one special character.' + '\n';
