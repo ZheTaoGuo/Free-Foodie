@@ -69,45 +69,7 @@ export const register = () => {
     var gender = document.getElementById('gender').value;
     var familyId = document.getElementById('familyId').value;
     const name = document.getElementById('name').value;
-    var alertstr = '';
-    if (email.length < 4) {
-        alertstr += 'Please enter an email address.' + '\n';
-    }else{
-        if (
-            !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)
-        ) {
-            alertstr += 'Email address is invalid.' + '\n';
-        }
-    }
-    if (password.length < 6) {
-        alertstr += 'Please enter a valid password.' + '\n';
-    } else{
-        if(password.length < 8){
-            alertstr += 'Password must be at least 8 characters long.' + '\n';
-        }
-        if(!/[A-Z]/.test(password) || !/[a-z]/.test(password)){
-            alertstr += 'Password must contain at least one uppercase and lowercase letter.' + '\n';
-        }
-        if(!/[^0-9a-zA-Z]/.test(password)){
-            alertstr += 'Password must be aplanumeric' + '\n';
-        }
-        if(!/[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(password)){
-            alertstr += 'Password must contain at least one special character.' + '\n';
-        }
-    }
-    if (name.length == 0) {
-        alertstr += 'Please enter your name.' + '\n';
-    }
-    if (age.length == 0) {
-        alertstr += 'Please enter your age.' + '\n';
-    }
-    if (gender == 'Gender') {
-        alertstr += 'Please enter your gender.' + '\n';
-    }
-    if (alertstr.length>0){
-        alert(alertstr)
-        return;
-    }
+    
     // Create user with email and pass.
     createUserWithEmailAndPassword(getAuth(), email, password)
         .then(function (result) {
