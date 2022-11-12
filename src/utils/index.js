@@ -995,6 +995,21 @@ export const saveIngredients = (obj, itemName, quantity, selectedValue) => {
     obj.selectedValue = "";
 };
 
+export const addingIngredientToFridge = (item, userId) => {
+    console.log("addingIngredientToFridge is called")
+    return new Promise ((resolve) => {
+        getIndex("fridge").then(value=>{
+            set(ref(db, "fridge/" + value), {
+                Name: item.itemName,
+                Quantity: item.quantity,
+                Type: item.itemType,
+            });
+            unassignItem(userId, item.itemName)
+            resolve(true)
+        });
+    })
+}
+
 export const deleteFromFridge = (item) => {
     return new Promise((resolve, reject) => {
         const ingredients = ref(db, "fridge/");

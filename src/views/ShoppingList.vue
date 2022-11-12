@@ -15,7 +15,8 @@
         isLoggedIn,
         unassignItem,
         changeAssignment,
-        removeItem
+        removeItem,
+        addingIngredientToFridge
     } from '../utils'
     import axios from 'axios'
 
@@ -138,6 +139,15 @@
                     console.log(response)
                     this.callGetAllMissing()
                 })
+            },
+            IngredientBought(item) {
+                console.log("IngredientBought is called")
+                // function to push the ingredient to fridge
+                addingIngredientToFridge(item, this.loggedInUser).then(response => {
+                    console.log(response)
+                    this.callGetAllMissing()
+                    this.getAssignedIngredientPerUser();
+                })
             }
         }
     }
@@ -186,9 +196,9 @@
                                     <div v-else>
                                         <ShoppingItem v-for="item of user.assignedList" :title="'Family'"
                                             :itemName="item.itemName" :user="loggedInUser" 
-                                            :familyMembers="familyUsers" :itemImage="item.image"
+                                            :familyMembers="familyUsers" :itemImage="item.image" :item="item"
                                             @assignItem="moveItem" @cancelItem="cancelItemParent" @changeAssignment="changeAssignmentOfItem"
-                                            :mobile="mobile">
+                                            :mobile="mobile" @IngredientBought="IngredientBought">
                                         </ShoppingItem>
                                     </div>
                                 </div>
