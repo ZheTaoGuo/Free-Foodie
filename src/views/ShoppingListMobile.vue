@@ -31,7 +31,7 @@
                 member: '',
                 familyId: "",
                 user: {},
-                mobile: false,
+                mobile: true,
             }
         },
         components: {
@@ -114,9 +114,8 @@
                     })
             },
             unassignItem,
-            cancelItemParent(item) {
+            cancelItem(item) {
                 console.log("this is emitted item", item)
-                console.log("cancelitem in shopping list is called ")
                 this.unassignItem(this.loggedInUser, item.name).then(response => {
                     console.log(response)
                     this.getAssignedIngredientPerUser()
@@ -158,39 +157,55 @@
         <IndividualTab title="Assigned Items" id="family-style">
 
             <div class="container-fluid">
-                <div class="row">
-                    <div class="col-3">
-                        <div class="nav nav-pills flex-column text-center" id="v-tab" aria-orientation="vertical">
-                            <button v-for="user of familyUsers" class="nav-link border p-4 my-2" style="color: black;"
-                                :class="{ active: user.userId == loggedInUser }" id="v-settings-tab"
-                                data-bs-toggle="pill" :data-bs-target="'#v-settings' + users.userId" type="button"
-                                role="tab" aria-controls="v-settings" :aria-selected="users.userId == loggedInUser"
+                <div class="row flex-nowrap">
+                    <!-- bootstrap ver -->
+                    <!-- <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                        <li class="nav-item" role="presentation" v-for="user of familyUsers">
+                            <button class="nav-link active" :id="'pills-tab'+ user.userId" data-bs-toggle="pill" 
+                            :data-bs-target="'#pills-' + users.userId" type="button" role="tab" :aria-controls="'pills-' + user.userId" 
+                            :aria-selected="user.userId == loggedInUser" @click="updateSelectedUser(user)"><i class="fas fa-solid fa-user"></i>{{ user.userName }}</button>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="pills-tabContent">
+                        <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">...</div>
+                        <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">...</div>
+                        <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">...</div>
+                    </div> -->
+
+                    <!-- using CSS & HTML -->
+                    <div class="scrollmenu container">
+                        <template v-for="user of familyUsers">
+                            <span v-if="user.userId == loggedInUser" class="btn" style="background-color:darkblue" 
                                 @click="updateSelectedUser(user)">
-                                <!-- requery database-->
-                                <i class="fas fa-solid fa-user"></i>
-                                <br>{{ user.userName }}
-                            </button>
-                        </div>
+                                <i class="fas fa-solid fa-user" ></i> &nbsp;&nbsp;{{ user.userName }}
+                            </span>
+                            <span v-else class="btn btn-primary" 
+                                @click="updateSelectedUser(user)">
+                                <i class="fas fa-solid fa-user" ></i> &nbsp;&nbsp;{{ user.userName }}
+                            </span>
+                        </template>
+                        
                     </div>
 
-                    <div class="col-9">
-                        <div class="tab-content" id="v-pills-tabContent">
-                            <div v-for="user of familyUsers" class="tab-pane-fade"
-                                :class="{ active: users.userId == loggedInUser, show: users.userId == loggedInUser }"
-                                :id="'v-settings' + users.userId" :aria-labelledby="users.userId == loggedInUser"
-                                role="tabpanel" tabindex="0">
-                                <div v-if="user.userId == loggedInUser">
-                                    <div v-if="user.assignedList == null || user.assignedList == undefined">
-                                        <h3 class="text-center">No items assigned to you</h3>
-                                    </div>
-                                    <div v-else>
-                                        <ShoppingItem v-for="item of user.assignedList" :title="'Family'"
-                                            :itemName="item.itemName" :user="loggedInUser" 
-                                            :familyMembers="familyUsers" :itemImage="item.image"
-                                            @assignItem="moveItem" @cancelItem="cancelItemParent" @changeAssignment="changeAssignmentOfItem"
-                                            :mobile="mobile">
-                                        </ShoppingItem>
-                                    </div>
+
+                </div>
+
+                <div class="row mt-3">
+                    <div class="tab-content" id="v-pills-tabContent">
+                        <div v-for="user of familyUsers" class="tab-pane-fade"
+                            :class="{ active: users.userId == loggedInUser, show: users.userId == loggedInUser }"
+                            :id="'v-settings' + users.userId" :aria-labelledby="users.userId == loggedInUser"
+                            role="tabpanel" tabindex="0">
+                            <div v-if="user.userId == loggedInUser">
+                                <div v-if="user.assignedList == null || user.assignedList == undefined">
+                                    <h3 class="text-center">No items assigned to you</h3>
+                                </div>
+                                <div v-else>
+                                    <ShoppingItem v-for="item of user.assignedList" :title="'Family'"
+                                        :itemName="item.itemName" :user="loggedInUser" 
+                                        :familyMembers="familyUsers" :itemImage="item.image"
+                                        @assignItem="moveItem" @cancelItem="cancelItem" @changeAssignment="changeAssignmentOfItem" :mobile="mobile">
+                                    </ShoppingItem>
                                 </div>
                             </div>
                         </div>
@@ -209,4 +224,32 @@
     .tabs-component {
         color: rgb(183, 221, 234);
     }
+
+    div.scrollmenu {
+        color: rgb(183, 221, 234);
+        overflow: auto;
+        white-space: nowrap;
+    }
+
+    div.scrollmenu span {
+    display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 14px;
+    text-decoration: none;
+    margin-right:5px;
+    margin-left: 5px;
+    }
+
+    div.scrollmenu::-webkit-scrollbar {
+        display: none;
+    }
+
+    div.scrollmenu span:hover {
+        cursor: pointer
+    }
+
+    /* div.scrollmenu button:hover {
+    background-color: #777;
+    } */
 </style>
