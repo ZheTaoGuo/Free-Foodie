@@ -551,7 +551,7 @@ export default {
                         <div class="mb-3">
                             <label for="exampleFormControlInput1" class="form-label">Activity Frequency</label>
                             <select class="form-control moreMinimal" style="text-align:center" v-model="activityFrequency">
-                                    <option selected value="Little to no exercise   ">Little to no exercise</option>
+                                    <option selected value="Little to no exercise">Little to no exercise</option>
                                     <option value="Exercise 1-3 days/week">Exercise 1-3 days/week</option>
                                     <option value="Exercise 3-5 days/week">Exercise 3-5 days/week</option>
                                     <option value="Exercise 6-7 days/week">Exercise 6-7 days/week</option>
@@ -575,7 +575,7 @@ export default {
                                     {{ weight }}kg, and {{ age }} years old is:</span> 18.5 to 24.9
                             </p><br>
                             <p>
-                                <span style="font-weight: bold;">Your recommended daily calorie intake:</span> {{ calorieLimit }} calories
+                                <span style="font-weight: bold;">Your recommended daily calorie intake:</span> {{ Number(calorieLimit).toFixed(2) }} calories
                             </p>
                         </div>
                         <div v-else class="mt-4">
