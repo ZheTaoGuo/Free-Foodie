@@ -27,7 +27,7 @@ const db = getDatabase(app);
 export const isLoggedIn = () => {
     onAuthStateChanged(getAuth(), (currentUser) => {
         if (currentUser!=null) {
-            router.push('/Profile')
+            router.push('/profileinit')
             return true
         } else {
             router.push('/Login')
@@ -990,7 +990,7 @@ export const saveIngredients = (obj, itemName, quantity, selectedValue) => {
 export const addingIngredientToFridge = (item, userId) => {
     console.log("addingIngredientToFridge is called")
     return new Promise ((resolve) => {
-        set(ref(db, "fridge/"), {
+        push(ref(db, "fridge/"), {
             Name: item.itemName,
             Quantity: item.quantity,
             Type: item.itemType,
