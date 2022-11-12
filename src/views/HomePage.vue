@@ -8,7 +8,7 @@
         <div class="row " id="carouselStyle ">
             <div id="foodcarousel" class="carousel slide px-0" data-bs-ride="carousel" style="height:90%">
                 <div class="carousel-inner text-center">
-                    <div class="carousel-item active" data-bs-interval="3000">
+                    <div class="carousel-item active" data-bs-interval="2000">
                         <img src="../assets/backgroundpicture1.jpg" class="d-block w-100">
                     </div>
                     <div class="carousel-item" data-bs-interval="3000">
