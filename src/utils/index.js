@@ -977,19 +977,11 @@ export const saveIngredients = (obj, itemName, quantity, selectedValue) => {
         console.log("Error. Please pass in ItemName");
         return;
     }
-    getIndex("fridge")
-        .then(function (value) {
-            // creating the family table
-            set(ref(db, "fridge/" + value), {
-                Name: itemName,
-                Quantity: quantity,
-                Type: selectedValue,
-            });
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
-
+    push(ref(db, "fridge/"), {
+        Name: itemName,
+        Quantity: quantity,
+        Type: selectedValue,
+    });
     obj.itemName = "";
     obj.quantity = "";
     obj.selectedValue = "";
@@ -998,15 +990,13 @@ export const saveIngredients = (obj, itemName, quantity, selectedValue) => {
 export const addingIngredientToFridge = (item, userId) => {
     console.log("addingIngredientToFridge is called")
     return new Promise ((resolve) => {
-        getIndex("fridge").then(value=>{
-            set(ref(db, "fridge/" + value), {
-                Name: item.itemName,
-                Quantity: item.quantity,
-                Type: item.itemType,
-            });
-            unassignItem(userId, item.itemName)
-            resolve(true)
+        set(ref(db, "fridge/"), {
+            Name: item.itemName,
+            Quantity: item.quantity,
+            Type: item.itemType,
         });
+        unassignItem(userId, item.itemName)
+        resolve(true)
     })
 }
 
@@ -1018,7 +1008,7 @@ export const deleteFromFridge = (item) => {
             for (let index in data){
                 // console.log(items);
                 if(data[index].Name == item.itemName){
-                    remove(ref(db, 'fridge/' + index))
+                    return resolve(remove(ref(db, 'fridge/' + index)))
                 }
             }
         })
@@ -1036,10 +1026,10 @@ export const retrieveIngredients = () => {
             if (data == null) {
                 return reject("no ingredients found");
             }
-            // console.log("This is the ingredients in the fridge: " + data);
-            for (let index of data) {
-                // console.log('This are the indiv items: ', index);
-                let retrievedObject = index;
+            console.log("This is the ingredients in the fridge: " + data);
+            for (let index in data) {
+                console.log('This are the indiv items: ', data[index]);
+                let retrievedObject = data[index];
                 let itemName = retrievedObject.Name;
                 let itemQuantity = retrievedObject.Quantity;
                 let itemType = retrievedObject.Type;
