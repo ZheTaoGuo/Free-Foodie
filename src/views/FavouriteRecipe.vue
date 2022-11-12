@@ -57,7 +57,7 @@
         <h1 class="text-center">Favourite Recipes</h1>
     </div>
 
-    <div class="container">
+    <div class="container-fluid">
 
         <div class="row">
             <!--Start of Search Bar-->
