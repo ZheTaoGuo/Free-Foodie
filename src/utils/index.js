@@ -275,7 +275,7 @@ export const signout = ()=>{
     signOut(getAuth())
     .then(() => {
         console.log('Signed Out');
-        router.push('/')
+        router.push('/login')
     })
     .catch(e=>{
         console.error('Sign Out Error', e);
