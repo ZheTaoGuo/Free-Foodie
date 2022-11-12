@@ -1,6 +1,6 @@
 <script>
     import { RouterLink } from 'vue-router'
-    import { getFamily, createFamily, addFamilyMember, getUser, getLoggedInUser, isLoggedIn, signout } from '../utils'
+    import { getFamily, createFamily, addFamilyMember, getUser, getLoggedInUser, isLoggedIn } from '../utils'
     import * as d3 from "d3";
     // import plot from "@/components/plotWithXandYaxis.vue";
     import NavBar from '../components/Navbar.vue'
@@ -9,25 +9,11 @@
     // const userId = "1"   // TODO: obtained from cookies
     // const userName = "bob"   // TODO: obtained from cookies
 
-    // window.addEventListener("resize", ()=>{
-    //     console.log("resize")
-    //     console.log("screen.width: " + screen.width)
-    //     let graph = document.getElementById("dashboard")
-    //     console.log(graph)
-    //     let resize = screen.width * 40 / 100
-    //     graph.setAttribute("width", resize)
-    // })
-
     export default {
         components: {
             RouterLink,
             NavBar,
             Footer
-        },
-        computed: {
-            graphWidth(){
-                return screen.width * 60/100
-            } 
         },
         data() {
             return {
@@ -42,7 +28,6 @@
             }
         },
         methods: {
-            signout,
             isLoggedIn,
             getLoggedInUser,
             // createUser,
@@ -71,7 +56,7 @@
                     width = svg.attr("width") - margin,
                     height = svg.attr("height") - margin
                 
-                var xScale = d3.scaleBand().range([0, width]).padding(0.4),
+                var xScale = d3.scaleBand().range([0, width]).padding(0.5),
                     yScale = d3.scaleLinear().range([height, 0]);
 
                 // DOM manipulation to remove <g> tag if it already exists
@@ -84,16 +69,16 @@
                     .attr("transform", "translate(" + 60 + "," + 70 + ")");
 
                 let days = {
-                    0: "Sunday",
-                    1: "Monday",
-                    2: "Tuesday",
-                    3: "Wednesday",
-                    4: "Thursday",
-                    5: "Friday",
-                    6: "Saturday"
+                    0: "Sun",
+                    1: "Mon",
+                    2: "Tue",
+                    3: "Wed",
+                    4: "Thu",
+                    5: "Fri",
+                    6: "Sat"
                 }
                 let data = this.userCaloriesData
-                let filteredData = [{date:"Sunday", calories: 0}, {date:"Monday", calories: 0}, {date:"Tuesday", calories: 0}, {date:"Wednesday", calories: 0}, {date:"Thursday", calories: 0}, {date:"Friday", calories: 0}, {date:"Saturday", calories: 0}]
+                let filteredData = [{date:"Sun", calories: 0}, {date:"Mon", calories: 0}, {date:"Tue", calories: 0}, {date:"Wed", calories: 0}, {date:"Thu", calories: 0}, {date:"Fri", calories: 0}, {date:"Sat", calories: 0}]
                 for (let obj of data) {
                     // console.log("this is filtereddata day", days[new Date(obj.date).getDay()])
                     for (let obj2 of filteredData) {
@@ -166,96 +151,96 @@
 
 </script>
 
-<template id="profileLandingPage">
-    <div>
-        <!--Start of NavBar-->
-        <NavBar @checkLogin="isLoggedIn()"></NavBar>
-        <!--End of NavBar-->
-        <div class="mainContent container-fluid">
-            <div class="row justify-content-around">
-                <div class="col-lg-3" style="padding:0; margin-left:10px">
-                    <div class="row signout bg-secondary text-white" @click="signout()">
-                        <div class="link col-9 pt-1">
-                            <h5>Click here to sign out</h5>
+<template>
+    <!--Start of NavBar-->
+    <NavBar @checkLogin="isLoggedIn()"></NavBar>
+    <!--End of NavBar-->
+    <div class="mainContent container-fluid">
+        <div class="row justify-content-around">
+            <div class="col-lg-3" style="padding:0; margin-left:20px">
+                <div class="row">
+                    <div class="row">
+                        <div class="link col pt-1 signout bg-secondary text-white" style="border-radius: 10px;">
+                            <h5 @click="signout()">Click here to sign out</h5>
                         </div>
                     </div>
-                    <div class="row familyMembers d-flex flex-column">
-                        <div class="row">
-                            <div class="col-8 h-1" style="margin-top: 17px;"><h5>My Family Members</h5></div>
-                            <div class="col-4 h-1"><span class="addFamilyMember btn" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">+</span></div>
-                        </div>
-                        <div class="collapse" id="collapseExample">
-                            <div class="card card-body" v-if=" referralCode !== null">    
-                                Your referral code is: <span>{{ referralCode }}</span>
-                            </div>
-                            <div class="card card-body" v-else>    
-                                <span>You do not have a family yet</span>
-                            </div>
-                        </div>
-                        
-                        <!-- populate this row with family members from data from user-->
-                        <div class="row">
-                            <div v-if="familyList == null">
-                                <div class="col-8 h-1" style="margin-top: 10px; text-align: center; width:100%">
-                                    <p v-on:click="createFamily(userId, userName)" class="btn btn-secondary">Create Family</p>
-                                </div>
-                            </div> 
-                            <div v-else>
-                                <table id="familyMembers" style="width:100%">
-                                    <tr v-for="user of familyList" v-bind:key="user">
-                                        <div v-if="user !== undefined" class="row" style="padding:10px">
-                                            <td class="col-3"><i class="fas fa-solid fa-user"></i></td>
-                                            <td class="col" style="text-align:start"> {{ user.userName }} </td>
-                                        </div>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
-                        
-                    </div>
-    
-                    <!-- favorite & past recipies -->
-                    <router-link to="/favourite" style="text-decoration:none; color: black">
-                        <div class="row favoriteRecipies">
-                            <div class="col-1">
-                                <a href="/"><img src="../assets/love.png" style="height:30px; width:30px;"></a>
-                            </div>
-                            <div class="link col-9 pt-1">
-                                <h5>Your Favorite Recipies</h5>
-                            </div>
-                        </div>
-                    </router-link>
-    
-                    <router-link to="/past" style="text-decoration:none; color: black">
-                        <div class="row pastRecipies">
-                            <div class="col-1">
-                                <a href="/"><img src="../assets/history.png" style="height:30px; width:30px;"></a>
-                            </div>
-                            <div class="link col-9 pt-1">
-                                <h5>Your Past Recipies</h5>
-                            </div>
-                        </div>
-                    </router-link>
                 </div>
-    
-                <!-- mini dashboard -->
-                <div class="col-lg-8 calorieTracker d-flex flex-column" style="padding-bottom:40px">
-                <router-link to="/CalorieTracker" style="text-decoration:none">
-                    <div class="d-flex justify-content-between">
-                        <h5 style="text-align:start; color:black; padding-top:5px">My Dashboard</h5>
-                        <div class="btn btn-secondary">Expand</div>
+                <div class="row familyMembers d-flex flex-column">
+                    <div class="row">
+                        <div class="col-8 h-1" style="margin-top: 17px;"><h5>My Family Members</h5></div>
+                        <div class="col-4 h-1"><span class="addFamilyMember btn" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">+</span></div>
                     </div>
-                    <div class="d-flex justify-content-center" style="padding:20px">
-                        <svg width="600" height="450" id="dashboard"></svg>
+                    <div class="collapse" id="collapseExample">
+                        <div class="card card-body" v-if=" referralCode !== null">    
+                            Your referral code is: <span>{{ referralCode }}</span>
+                        </div>
+                        <div class="card card-body" v-else>    
+                            <span>You do not have a family yet</span>
+                        </div>
                     </div>
                     
-                </router-link>
+                    <!-- populate this row with family members from data from user-->
+                    <div class="row">
+                        <div v-if="familyList == null">
+                            <div class="col-8 h-1" style="margin-top: 10px; text-align: center; width:100%">
+                                <p v-on:click="createFamily(userId, userName)" class="btn btn-secondary">Create Family</p>
+                            </div>
+                        </div> 
+                        <div v-else>
+                            <table id="familyMembers" style="width:100%">
+                                <tr v-for="user of familyList" v-bind:key="user">
+                                    <div v-if="user !== undefined" class="row" style="padding:10px">
+                                        <td class="col-3"><i class="fas fa-solid fa-user"></i></td>
+                                        <td class="col" style="text-align:start"> {{ user.userName }} </td>
+                                    </div>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    
                 </div>
+
+                <!-- favorite & past recipies -->
+                <router-link to="/favourite" style="text-decoration:none; color: black">
+                    <div class="row favoriteRecipies">
+                        <div class="col-1">
+                            <a href="/"><img src="../assets/love.png" style="height:30px; width:30px;"></a>
+                        </div>
+                        <div class="link col-9 pt-1">
+                            <h5>Your Favorite Recipies</h5>
+                        </div>
+                    </div>
+                </router-link>
+
+                <router-link to="/past" style="text-decoration:none; color: black">
+                    <div class="row pastRecipies">
+                        <div class="col-1">
+                            <a href="/"><img src="../assets/history.png" style="height:30px; width:30px;"></a>
+                        </div>
+                        <div class="link col-9 pt-1">
+                            <h5>Your Past Recipies</h5>
+                        </div>
+                    </div>
+                </router-link>
             </div>
-            
+
+            <!-- mini dashboard -->
+            <div class="col-lg-8 calorieTracker" style="padding-bottom:40px">
+            <router-link to="/CalorieTracker" style="text-decoration:none">
+                <div class="d-flex justify-content-between">
+                    <h5 style="text-align:start; color:black; padding-top:5px">My Dashboard</h5>
+                    <div class="btn btn-secondary">Expand</div>
+                </div>
+
+                <div class="d-flex justify-content-center" >
+                    <svg width="450" height="450" id="dashboard"></svg>
+                </div>
+                
+            </router-link>
+            </div>
         </div>
-        <Footer @signOut="callSignOut()" style="margin-top:0px; padding-top:100px"></Footer>
     </div>
+    <Footer @signOut="callSignOut()" style="margin-top:0px; padding-top:100px"></Footer>
 </template>
 
 <style scoped>
@@ -263,6 +248,7 @@
         .mainContent {
             padding: 50px 70px;
             background-color: rgb(183, 221, 234);
+            overflow-x: hidden;
         }
 
         .calorieTracker {
@@ -273,6 +259,7 @@
         .mainContent {
             padding: 20px 20px;
             background-color: rgb(183, 221, 234);
+            overflow-x: hidden;
         }
 
         .calorieTracker {
@@ -288,15 +275,16 @@
         }
     }
 
+
     .familyMembers {
         background-color: white;
         border-radius: 10px;
-        height: 330px;
+        height: 400px;
         width: 100%;
         padding: 20px 0 0 20px
     }
 
-    .pastRecipies, .favoriteRecipies, .signout {
+    .pastRecipies, .favoriteRecipies{
         background-color: white;
         margin-top: 10px;
         height: 60px;
@@ -309,10 +297,7 @@
         align-content: center;
         gap:10px;
     }
-    .signout{
-        margin-bottom: 10px;
-        margin-top: 0px;
-    }
+
     .addFamilyMember {
         font-size: 30px;
         cursor: pointer;
@@ -339,9 +324,5 @@
 
     .link:hover{
         text-decoration: underline;
-    }
-
-    .signout h5:hover{
-        cursor:pointer
     }
 </style>
