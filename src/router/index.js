@@ -56,6 +56,18 @@ const routes = [
     {
         path: '/recipe',
         name: 'Recipe',
+        component: () => import('../views/RecipeInit.vue'),
+        query: true
+    },
+    {
+        path: '/recipemobile',
+        name: 'RecipeMobile',
+        component: () => import('../views/RecipeViewMobile.vue'),
+        query: true
+    },
+    {
+        path: '/recipeweb',
+        name: 'RecipeWeb',
         component: () => import('../views/RecipeView.vue'),
         query: true
     },

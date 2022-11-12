@@ -36,7 +36,7 @@
         },
         async mounted() {
             
-            console.log('In web');
+            console.log('In mobile View');
             const currentUser = await getLoggedInUser();
             this.loggedInUser = currentUser.userId
             console.log('Current UserId: ', this.loggedInUser);
@@ -110,6 +110,9 @@
                 // console.log(this.shoppingList[recipeId]);
                 addToPast(this.loggedInUser, this.selectedRecipe)
                 addToMissing(this.loggedInUser, this.shoppingList[recipeId])
+            },
+            updateSelectedRecipe(recipeId){
+                this.selectedRecipe = recipeId
             }
         }
     }
@@ -153,26 +156,28 @@
     <NavBar @checkLogin="isLoggedIn()"></NavBar>
     <div class="container-fluid align-items-start mt-2">
         <div class="row">
-            <div class="col-3">
-                <div class="nav nav-pills flex-column me-3" id="v-tab" role="tablist" aria-orientation="vertical">
-                    <!-- eslint-disable-next-line -->
-                    <button v-for="recipe of recipes" class="nav-link border p-4 my-2 receipe-button"
-                        :class="{active: recipe['recipeId'] == selectedRecipe}" id="v-settings-tab"
-                        data-bs-toggle="pill" :data-bs-target="'#v-settings'+recipe['recipeId']" type="button"
-                        role="tab" aria-controls="v-settings"
-                        :aria-selected="recipe['recipeId'] == selectedRecipe">{{recipe['recipeName']}}
-                    </button>
+            <div class="col">
+                <div class="scrollmenu container">
+                    <template v-for="recipe of recipes">
+                        <button class="nav-link border p-4 my-2 receipe-button"
+                            :class="{active: recipe['recipeId'] == selectedRecipe}" id="v-settings-tab"
+                            data-bs-toggle="pill" :data-bs-target="'#v-settings'+recipe['recipeId']" type="button"
+                            role="tab" aria-controls="v-settings"
+                            :aria-selected="recipe['recipeId'] == selectedRecipe" @click="updateSelectedRecipe(recipe['recipeId'])">{{recipe['recipeName']}}
+                        </button>
+                    </template>
                 </div>
             </div>
-            <div class="col-9 position-relative">
-                <div class="tab-content position-sticky top-0 background-style" id="v-pills-tabContent"
-                    style="overflow-y: auto; max-height: 100vh;">
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="tab-content background-style" id="v-pills-tabContent">
                     <!-- eslint-disable-next-line -->
                     <div v-for="recipe of recipes" class="tab-pane fade"
                         :class="{active: recipe['recipeId'] == selectedRecipe, show: recipe['recipeId'] == selectedRecipe}"
                         :id="'v-settings'+recipe['recipeId']" role="tabpanel"
                         :aria-labelledby="'recipe'+recipe['recipeId']" tabindex="0">
-                        <div class="container-fluid mt-3 px-4">
+                        <div class="container-fluid mt-3 px-4 pt-2">
                             <div class="image-style"
                                 :style="{ background: 'url(' + recipe['image'] + ') no-repeat', backgroundSize: 'cover', backgroundPosition: 'center', height:'35vh'}">
                                 <div class="image-style" style="background-color: rgba(0, 0, 0, 0.5); height:inherit">
@@ -249,5 +254,21 @@
         border-color: white !important;
         color: black !important;
         font-weight: 500;
+    }
+
+    div.scrollmenu {
+        color: rgb(183, 221, 234);
+        overflow: auto;
+        white-space: nowrap;
+    }
+
+    div.scrollmenu button {
+    display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 14px;
+    text-decoration: none;
+    margin-right:5px;
+    margin-left: 5px;
     }
 </style>
