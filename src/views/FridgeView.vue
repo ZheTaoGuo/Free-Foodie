@@ -6,7 +6,7 @@
             <div class="col-12 col-sm-6 col-md-4 col-lg-3 p-2" v-for="item in items">
                 <div class="card">
                     <div class="card-body text-center w-100">
-                        <a class="cross-icon" @click="this.deleteIngredients(item)">
+                        <a class="cross-icon" @click="deleteIngredients(item)">
                             <i class="fa-solid fa-circle-xmark fa-lg"></i>
                         </a>
 
@@ -24,7 +24,7 @@
             <div class="col-12 col-sm-6 col-md-4 col-lg-3 p-2" v-for="item in meat">
                 <div class="card">
                     <div class="card-body text-center w-100">
-                        <a class="cross-icon" @click="this.deleteIngredients(item)">
+                        <a class="cross-icon" @click="deleteIngredients(item)">
                             <i class="fa-solid fa-circle-xmark fa-lg"></i>
                         </a>
                         <h5 class="card-title">{{ item.itemName }}</h5>
@@ -41,7 +41,7 @@
             <div class="col-12 col-sm-6 col-md-4 col-lg-3 p-2" v-for="item in carbohydrates">
                 <div class="card">
                     <div class="card-body text-center w-100">
-                        <a class="cross-icon" @click="this.deleteIngredients(item)">
+                        <a class="cross-icon" @click="deleteIngredients(item)">
                             <i class="fa-solid fa-circle-xmark fa-lg"></i>
                         </a>
                         <h5 class="card-title">{{ item.itemName }}</h5>
@@ -58,7 +58,7 @@
             <div class="col-12 col-sm-6 col-md-4 col-lg-3 p-2" v-for="item in sauces">
                 <div class="card">
                     <div class="card-body text-center w-100">
-                        <a class="cross-icon" @click="this.deleteIngredients(item)">
+                        <a class="cross-icon" @click="deleteIngredients(item)">
                             <i class="fa-solid fa-circle-xmark fa-lg"></i>
                         </a>
                         <h5 class="card-title">{{ item.itemName }}</h5>
@@ -75,7 +75,7 @@
             <div class="col-12 col-sm-6 col-md-4 col-lg-3 p-2" v-for="item in condiments">
                 <div class="card">
                     <div class="card-body text-center w-100">
-                        <a class="cross-icon" @click="this.deleteIngredients(item)">
+                        <a class="cross-icon" @click="deleteIngredients(item)">
                             <i class="fa-solid fa-circle-xmark fa-lg"></i>
                         </a>
                         <h5 class="card-title">{{ item.itemName }}</h5>
@@ -92,7 +92,7 @@
             <div class="col-12 col-sm-6 col-md-4 col-lg-3 p-2" v-for="item in freshProduce">
                 <div class="card">
                     <div class="card-body text-center w-100">
-                        <a class="cross-icon" @click="this.deleteIngredients(item)">
+                        <a class="cross-icon" @click="deleteIngredients(item)">
                             <i class="fa-solid fa-circle-xmark fa-lg"></i>
                         </a>
                         <h5 class="card-title">{{ item.itemName }}</h5>
