@@ -448,49 +448,20 @@ export default {
     <!--End of NavBar-->
     <div class="mainContent">
 
-        <div class="row">
-            <!-- form -->
-            <div class="container" style="margin-bottom:20px">
-                <form class="row g-1 d-flex justify-content-center">
+        <div class="container-fluid">
+            <div class="row">
+                <!-- form -->
+                <form class="g-1 d-flex justify-content-center">
                     <div class="col-6">
-                        <!-- <AutoComplete v-model="userSearch" @complete="searchFood()"
-                            placeholder="Enter your meal details here to track your calories!"
-                            style="width:100%; padding-left: 90px;" :suggestions="searchResults" input-class="form-control"
-                            panel-class="bg-white pt-1" :emptySelectionMessage="''" empty-search-message=""
-                            search-message="" selection-message="" optionLabel="label">
-                        </AutoComplete> -->
                         <div class="mb-3">
                             <input type="text" class="form-control" id="search" placeholder="Enter your meal details here to track your calories!" v-model="userSearch" @input="searchFood">
                         </div>
-
                     </div>
                     <div class="col-1">
-                        <!-- <Modal @close="toggleModal" :modalActive="modalActive">
-                            <div class="modal-content" style="border:none">
-                                <div v-if="userSearch != ''">
-                                    <h2 style="font-weight:bold; text-align:start">You have eaten:</h2>
-                                    <br>
-                                    <p style="font-size:20px"> <span
-                                            style="font-weight:bold">{{ userSearch.item_name }}</span> from <span
-                                            style="font-weight:bold">{{ userSearch.brand_name }}</span></p>
-                                    <p style="font-size:20px">
-                                        It had {{ userSearch.calories }} calories. <br>
-                                        You have <span style="font-weight:bold">{{ Number(calorieLimit -
-                                                dailyCalorieIntake).toFixed(2)
-                                        }} calories left</span> for today.
-                                    </p>
-                                </div>
-                                <div v-else>
-                                    <h2 style="font-weight:bold">Please select a food entry first.</h2>
-                                </div>
-                            </div>
-                        </Modal> -->
-
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                             Add
                         </button>
-
                         <!-- Modal -->
                         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
@@ -524,91 +495,86 @@ export default {
                             </div>
                         </div>
                         </div>
-
                     </div>
                 </form>
             </div>
-        </div>
-        <div class="row justify-content-around ">
-            <div class="col-lg-3 col-md-12">
-                <div class="box pt-3 px-4">
-                    <h2 style="text-align:start">Personal Details</h2>
-                    <!-- letting user key in the fields of details of themselves -->
-                    <div class="row d-flex justify-content-center mt-3  pt-2" style="text-align:start;">
-                        <div class="mb-3">
-                            <label for="exampleFormControlInput1" class="form-label">Height (in cm)</label>
-                            <input type="text" class="form-control" id="height" v-model="height" placeholder="Enter your height">
+            <div class="row h-100 ">
+                <div class="col-lg-3 col-md-12 d-flex flex-column justify-content-between">
+                    <div class="box p-3 px-4" style="height: 65%;">
+                        <h2 style="text-align:start">Personal Details</h2>
+                        <!-- letting user key in the fields of details of themselves -->
+                        <div class="row d-flex justify-content-center mt-3 pt-2" style="text-align:start;">
+                            <div class="mb-3">
+                                <label for="exampleFormControlInput1" class="form-label">Height (in cm)</label>
+                                <input type="text" class="form-control" id="height" v-model="height" placeholder="Enter your height">
+                            </div>
                         </div>
-                    </div>
-                    <div class="row d-flex justify-content-center mt-3  pt-2" style="text-align:start;">
-                        <div class="mb-3">
-                            <label for="exampleFormControlInput1" class="form-label">Weight (in kg)</label>
-                            <input type="text" class="form-control" id="weight" v-model="weight" placeholder="Enter your weight">
+                        <div class="row d-flex justify-content-center mt-3  pt-2" style="text-align:start;">
+                            <div class="mb-3">
+                                <label for="exampleFormControlInput1" class="form-label">Weight (in kg)</label>
+                                <input type="text" class="form-control" id="weight" v-model="weight" placeholder="Enter your weight">
+                            </div>
                         </div>
-                    </div>
-    
-                    <div class="row d-flex justify-content-center mt-3  pt-2" style="text-align:start;">
-                        <div class="mb-3">
-                            <label for="exampleFormControlInput1" class="form-label">Activity Frequency</label>
-                            <select class="form-control moreMinimal" style="text-align:center" v-model="activityFrequency">
-                                    <option selected value="Little to no exercise">Little to no exercise</option>
-                                    <option value="Exercise 1-3 days/week">Exercise 1-3 days/week</option>
-                                    <option value="Exercise 3-5 days/week">Exercise 3-5 days/week</option>
-                                    <option value="Exercise 6-7 days/week">Exercise 6-7 days/week</option>
-                                    <option value="Hard exercise 6-7 days/week">Hard exercise 6-7 days/week</option>
-                            </select>
-                        </div>
-                    </div>
-    
-    
-                    <div class="row d-flex justify-content-center mt-3 p-3" style="text-align:start;">
-                        <div class="btn" style="background-color:crimson; color:white;height:10%"
-                            v-on:click="calculateCaloriesAndUpdate(userId, height, weight, activityFrequency, dailyCalorieIntake)">Calculate</div>
-                    </div>
-                </div>
-                <div class="box pt-4 px-4 mt-3" style="padding: 102px;">
-                    <!-- personal details -->
-                    <div class="row" style="text-align:start;">
-                        <div style="text-align:center;" class="mx-auto mt-4" v-if="calorieLimit != 0">
-                            <p>
-                                <span style="font-weight: bold;">The healthy BMI range for a {{ gender }} of height {{ height }}cm,
-                                    {{ weight }}kg, and {{ age }} years old is:</span> 18.5 to 24.9
-                            </p><br>
-                            <p>
-                                <span style="font-weight: bold;">Your recommended daily calorie intake:</span> {{ Number(calorieLimit).toFixed(2) }} calories
-                            </p>
-                        </div>
-                        <div v-else class="mt-4">
-                            <p>Key in the fields to calculate the amount of calories you should intake.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- dashboard -->
-            <div class="col-lg-9 col-md-12 box dashboard" style="position:relative">
-                <div style="width:90%" class="p-3 mx-auto col-6">
-                    <h2 style="text-align:left">Overview</h2>
-                    <div style="border:1px solid black;" class="mb-3">
-                        <!-- <plot :height="500" style="padding-left:50px" :data="userCaloriesData" /> -->
-            
-                        <svg width="950" height="600" id="dashboard"></svg>
-                        
-                        <div class="row d-flex justify-content-end m-4">
-                            <label for="colFormLabelSm" class="col-1 col-form-label col-form-label-sm"
-                                style="text-align: end">X-axis:</label>
-                            <div class="dropdown col-2">
-                                <select class="form-control moreMinimal" style="text-align:center" v-model="xAxisVariable"
-                                    v-on:change="renderGraph(xAxisVariable)">
-                                    <option value="day" selected>Day</option>
-                                    <option value="week">Week</option>
-                                    <option value="month">Month</option>
+                        <div class="row d-flex justify-content-center mt-3  pt-2" style="text-align:start;">
+                            <div class="mb-3">
+                                <label for="exampleFormControlInput1" class="form-label">Activity Frequency</label>
+                                <select class="form-control moreMinimal" style="text-align:center" v-model="activityFrequency">
+                                        <option selected value="Little to no exercise">Little to no exercise</option>
+                                        <option value="Exercise 1-3 days/week">Exercise 1-3 days/week</option>
+                                        <option value="Exercise 3-5 days/week">Exercise 3-5 days/week</option>
+                                        <option value="Exercise 6-7 days/week">Exercise 6-7 days/week</option>
+                                        <option value="Hard exercise 6-7 days/week">Hard exercise 6-7 days/week</option>
                                 </select>
+                            </div>
+                        </div>
+                        <div class="row d-flex justify-content-center mt-3 p-3" style="text-align:start;">
+                            <div class="btn" style="background-color:crimson; color:white;height:10%"
+                                v-on:click="calculateCaloriesAndUpdate(userId, height, weight, activityFrequency, dailyCalorieIntake)">Calculate</div>
+                        </div>
+                    </div>
+                    <div class="box p-4 mt-3" style="height: 35%;">
+                        <!-- personal details -->
+                        <div class="row" style="text-align:start;">
+                            <div style="text-align:center;" class="mx-auto mt-4" v-if="calorieLimit != 0">
+                                <p>
+                                    <span style="font-weight: bold;">The healthy BMI range for a {{ gender }} of height {{ height }}cm,
+                                        {{ weight }}kg, and {{ age }} years old is:</span> 18.5 to 24.9
+                                </p><br>
+                                <p>
+                                    <span style="font-weight: bold;">Your recommended daily calorie intake:</span> {{ Number(calorieLimit).toFixed(2) }} calories
+                                </p>
+                            </div>
+                            <div v-else class="mt-4">
+                                <p>Key in the fields to calculate the amount of calories you should intake.</p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- <h2 v-else style="position:absolute; top:30%; width:100%;">Enter your personal details to start tracking your calorie intake!</h2> -->
+                <!-- dashboard -->
+                <div class="col-lg-9 col-md-12 box dashboard" style="position:relative">
+                    <div style="width:90%" class="p-3 mx-auto col-6">
+                        <h2 style="text-align:left">Overview</h2>
+                        <div style="border:1px solid black;" class="mb-3">
+                            <!-- <plot :height="500" style="padding-left:50px" :data="userCaloriesData" /> -->
+            
+                            <svg width="950" height="600" id="dashboard"></svg>
+            
+                            <div class="row d-flex justify-content-end m-4">
+                                <label for="colFormLabelSm" class="col-1 col-form-label col-form-label-sm"
+                                    style="text-align: end">X-axis:</label>
+                                <div class="dropdown col-2">
+                                    <select class="form-control moreMinimal" style="text-align:center" v-model="xAxisVariable"
+                                        v-on:change="renderGraph(xAxisVariable)">
+                                        <option value="day" selected>Day</option>
+                                        <option value="week">Week</option>
+                                        <option value="month">Month</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <h2 v-else style="position:absolute; top:30%; width:100%;">Enter your personal details to start tracking your calorie intake!</h2> -->
+                </div>
             </div>
         </div>
     </div>
