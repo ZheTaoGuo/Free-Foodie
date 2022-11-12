@@ -98,13 +98,13 @@
                             <div class="title">
                                 <span>
                                     {{String(itemName).charAt(0).toUpperCase() + String(itemName).slice(1)}} 
-                                    <span v-on:click="cancelIngredientFromUnassigned"><i class="fa-solid fa-trash"></i></span>
+                                    <span v-on:click="cancelIngredient"><i class="fa-solid fa-trash"></i></span>
                                 </span>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col" v-if="title != 'Personal'">  <!-- this is the assigned tab-->
-                                <button class="btn btn-primary mt-3" v-on:click="cancelIngredient" style="font-size:10px">
+                                <button class="btn btn-primary mt-3"  v-on:click="IngredientBought" style="font-size:10px">
                                     Ingredient Bought
                                 </button>
                             </div>
