@@ -16,7 +16,7 @@
             <a class="nav-link active" href="/fridge" style="color:white">My Fridge</a>
           </li>
           <li class="nav-item mx-2">
-            <a href="/shoppinglist" class="nav-link active" style="color:white">
+            <a href="/shoppinglistinit" class="nav-link active" style="color:white">
               Shopping List
             </a>
           </li>

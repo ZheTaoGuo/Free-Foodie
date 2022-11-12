@@ -19,9 +19,19 @@ const routes = [
         component: FridgeView
     },
     {
+        path: '/shoppinglistinit',
+        name: 'ShoppingListInit',
+        component: () => import('../views/ShoppingListInit.vue')
+    },
+    {
         path: '/shoppinglist',
         name: 'ShoppingList',
         component: ShoppingList
+    },
+    {
+        path: '/shoppinglistmobile',
+        name: 'ShoppingListMobile',
+        component: () => import('../views/ShoppingListMobile.vue')
     },
     {
         path: '/profile',

@@ -1,6 +1,6 @@
 <template>
   <div class="shopping-list-header">
-    <h1 class="text-center">Shopping List</h1>
+    <h1 class="text-center" style="padding:5px">Shopping List</h1>
   </div>
   <div class="container-fluid tabs-wrapper d-flex flex-column w-100" :style="{'cursor': hover == true ? 'pointer' : 'context-menu' }">
     <div class="row tabs-header">
