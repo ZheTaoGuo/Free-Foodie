@@ -533,17 +533,6 @@ export default {
                                 <input type="text" class="form-control" id="weight" v-model="weight" placeholder="Enter your weight">
                             </div>
                         </div>
-<<<<<<< HEAD
-                        <div class="row d-flex justify-content-center mt-3  pt-2" style="text-align:start;">
-                            <div class="mb-3">
-                                <label for="exampleFormControlInput1" class="form-label">Activity Frequency</label>
-                                <select class="form-control moreMinimal" style="text-align:center" v-model="activityFrequency">
-                                        <option selected value="Little to no exercise">Little to no exercise</option>
-                                        <option value="Exercise 1-3 days/week">Exercise 1-3 days/week</option>
-                                        <option value="Exercise 3-5 days/week">Exercise 3-5 days/week</option>
-                                        <option value="Exercise 6-7 days/week">Exercise 6-7 days/week</option>
-                                        <option value="Hard exercise 6-7 days/week">Hard exercise 6-7 days/week</option>
-=======
                     </div>
     
                     <div class="row d-flex justify-content-center mt-3  pt-2" style="text-align:start;">
@@ -613,7 +602,6 @@ export default {
                                     <option value="day" selected>Day</option>
                                     <option value="week">Week</option>
                                     <option value="month">Month</option>
->>>>>>> 56f3bef (fixed bug)
                                 </select>
                             </div>
                         </div>
