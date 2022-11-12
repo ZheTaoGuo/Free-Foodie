@@ -13,7 +13,7 @@
                 <label for="email">Email address</label>
               </div>
               <div class="form-floating mx-auto mb-3 col-6">
-                <input type="password" th:field="*{password}"  class="form-control" id="password" placeholder="Password">
+                <input type="password" th:field="*{password}" class="form-control" id="password" placeholder="Password" @keyup.enter="signin()">
                 <label for="password">Password</label>
               </div>
               
