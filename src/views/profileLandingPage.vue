@@ -21,7 +21,8 @@
     export default {
         components: {
             RouterLink,
-            NavBar
+            NavBar,
+            Footer
         },
         computed: {
             graphWidth(){
@@ -253,7 +254,7 @@
             </div>
             
         </div>
-        <Footer @signOut="callSignOut()"></Footer>
+        <Footer @signOut="callSignOut()" style="margin-top:0px; padding-top:100px"></Footer>
     </div>
 </template>
 
@@ -271,7 +272,7 @@
 
     @media (min-width: 992px) {
         .mainContent {
-            height: 100vh;
+            /* height: 100vh; */
             padding: 20px 70px;
             background-color: rgb(183, 221, 234);
         }
