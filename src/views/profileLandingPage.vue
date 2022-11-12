@@ -1,6 +1,6 @@
 <script>
     import { RouterLink } from 'vue-router'
-    import { getFamily, createFamily, addFamilyMember, getUser, getLoggedInUser, isLoggedIn } from '../utils'
+    import { getFamily, createFamily, addFamilyMember, getUser, getLoggedInUser, isLoggedIn, signout } from '../utils'
     import * as d3 from "d3";
     // import plot from "@/components/plotWithXandYaxis.vue";
     import NavBar from '../components/Navbar.vue'
@@ -26,6 +26,7 @@
             }
         },
         methods: {
+            signout,
             isLoggedIn,
             getLoggedInUser,
             // createUser,
@@ -156,6 +157,14 @@
     <div class="mainContent container-fluid">
         <div class="row">
             <div class="col-lg-4">
+                <div class="row signout bg-secondary text-white" @click="signout()">
+                    <div class="col-1">
+                        <img src="../assets/user.png" style="height:30px; width:30px;">
+                    </div>
+                    <div class="link col-9 pt-1">
+                        <h5>Click here to sign out</h5>
+                    </div>
+                </div>
                 <div class="row familyMembers d-flex flex-column">
                     <div class="row">
                         <div class="col-8 h-1" style="margin-top: 17px;"><h5>My Family Members</h5></div>
@@ -229,6 +238,7 @@
                 
             </router-link>
             </div>
+            
         </div>
     </div>
     
@@ -257,12 +267,12 @@
     .familyMembers {
         background-color: white;
         border-radius: 10px;
-        height: 400px;
+        height: 320px;
         width: 100%;
         padding: 20px 0 0 20px
     }
 
-    .pastRecipies, .favoriteRecipies{
+    .pastRecipies, .favoriteRecipies, .signout {
         background-color: white;
         margin-top: 10px;
         height: 60px;
@@ -275,7 +285,10 @@
         align-content: center;
         gap:10px;
     }
-
+    .signout{
+        margin-bottom: 10px;
+        margin-top: 0px;
+    }
     .addFamilyMember {
         font-size: 30px;
         cursor: pointer;
