@@ -49,6 +49,16 @@ const routes = [
         component: profileLandingPage
     },
     {
+        path: '/CalorieTrackerInit',
+        name: 'CalorieTrackerInit',
+        component: () => import('../views/CalorieTrackerInit.vue')
+    },
+    {
+        path: '/CalorieTrackerMobile',
+        name: 'CalorieTrackerMobile',
+        component: () => import('../views/CalorieTrackerMobile.vue')
+    },
+    {
         path: '/CalorieTracker',
         name: 'CalorieTracker',
         component: () => import('../views/CalorieTracker.vue')
