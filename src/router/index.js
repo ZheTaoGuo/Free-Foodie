@@ -34,6 +34,16 @@ const routes = [
         component: () => import('../views/ShoppingListMobile.vue')
     },
     {
+        path: '/profileinit',
+        name: 'ProfileInit',
+        component: () => import('../views/profileLandingPageInit.vue')
+    },
+    {
+        path: '/profilemobile',
+        name: 'ProfileMobile',
+        component: () => import('../views/profileLandingPageMobile.vue')
+    },
+    {
         path: '/profile',
         name: 'Profile',
         component: profileLandingPage
