@@ -1,6 +1,6 @@
 <script>
     import { RouterLink } from 'vue-router'
-    import { getFamily, createFamily, addFamilyMember, getUser, getLoggedInUser, isLoggedIn } from '../utils'
+    import { getFamily, createFamily, addFamilyMember, getUser, getLoggedInUser, isLoggedIn, signout } from '../utils'
     import * as d3 from "d3";
     // import plot from "@/components/plotWithXandYaxis.vue";
     import NavBar from '../components/Navbar.vue'
@@ -28,6 +28,7 @@
             }
         },
         methods: {
+            signout,
             isLoggedIn,
             getLoggedInUser,
             // createUser,
@@ -160,7 +161,7 @@
             <div class="col-lg-3" style="padding:0; margin-left:20px">
                 <div class="row">
                     <div class="row">
-                        <div class="link col pt-1 signout bg-secondary text-white" style="border-radius: 10px;">
+                        <div class="link col pt-1 signout bg-secondary text-white mb-3" style="border-radius: 10px;">
                             <h5 @click="signout()">Click here to sign out</h5>
                         </div>
                     </div>
