@@ -135,7 +135,7 @@ export default {
         alert(alertMsg);
       }
       else{
-        alert("Your ingredeint has been added to your fridge!");
+        alert("Your ingredient has been added to your fridge!");
       }
       saveIngredients(this, this.itemName, this.quantity, this.selectedValue)
     }
