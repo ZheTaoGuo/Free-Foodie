@@ -153,7 +153,7 @@
     <!--Start of NavBar-->
     <NavBar @checkLogin="isLoggedIn()"></NavBar>
     <!--End of NavBar-->
-    <div class="mainContent">
+    <div class="mainContent container-fluid">
         <div class="row">
             <div class="col-lg-4">
                 <div class="row familyMembers d-flex flex-column">
@@ -235,10 +235,18 @@
 </template>
 
 <style scoped>
-    .mainContent {
-        height: 100vh;
-        padding: 20px 70px;
-        background-color: rgb(183, 221, 234);
+    @media (max-width: 991px) {
+        .mainContent {
+            padding: 20px 70px;
+            background-color: rgb(183, 221, 234);
+        }
+    }
+    @media (min-width: 992px) {
+        .mainContent {
+            height: 100vh;
+            padding: 20px 70px;
+            background-color: rgb(183, 221, 234);
+        }
     }
 
     .familyMembers {
