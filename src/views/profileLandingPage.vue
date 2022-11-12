@@ -240,7 +240,12 @@
             padding: 20px 70px;
             background-color: rgb(183, 221, 234);
         }
+
+        .calorieTracker {
+            margin-top: 10px;
+        }
     }
+    
     @media (min-width: 992px) {
         .mainContent {
             height: 100vh;
