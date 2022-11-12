@@ -1,12 +1,12 @@
 <template>
   <div class="shopping-list-header">
-    <h1 class="text-center" style="padding:5px">Shopping List</h1>
+    <h1 class="text-center">Shopping List</h1>
   </div>
   <div class="container-fluid tabs-wrapper d-flex flex-column w-100" :style="{'cursor': hover == true ? 'pointer' : 'context-menu' }">
     <div class="row tabs-header">
       <div class="col individual-tab-style mx-4 text-center" v-for="title in tabTitlesSlot" :key="title"
         :class="{ selected: title == selectedTitle }"
-        :style="{ 'background-color': title == selectedTitle ? 'green' : (hover == true && hoverTitle == title) ? 'blue' : 'white' }" @click="onClickEffect($event)"
+        :style="{ 'background-color': title == selectedTitle ? 'rgb(183, 221, 234)' : (hover == true && hoverTitle == title) ? 'lightgreen' : 'white' }" @click="onClickEffect($event)"
         @mouseenter="onHoverEffect($event)" @mouseleave="outHoverEffect($event)">
         {{ title }}
       </div>
@@ -122,7 +122,6 @@ export default {
 
 .shopping-list-header {
   background-image: linear-gradient(to bottom right, #7395AE, #379683) !important;
-  /* border-radius: 20px; */
   color: #fff !important;
   box-shadow: 0 0 40px 0 rgba(94, 92, 154, .06);
   margin-bottom: 5px;
