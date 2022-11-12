@@ -98,7 +98,7 @@
                             <div class="title">
                                 <span>
                                     {{String(itemName).charAt(0).toUpperCase() + String(itemName).slice(1)}} 
-                                    <span v-on:click="cancelIngredient"><i class="fa-solid fa-trash"></i></span>
+                                    <span v-on:click="cancelIngredientFromUnassigned"><i class="fa-solid fa-trash"></i></span>
                                 </span>
                             </div>
                         </div>
