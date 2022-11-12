@@ -181,7 +181,7 @@
                             <table id="familyMembers" style="width:100%">
                                 <tr v-for="user of familyList" v-bind:key="user">
                                     <div v-if="user !== undefined" class="row" style="padding:10px">
-                                        <td class="col-3"><img src="../assets/user.png" style="width:30px; height:30px"></td>
+                                        <td class="col-3"><i class="fas fa-solid fa-user"></i></td>
                                         <td class="col" style="text-align:start"> {{ user.userName }} </td>
                                     </div>
                                 </tr>
@@ -245,7 +245,7 @@
             margin-top: 10px;
         }
     }
-    
+
     @media (min-width: 992px) {
         .mainContent {
             height: 100vh;
