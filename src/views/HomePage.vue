@@ -10,22 +10,39 @@
                 <div class="carousel-inner text-center">
                     <div class="carousel-item active" data-bs-interval="2000">
                         <img src="../assets/backgroundpicture1.jpg" class="d-block w-100">
+                        <div id="titledetails">
+                            <h1 class="title" style="font-size: 5vw;" v-if="userName != ''">Welcome, {{userName}}! <br> Cook at home sustainably with us
+                                today</h1>
+                            <h1 class="title" style="font-size: 5vw;" v-else>Welcome! <br> Cook at home sustainably with us today</h1>
+                            <button type="button" style="font-size: 3vw;" class="btn btn-primary btnstyle" @click="$router.push('/search')">
+                                Explore Menu
+                            </button>
+                        </div>
                     </div>
                     <div class="carousel-item" data-bs-interval="3000">
                         <img src="../assets/backgroundpicture2.jpg" class="d-block w-100">
+                        <div id="titledetails">
+                            <h1 class="title" style="font-size: 5vw;" v-if="userName != ''">Welcome, {{userName}}! <br> Cook at home sustainably with us
+                                today</h1>
+                            <h1 class="title" style="font-size: 5vw;" v-else>Welcome! <br> Cook at home sustainably with us today</h1>
+                            <button type="button" style="font-size: 3vw;" class="btn btn-primary btnstyle" @click="$router.push('/search')">
+                                Explore Menu
+                            </button>
+                        </div>
                     </div>
                     <div class="carousel-item" data-bs-interval="3000">
                         <img src="../assets/backgroundpicture3.jpg" class="d-block w-100">
+                        <div id="titledetails">
+                            <h1 class="title" style="font-size: 5vw;" v-if="userName != ''">Welcome, {{userName}}! <br> Cook at home sustainably with us
+                                today</h1>
+                            <h1 class="title" style="font-size: 5vw;" v-else>Welcome! <br> Cook at home sustainably with us today</h1>
+                            <button type="button" style="font-size: 3vw;" class="btn btn-primary btnstyle" @click="$router.push('/search')">
+                                Explore Menu
+                            </button>
+                        </div>
                     </div>
                 </div>
-                <div id="titledetails">
-                    <h1 class="title" style="font-size: 5vw;" v-if="userName != ''">Welcome, {{userName}}! <br> Cook at home sustainably with us
-                        today</h1>
-                    <h1 class="title" style="font-size: 5vw;" v-else>Welcome! <br> Cook at home sustainably with us today</h1>
-                    <button type="button" style="font-size: 3vw;" class="btn btn-primary btnstyle" @click="$router.push('/search')">
-                        Explore Menu
-                    </button>
-                </div>
+                
             </div>
 
         </div>
@@ -234,9 +251,8 @@
         margin: 0 auto;
     }
 
-    .carousel-item {
+    /* .carousel-item {
         filter: blur(2px);
         -webkit-filter: blur(2px);
-
-    }
+    } */
 </style>
