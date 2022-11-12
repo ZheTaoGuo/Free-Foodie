@@ -640,13 +640,26 @@ export const removeItem = (userId, itemName) => {
     })
 }
 
+const itemType = {
+    'Meat': ['lean ground turkey', ],
+    'Condiments': ['chili powder', 'ground coriander', 'ground cumin', 'paprika', ],
+    'Sauces': ['canned black beans', 'chipotles in adobo', 'fire roasted canned tomatoes', ],
+    'Fresh Produce': ['bell peppers', 'garlic', 'green chilies', 'tomatillos', 'yellow onion'],
+}
+
 // Add item into the user's assignedIngredients
 function addItem(userId, itemName, itemImage) {
+    let type = Object.keys(itemType).find(key => itemType[key].includes(itemName));
+    let wordArr = itemName.split(' ')
+    for (let i = 0; i < wordArr.length; i++) {
+        wordArr[i] = wordArr[i][0].toUpperCase() + wordArr[i].substr(1);
+    }
+    itemName = wordArr.join(' ')
     console.log("addItem is called")
     const newUserItem = ref(db, 'users/' + userId + '/assignedIngredients')
     push(newUserItem, {
         itemName: itemName,
-        itemType: 'NA',
+        itemType: type,
         quantity: 1,
         image: itemImage,
     })
