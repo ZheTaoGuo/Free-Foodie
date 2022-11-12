@@ -147,9 +147,9 @@ export default {
         saveIngredients,
         loadIngredients() {
             const retrievedIngredientsObject = retrieveIngredients();
-            retrievedIngredientsObject.then(value => {
+            retrievedIngredientsObject.then((value) => {
                 this.items = value
-
+                console.log(this.items);
                 for (let item of this.items) {
                     if (item.itemType == "Meat") {
                         this.meat.push(item)
@@ -174,7 +174,11 @@ export default {
         },
         deleteIngredients(item) {
             console.log(item);
-            deleteFromFridge(item)
+            deleteFromFridge(item).then(value => {
+                this.loadIngredients()
+            }).catch(error => {
+                this.loadIngredients()
+            })
             this.loadIngredients()
         }
     },
