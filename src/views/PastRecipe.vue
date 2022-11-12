@@ -1,5 +1,6 @@
 <script>
     import Card from '../components/CardComp.vue'
+    import Footer from '../components/Footer.vue'
     import NavBar from '../components/Navbar.vue'
     import data from '../recipes.json'
     import {getPast, searchFavPast, getLoggedInUser, isLoggedIn } from '../utils'
@@ -8,7 +9,8 @@
     export default {
         components: {
             Card,
-            NavBar
+            NavBar,
+            Footer
         },
         data() {
             return {
@@ -92,6 +94,7 @@
         </div>
         
     </div>
+    <Footer></Footer>
 </template>
 
 <style>

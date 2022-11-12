@@ -1,6 +1,7 @@
 <script>
     import Card from '../components/CardComp.vue'
     import NavBar from '../components/Navbar.vue'
+    import Footer from '../components/Footer.vue'
     import {
         getAll,
         searchContent,
@@ -11,7 +12,8 @@
     export default {
         components: {
             Card,
-            NavBar
+            NavBar,
+            Footer
         },
         data() {
             return {
@@ -147,6 +149,7 @@
             <!-- End of Recipe -->
         </div>
     </div>
+    <Footer></Footer>
 </template>
 
 <style>
