@@ -585,7 +585,7 @@ export default {
             </div>
 
             <!-- dashboard -->
-            <div class="col-lg-9 col-md-12 box" style="position:relative">
+            <div class="col-lg-9 col-md-12 box dashboard" style="position:relative">
                 <div style="width:90%" class="p-3 mx-auto col-6">
                     <h2 style="text-align:left">Overview</h2>
                     <div style="border:1px solid black;" class="mb-3">
@@ -621,6 +621,12 @@ export default {
     background-color: rgb(183, 221, 234);
     overflow-x: hidden;
 }
+
+@media (max-width: 991px) {
+        .dashboard {
+            margin-top: 10px;
+        }
+    }
 
 select.moreMinimal {
     background-image:
