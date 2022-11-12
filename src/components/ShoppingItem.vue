@@ -1,7 +1,7 @@
 <script>
     export default {
-        props: ['title', 'itemName', 'user', 'familyMembers', 'itemImage', 'mobile'],
-        emits: ['assignItem', "cancelItem", "cancelIngredientFromUnassigned"],
+        props: ['title', 'itemName', 'user', 'familyMembers', 'itemImage', 'mobile', "item"],
+        emits: ['assignItem', "cancelItem", "cancelIngredientFromUnassigned", "IngredientBought"],
         data() {
             return{
                 famMember: 'Assign to',
@@ -28,6 +28,10 @@
             cancelIngredientFromUnassigned() {
                 console.log("cancelIngredientFromUnassigned");
                 this.$emit('cancelIngredientFromUnassigned', {name: this.itemName, image: this.itemImage})
+            },
+            IngredientBought() {
+                console.log("IngredientBought");
+                this.$emit('IngredientBought', this.item)
             }
         },
     }
@@ -58,7 +62,7 @@
 
                         <div class="status">
                             <div class="icon" v-if="title != 'Personal'">
-                                <button class="btn btn-primary" v-on:click="cancelIngredient">
+                                <button class="btn btn-primary" v-on:click="IngredientBought">
                                     Ingredient Bought
                                 </button>
                             </div>
