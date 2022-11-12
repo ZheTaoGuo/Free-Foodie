@@ -38,23 +38,6 @@ const emit = defineEmits(['missing'])
 emit('missing', props.missingIngredient, props.recipeId)
 </script>
 
-<<<<<<< HEAD
-=======
-<script>
-
-export default {
-    data() {
-        return {
-            missingIngredient: []
-        }
-    },
-    mounted() {
-        this.$emit('missing', this.missingIngredient, this.recipeId)
-    }
-}
-</script>
->>>>>>> 96f92f5 (Updated how ingredients list check fridge items)
-
 <template>
     <div class="text-dark">
         <table>

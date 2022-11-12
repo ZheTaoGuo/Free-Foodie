@@ -48,7 +48,6 @@
               <div class="form-group">
                 <label for="Quantity" class="d-flex justify-content-start p-2">Quantity</label>
                 <input type="number" class="form-control" id="Quantity" placeholder="Enter Quantity" v-model="quantity"
-                <input type="number" class="form-control" id="Quantity" placeholder="Enter Quantity" v-model="quantity"
                   required />
               </div>
 

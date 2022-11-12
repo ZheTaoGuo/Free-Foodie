@@ -199,11 +199,10 @@
                                 :ingredients="recipe['ingredientDetails']" :fridge="fridgeContent"
                                 @missing="getMissing"></Ingredient>
                             <hr>
-                            <button class="btn btn-secondary me-2"
-                                v-show="queryType !== 'favourite' && queryType !== 'past'"
-                                @click="addToFav()">Favourite</button>
+                            <button type="button" class="btn btn-secondary  me-2" data-bs-toggle="modal" v-show="queryType !== 'favourite' && queryType !== 'past'"
+                                data-bs-target="#favouriteModal"  @click="addToFav()">Favourite</button>
                             <button type="button" class="btn btn-secondary" data-bs-toggle="modal" v-show="queryType !== 'favourite' && queryType !== 'past'"
-                                data-bs-target="#itemModal"  @click="callAddToMissing(recipe['recipeId'])">
+                                data-bs-target="#missingModal"  @click="callAddToMissing(recipe['recipeId'])">
                                 Use this recipe
                             </button>
                             <hr>
