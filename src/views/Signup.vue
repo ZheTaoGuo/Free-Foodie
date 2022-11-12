@@ -7,9 +7,10 @@
     var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         return new bootstrap.Tooltip(tooltipTriggerEl, {
             delay: {
-                'show': 0,
-                'hide': 0
-            }
+                show: 0,
+                hide: 0,
+            },
+            trigger: 'click'
         }, )
     });
 
@@ -120,7 +121,7 @@
                             <input class="form-control" id="familyId" placeholder="Input your family ID (optional)" />
                             <label for="familyId">Family ID (optional)</label>
                             <img src="/info-svgrepo-com.svg" alt="info" class="icon-image" data-bs-delay="0"
-                                data-bs-trigger="hover focus" data-bs-toggle="tooltip" data-bs-placement="top"
+                                data-bs-trigger="click" data-bs-toggle="tooltip" data-bs-placement="top"
                                 title="If you are a new user, please leave this field blank. You can retrieve your family referral code on your profile">
                         </div>
 
@@ -171,8 +172,6 @@
                                 </p>
                             </router-link>
                         </div>
-
-
                     </div>
                 </div>
             </div>
@@ -186,7 +185,6 @@
     familyId {
         position: relative;
     }
-
     .icon-image {
         position: absolute;
         top: 32%;
@@ -194,34 +192,6 @@
         right: 0;
         width: 20px;
         height: 20px;
-
-
     }
 
-    /* .tooltip{
-  position:relative;
-  display: inline-block;
-  border-bottom: 1px dotted black;
-}
-
-.tooltip .tooltiptext{
-  position:absolute;
-  top: 0;
-  right: 0;
-  margin-top: 10px;
-  margin-right: 10px;
-  font-size: 20px;
-  background-color: black;
-  visibility: hidden;
-  width: 120px;
-  padding: 5px 0;
-  z-index: -1;
-  opacity: 0;
-  transition: opacity 1s;
-}
-
-.tooltip:hover .tooltiptext {
-  visibility: visible;
-  opacity: 1;
-} */
 </style>

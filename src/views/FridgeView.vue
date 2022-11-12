@@ -9,7 +9,6 @@
                         <a class="cross-icon" @click="deleteIngredients(item)">
                             <i class="fa-solid fa-circle-xmark fa-lg"></i>
                         </a>
-
                         <h5 class="card-title">{{ item.itemName }}</h5>
                         <h6 class="card-subtitle text-muted">{{ item.itemType }}</h6>
                         <p class="card-text">

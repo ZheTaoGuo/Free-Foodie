@@ -53,10 +53,8 @@
             } else {
                 this.getAllRecipe()
             }
-
             this.getAllFridgeIngredient()
             console.log(this.shoppingList);
-
         },
         methods: {
             isLoggedIn,
