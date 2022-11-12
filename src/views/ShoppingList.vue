@@ -58,12 +58,10 @@
                 })
             }
             // this.familyUsers = Object.values(family.users);
-
             console.log(this.familyUsers);
             this.callGetAllMissing();
             this.callGetFamily();
             this.getAssignedIngredientPerUser();
-
         },
         methods: {
             isLoggedIn,

@@ -7,10 +7,7 @@
                         <slot></slot>
                     </div>
             </div>
-        
     </div>
-    
-    
 </template>
 
 <script>
@@ -20,7 +17,6 @@ export default {
     emit: [],
     setup(){
         const selectedTitle = inject("selectedTitle");
-
         return { 
             selectedTitle,
         }

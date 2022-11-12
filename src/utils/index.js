@@ -79,22 +79,19 @@ export const register = () => {
             alertstr += 'Email address is invalid.' + '\n';
         }
     }
-    if (password.length < 6) {
-        alertstr += 'Please enter a valid password.' + '\n';
-    } else{
-        if(password.length < 8){
-            alertstr += 'Password must be at least 8 characters long.' + '\n';
-        }
-        if(!/[A-Z]/.test(password) || !/[a-z]/.test(password)){
-            alertstr += 'Password must contain at least one uppercase and lowercase letter.' + '\n';
-        }
-        if(!/[^0-9a-zA-Z]/.test(password)){
-            alertstr += 'Password must be aplanumeric' + '\n';
-        }
-        if(!/[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(password)){
-            alertstr += 'Password must contain at least one special character.' + '\n';
-        }
+    if(password.length < 8){
+        alertstr += 'Password must be at least 8 characters long.' + '\n';
     }
+    if(!/[A-Z]/.test(password) || !/[a-z]/.test(password)){
+        alertstr += 'Password must contain at least one uppercase and lowercase letter.' + '\n';
+    }
+    if(!/[^0-9a-zA-Z]/.test(password)){
+        alertstr += 'Password must be aplanumeric' + '\n';
+    }
+    if(!/[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(password)){
+        alertstr += 'Password must contain at least one special character.' + '\n';
+    }
+    
     if (name.length == 0) {
         alertstr += 'Please enter your name.' + '\n';
     }
