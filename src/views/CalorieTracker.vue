@@ -10,7 +10,7 @@ import axios from 'axios'
 // import Modal from "@/components/Modal.vue";
 import { ref, toRaw } from "vue";
 import NavBar from '../components/Navbar.vue'
-
+import Footer from '../components/Footer.vue'
 
 
 export default {
@@ -18,7 +18,8 @@ export default {
         plot,
         // AutoComplete,
         // Modal,
-        NavBar
+        NavBar,
+        Footer
     },
     setup() {
         // const modalActive = ref(false);
@@ -611,7 +612,7 @@ export default {
             </div>
         </div>
     </div>
-
+    <Footer @signOut="callSignOut()" style="margin-top:0px; padding-top:80px"></Footer>
 </template>
 
 <style scoped>
