@@ -24,7 +24,7 @@
 
       <!-- Button trigger modal -->
       <div class="fab-container">
-        <div class="button iconbutton">
+        <div class="button iconbutton addbutton">
           <span type="button" id="plus" data-bs-toggle="modal" data-bs-target="#itemModal">Add New Ingredient</span>
         </div>
       </div>
@@ -214,6 +214,9 @@ export default {
   bottom: 20px;
   right: 20px;
   cursor: pointer;
+}
+.addbutton:hover{
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3) !important;
 }
 
 #plus{
