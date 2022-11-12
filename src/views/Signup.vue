@@ -133,7 +133,7 @@
                             <!-- <p class="h5 mb-3 section-titles">Or create account with email</p> -->
                             <div class="form-floating mx-auto mb-3 col-6">
                                 <input type="email" th:field class="form-control" id="email"
-                                    placeholder="name@example.com" :onkeypress="checkEmail" v-model="useremail">
+                                    placeholder="name@example.com" @blur="checkEmail" v-model="useremail">
                                 <label for="email">Email address</label>
                                 <div id="emailHelpBlock" class="form-text text-danger" v-if="emailInvalid">
                                     Email address is invalid! Please enter a valid email address
@@ -141,7 +141,7 @@
                             </div>
                             <div class="form-floating mx-auto mb-3 col-6">
                                 <input type="password" th:field="*{password}" class="form-control" id="password"
-                                    placeholder="Password" :onkeypress="checkPassword" v-model="userpass">
+                                    placeholder="Password" @blur="checkPassword" v-model="userpass">
                                 <label for="password">Password</label>
                                 <div id="passwordHelpBlock" class="form-text text-danger" v-if="passwordInvalid">
                                     Your password must be 8 characters or longer, contain letters and numbers, and must
