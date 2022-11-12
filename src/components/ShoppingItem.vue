@@ -38,7 +38,7 @@
 </script>
 
 <template>
-    <div>
+    <div id="shoppingItem">
         <div class="container-fluid" v-if="mobile == false">
             <div class="row justify-content-start">
                 <div class="col-3" >
@@ -170,7 +170,7 @@
 
     }
 
-    span:hover, select:hover {
+    #shoppingItem span:hover, select:hover {
         cursor: pointer;
     }
 </style>
