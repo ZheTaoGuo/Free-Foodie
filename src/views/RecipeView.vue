@@ -4,6 +4,7 @@
     import router from '../router'
     import Instruction from '../components/InstructionView.vue'
     import Ingredient from '../components/IngredientView.vue'
+    import Footer from '../components/Footer.vue'
     import NavBar from '../components/Navbar.vue'
     import {
         getFavourite,
@@ -33,6 +34,7 @@
             Instruction,
             Ingredient,
             NavBar,
+            Footer
         },
         async mounted() {
             
@@ -212,6 +214,7 @@
             </div>
         </div>
     </div>
+    <Footer></Footer>
 </template>
 
 <style scoped>
