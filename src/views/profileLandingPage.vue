@@ -240,7 +240,7 @@
     
                 <!-- mini dashboard -->
                 <div class="col-lg-8 calorieTracker d-flex flex-column" style="padding-bottom:40px">
-                <router-link to="/CalorieTracker" style="text-decoration:none">
+                <router-link to="/CalorieTrackerInit" style="text-decoration:none">
                     <div class="d-flex justify-content-between">
                         <h5 style="text-align:start; color:black; padding-top:5px">My Dashboard</h5>
                         <div class="btn btn-secondary">Expand</div>

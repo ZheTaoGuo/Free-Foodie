@@ -137,7 +137,9 @@
                     this.userObj = user
                     // console.log("tjs is this.userObj", this.userObj)
                     if (user.calorieDetails != null) {
-                        this.calorieLimit = Number(user.calorieDetails[Object.keys(user.calorieDetails)[Object.keys(user.calorieDetails).length - 1]].calorieLimit).toFixed(2);
+                        if (this.calorieLimit == 0) {
+                            this.calorieLimit = Number(user.calorieDetails[Object.keys(user.calorieDetails)[Object.keys(user.calorieDetails).length - 1]].calorieLimit).toFixed(2);
+                        }
                         for (const property in user.calorieDetails) {
                             // console.log("this is new obj created", { date: user.calorieDetails[property].date, calories: user.calorieDetails[property].dailyCalorieIntake})
                             this.userCaloriesData.push({ date: user.calorieDetails[property].date, calories: user.calorieDetails[property].dailyCalorieIntake})
@@ -227,7 +229,7 @@
 
             <!-- mini dashboard -->
             <div class="col-lg-8 calorieTracker" style="padding-bottom:40px">
-            <router-link to="/CalorieTracker" style="text-decoration:none">
+            <router-link to="/CalorieTrackerInit" style="text-decoration:none">
                 <div class="d-flex justify-content-between">
                     <h5 style="text-align:start; color:black; padding-top:5px">My Dashboard</h5>
                     <div class="btn btn-secondary">Expand</div>
