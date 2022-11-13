@@ -50,6 +50,7 @@ export default {
             userCaloriesData: [],
             xAxisVariable: "day",
             filteredData: [],
+            modalStatus: false,
         }
     },
     methods: {
@@ -447,6 +448,9 @@ export default {
                 .attr("text-anchor", "end")
                 .attr("style", "font-size: 15px; font-weight: bold")
                 .text("Max Calorie Intake: " + Number(this.calorieLimit * scale).toFixed(2))
+        },
+        checkStatus() {
+            this.modalStatus = true 
         }
 
     },
@@ -506,7 +510,7 @@ export default {
                         </Modal> -->
 
                         <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" @click="checkStatus">
                             Add
                         </button>
 
@@ -519,7 +523,7 @@ export default {
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <div v-if="userSearch != ''">
+                                <div v-if="modalStatus == true">
                                     <h2 style="font-weight:bold; text-align:start">You have chosen:</h2>
                                     <br>
                                     <p style="font-size:20px"> <span
