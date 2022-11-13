@@ -26,7 +26,7 @@ const db = getDatabase(app);
 //Authentication Functions
 export const isLoggedIn = () => {
     onAuthStateChanged(getAuth(), (currentUser) => {
-        if (currentUser!=null) {
+        if (currentUser != null) {
             router.push('/profileinit')
             return true
         } else {
@@ -36,28 +36,29 @@ export const isLoggedIn = () => {
     })
 }
 export const getLoggedInUser = () => {
-    return new Promise ((resolve, reject) => {
+    return new Promise((resolve, reject) => {
         onAuthStateChanged(getAuth(), (currentUser) => {
-        if (currentUser) {
-          var userId = currentUser.uid;
-          var user = ref(db, 'users/' + userId);
-          onValue(user, (snapshot) => {
-              const data = snapshot.val();
-              var username = data.username
-            //   console.log(username)
-              let returnObj = {
-                    userId: userId,
-                    userName: username,
-              }
-            //   console.log("returned object");
-            //   console.log(returnObj);
-              return resolve(returnObj)
-          });
-        } 
-        else{
-            console.log(null)
-            reject(null)
-        }
+            console.log(currentUser);
+            if (currentUser) {
+                var userId = currentUser.uid;
+                var user = ref(db, 'users/' + userId);
+                onValue(user, (snapshot) => {
+                    const data = snapshot.val();
+                    var username = data.username
+                    //   console.log(username)
+                    let returnObj = {
+                        userId: userId,
+                        userName: username,
+                    }
+                    //   console.log("returned object");
+                    //   console.log(returnObj);
+                    return resolve(returnObj)
+                });
+            }
+            else {
+                console.log(null)
+                reject(null)
+            }
         })
     })
 }
@@ -70,7 +71,7 @@ export const register = () => {
     var gender = document.getElementById('gender').value;
     var familyId = document.getElementById('familyId').value;
     const name = document.getElementById('name').value;
-    
+
     // Create user with email and pass.
     createUserWithEmailAndPassword(getAuth(), email, password)
         .then(function (result) {
@@ -87,9 +88,9 @@ export const register = () => {
                 activityFrequency: "",
                 calorieDetails: []
             });
-            if (familyId == ''){
-                createFamily(result.user.uid,name)
-            }else{
+            if (familyId == '') {
+                createFamily(result.user.uid, name)
+            } else {
                 addFamilyMember(result.user.uid, name, familyId)
             }
             router.push('/')
@@ -99,10 +100,10 @@ export const register = () => {
             var errorMessage = error.message;
             if (errorCode === "auth/wrong-password") {
                 alert("Incorrect password!");
-            } 
+            }
             else if (errorCode === "email-already-in-use") {
                 alert("Use a different email!");
-            } 
+            }
             else {
                 alert(errorMessage);
             }
@@ -125,7 +126,8 @@ export const signin = () => {
     // Create user with email and pass.
     signInWithEmailAndPassword(getAuth(), email, password).then(() => {
         console.log("Successfully signed in")
-        router.push('/')})
+        router.push('/')
+    })
 
         .catch(function (error) {
             // Handle Errors here.
@@ -133,10 +135,10 @@ export const signin = () => {
             var errorMessage = error.message;
             if (errorCode === "auth/wrong-password") {
                 alert("Incorrect password!");
-            } 
+            }
             else if (errorCode === "auth/user-not-found") {
                 alert("User not found! Please enter a valid email address");
-            } 
+            }
             else {
                 alert(errorMessage);
             }
@@ -145,8 +147,8 @@ export const signin = () => {
 }
 
 export const signin2 = () => {
-    return new Promise ((resolve, reject)=> {
-           console.log("Handling signin")
+    return new Promise((resolve, reject) => {
+        console.log("Handling signin")
         var email = document.getElementById('email').value;
         var password = document.getElementById('password').value;
         let msgList = []
@@ -164,14 +166,14 @@ export const signin2 = () => {
         if (msgList.length > 0) {
             return reject(msgList)
         }
-        
+
         // Create user with email and pass.
         signInWithEmailAndPassword(getAuth(), email, password)
-        .then(() => {
+            .then(() => {
                 console.log("Successfully signed in")
                 router.push('/')
             })
-            
+
             .catch(function (error) {
                 // Handle Errors here.
                 var errorCode = error.code;
@@ -180,12 +182,12 @@ export const signin2 = () => {
                     // alert("Incorrect password!");
                     let msg = "Incorrect password!"
                     msgList.push(msg)
-                } 
+                }
                 else if (errorCode === "auth/user-not-found") {
                     // alert("User not found! Please enter a valid email address");
                     let msg = "User not found! Please enter a valid email address"
                     msgList.push(msg)
-                } 
+                }
                 else {
                     alert(errorMessage);
                 }
@@ -194,8 +196,8 @@ export const signin2 = () => {
                     return reject(msgList)
                 }
             });
-        })
-    }
+    })
+}
 
 export const googlesignup = () => {
     var provider = new GoogleAuthProvider();
@@ -213,7 +215,7 @@ export const googlesignup = () => {
     if (gender == 'Gender') {
         alertstr += 'Please enter your gender.' + '\n';
     }
-    if (alertstr.length>0){
+    if (alertstr.length > 0) {
         alert(alertstr)
         return;
     }
@@ -236,7 +238,7 @@ export const googlesignup = () => {
     }).catch(function (error) {
         var errorCode = error.code;
         var errorMessage = error.message;
-        if (errorCode === 'auth/popup-closed-by-user'){
+        if (errorCode === 'auth/popup-closed-by-user') {
             alert('Please try again! Do not close the popup before logging in');
         } else {
             alert(errorMessage);
@@ -273,11 +275,12 @@ export const googlesignin = () => {
         .catch(function (error) {
             var errorCode = error.code;
             var errorMessage = error.message;
-            if (errorCode === 'auth/popup-closed-by-user'){
-                alert('Please try again! Do not close the popup before logging in');}
+            if (errorCode === 'auth/popup-closed-by-user') {
+                alert('Please try again! Do not close the popup before logging in');
+            }
             else if (errorCode === "email-already-in-use") {
                 alert("Use a different email!");
-            } 
+            }
             else {
                 alert(errorMessage);
             }
@@ -285,15 +288,15 @@ export const googlesignin = () => {
         });
 };
 
-export const signout = ()=>{
+export const signout = () => {
     signOut(getAuth())
-    .then(() => {
-        console.log('Signed Out');
-        router.push('/login')
-    })
-    .catch(e=>{
-        console.error('Sign Out Error', e);
-    });
+        .then(() => {
+            console.log('Signed Out');
+            router.push('/login')
+        })
+        .catch(e => {
+            console.error('Sign Out Error', e);
+        });
 };
 
 // Getting all the recipe from the DB for display in SearchRecipe.vue
@@ -317,23 +320,23 @@ export const getAll = () => {
 }
 
 export const filterBar = (selectedCuisine, selectedDiet, selectedDish) => {
-    if(selectedCuisine != 'Cuisines' && selectedDiet == 'Diet' && selectedDish == 'Dish' ){
+    if (selectedCuisine != 'Cuisines' && selectedDiet == 'Diet' && selectedDish == 'Dish') {
         console.log('Only have cuisine');
         return checkCuisine(selectedCuisine)
-    }else if (selectedCuisine == 'Cuisines' && selectedDiet != 'Diet' && selectedDish == 'Dish' ){
+    } else if (selectedCuisine == 'Cuisines' && selectedDiet != 'Diet' && selectedDish == 'Dish') {
         console.log('Only have diet');
         return checkDiet(selectedDiet)
-    }else if (selectedCuisine == 'Cuisines' && selectedDiet == 'Diet' && selectedDish != 'Dish' ){
+    } else if (selectedCuisine == 'Cuisines' && selectedDiet == 'Diet' && selectedDish != 'Dish') {
         console.log('Only have dish');
         return checkDish(selectedDish)
-    }else{
-        if (selectedCuisine == 'Cuisines'){
+    } else {
+        if (selectedCuisine == 'Cuisines') {
             selectedCuisine = ''
         }
-        if (selectedDiet == 'Diet'){
+        if (selectedDiet == 'Diet') {
             selectedDiet = ''
         }
-        if (selectedDish == 'Dish'){
+        if (selectedDish == 'Dish') {
             selectedDish = ''
         }
         return new Promise((resolve, reject) => {
@@ -380,7 +383,7 @@ function checkCuisine(phrase) {
 }
 
 // Filter bu Diet
-function checkDiet(phrase){
+function checkDiet(phrase) {
     return new Promise((resolve, reject) => {
         console.log('start promise');
         var recipeFound = []
@@ -622,17 +625,17 @@ export const getAllMissing = (userId) => {
 export const getAllAssignedIngredients = (userId) => {
     // console.log(userId);
     return new Promise((resolve, reject) => {
-            console.log("Start getAllAssignedIngredients");
-            // console.log('Item adding: ', itemName);
-            const assignedIngredientsRef = ref(db, 'users/' + userId + '/assignedIngredients')
-            console.log(assignedIngredientsRef);
-            onValue(assignedIngredientsRef, (snapshot) => {
-                const assignedList = snapshot.val();
-                // console.log(assignedList);
-                console.log("End getAllAssignedIngredients");
-                return resolve(assignedList);
-            })
-        
+        console.log("Start getAllAssignedIngredients");
+        // console.log('Item adding: ', itemName);
+        const assignedIngredientsRef = ref(db, 'users/' + userId + '/assignedIngredients')
+        console.log(assignedIngredientsRef);
+        onValue(assignedIngredientsRef, (snapshot) => {
+            const assignedList = snapshot.val();
+            // console.log(assignedList);
+            console.log("End getAllAssignedIngredients");
+            return resolve(assignedList);
+        })
+
     })
 }
 
@@ -658,9 +661,9 @@ export const removeItem = (userId, itemName) => {
 }
 
 const itemType = {
-    'Meat': ['lean ground turkey', ],
-    'Condiments': ['chili powder', 'ground coriander', 'ground cumin', 'paprika', ],
-    'Sauces': ['canned black beans', 'chipotles in adobo', 'fire roasted canned tomatoes', ],
+    'Meat': ['lean ground turkey',],
+    'Condiments': ['chili powder', 'ground coriander', 'ground cumin', 'paprika',],
+    'Sauces': ['canned black beans', 'chipotles in adobo', 'fire roasted canned tomatoes',],
     'Fresh Produce': ['bell peppers', 'garlic', 'green chilies', 'tomatillos', 'yellow onion'],
 }
 
@@ -686,7 +689,7 @@ function addItem(userId, itemName, itemImage) {
 
 // Remove assigned item from missingIngredients, add new item into user's assignedIngredients
 export const assignItem = (userId, itemName, itemImage) => {
-    removeItem(userId, itemName)  
+    removeItem(userId, itemName)
     addItem(userId, itemName, itemImage)
 }
 
@@ -696,15 +699,15 @@ export const unassignItem = (userId, itemName) => {
     return new Promise((resolve) => {
         console.log('Item to add to unassigned list: ', itemName);
         const missingListRef = ref(db, 'users/' + userId + '/assignedIngredients')
-            onValue(missingListRef, (snapshot) => {
-                const missingList = snapshot.val()
-                // console.log("this is missing list", missingList)
-                for (const index in missingList) {
-                    if (missingList[index].itemName == itemName) {
-                        remove(ref(db, 'users/' + userId + '/assignedIngredients/' + index))
-                    }
+        onValue(missingListRef, (snapshot) => {
+            const missingList = snapshot.val()
+            // console.log("this is missing list", missingList)
+            for (const index in missingList) {
+                if (missingList[index].itemName == itemName) {
+                    remove(ref(db, 'users/' + userId + '/assignedIngredients/' + index))
                 }
-                return resolve(true);
+            }
+            return resolve(true);
         })
     })
 }
@@ -714,7 +717,7 @@ export const changeAssignment = (userId, item, newMember) => {
     console.log("changeAssignment is called");
     console.log("this is item in changeAssignment", item);
     return new Promise((resolve) => {
-        addItem(newMember, item.name, item.image) 
+        addItem(newMember, item.name, item.image)
         unassignItem(userId, item.name)
         return resolve(true)
     })
@@ -991,7 +994,7 @@ export const updateCalories = (userId, calorieConsumed, dailyCalorieIntake, calo
 };
 
 export const saveIngredients = (obj, itemName, quantity, selectedValue) => {
-    
+
     let wordArr = itemName.split(' ')
     for (let i = 0; i < wordArr.length; i++) {
         wordArr[i] = wordArr[i][0].toUpperCase() + wordArr[i].substr(1);
@@ -1018,7 +1021,7 @@ export const saveIngredients = (obj, itemName, quantity, selectedValue) => {
 
 export const addingIngredientToFridge = (item, userId) => {
     console.log("addingIngredientToFridge is called")
-    return new Promise ((resolve) => {
+    return new Promise((resolve) => {
         push(ref(db, "fridge/"), {
             Name: item.itemName,
             Quantity: item.quantity,
@@ -1034,9 +1037,9 @@ export const deleteFromFridge = (item) => {
         const ingredients = ref(db, "fridge/");
         onValue(ingredients, (snapshot) => {
             const data = snapshot.val();
-            for (let index in data){
+            for (let index in data) {
                 // console.log(items);
-                if(data[index].Name == item.itemName){
+                if (data[index].Name == item.itemName) {
                     return resolve(remove(ref(db, 'fridge/' + index)))
                 }
             }

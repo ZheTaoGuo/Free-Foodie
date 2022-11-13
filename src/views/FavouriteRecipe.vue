@@ -40,13 +40,14 @@
             }
         },
         async mounted() {
-            const currentUser = getLoggedInUser();
-            this.loggedInUser = currentUser.userId
-            console.log('Current UserId: ', this.loggedInUser);
-
-            console.log('start mounted');
-            this.getFavouriteRecipe()
-            console.log('end mounted');
+            getLoggedInUser().then(value => {
+                this.loggedInUser = value.userId
+                console.log('Current UserId: ', this.loggedInUser);
+                console.log('start mounted');
+                this.getFavouriteRecipe()
+                console.log('end mounted');
+            })
+            
         }
     }
 </script>
