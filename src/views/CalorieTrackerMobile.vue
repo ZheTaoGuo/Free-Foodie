@@ -413,9 +413,10 @@ export default {
                 .append("text")
                 .attr("transform", "rotate(-90)")
                 .attr("y", 4)
-                .attr("dy", "-5.1em")
+                .attr("dy", "-3.1em")
                 .attr("text-anchor", "middle")
                 .attr("stroke", "black")
+                .attr("style", "font-size: 15px; font-family: Avenir")
                 .text("Calories Consumed");
 
             g.selectAll(".bar")
