@@ -51,7 +51,7 @@ export default {
             xAxisVariable: "day",
             filteredData: [],
             modalStatus: false,
-            graphWidth: 950,
+            graphWidth: document.documentElement.clientWidth * 60 / 100,
         }
     },
     methods: {
