@@ -35,6 +35,8 @@ export const isLoggedIn = () => {
         }
     })
 }
+
+// getting userId of the current logged in user
 export const getLoggedInUser = () => {
     return new Promise((resolve, reject) => {
         onAuthStateChanged(getAuth(), (currentUser) => {
@@ -45,13 +47,10 @@ export const getLoggedInUser = () => {
                 onValue(user, (snapshot) => {
                     const data = snapshot.val();
                     var username = data.username
-                    //   console.log(username)
                     let returnObj = {
                         userId: userId,
                         userName: username,
                     }
-                    //   console.log("returned object");
-                    //   console.log(returnObj);
                     return resolve(returnObj)
                 });
             }
@@ -63,6 +62,7 @@ export const getLoggedInUser = () => {
     })
 }
 
+// registering an account
 export const register = () => {
     console.log("Handling signup")
     var email = document.getElementById('email').value;
@@ -111,6 +111,7 @@ export const register = () => {
         });
 }
 
+// signing in the user 
 export const signin = () => {
     console.log("Handling signin")
     var email = document.getElementById('email').value;
@@ -146,6 +147,7 @@ export const signin = () => {
         });
 }
 
+// signing in the user 
 export const signin2 = () => {
     return new Promise((resolve, reject) => {
         console.log("Handling signin")
@@ -199,6 +201,7 @@ export const signin2 = () => {
     })
 }
 
+// google sign up 
 export const googlesignup = () => {
     var provider = new GoogleAuthProvider();
     const age = document.getElementById('age').value;
@@ -260,10 +263,11 @@ export const googlesignup = () => {
             console.log(error);
         });
 };
+
+// google sign in 
 export const googlesignin = () => {
     var provider = new GoogleAuthProvider();
     signInWithPopup(getAuth(), provider).then(function (result) {
-        // console.log(result.user);
         console.log(getAuth().currentUser.uid)
         router.push('/')
     }).catch(function (error) {
@@ -292,6 +296,7 @@ export const googlesignin = () => {
         });
 };
 
+// signing the user out 
 export const signout = () => {
     signOut(getAuth())
         .then(() => {
@@ -315,14 +320,13 @@ export const getAll = () => {
             for (const obj of data) {
                 recipeFound.push(obj)
             }
-            // console.log(recipeFound);
             return resolve(recipeFound)
         })
         console.log('end promises');
-        console.log('this is recipefound', recipeFound);
     })
 }
 
+// filtering the recipes based on the user's selection 
 export const filterBar = (selectedCuisine, selectedDiet, selectedDish) => {
     if (selectedCuisine != 'Cuisines' && selectedDiet == 'Diet' && selectedDish == 'Dish') {
         console.log('Only have cuisine');
@@ -359,7 +363,6 @@ export const filterBar = (selectedCuisine, selectedDiet, selectedDish) => {
                 return resolve(recipeFound)
             })
             console.log('end promises');
-            console.log('this is recipefound', recipeFound);
         })
     }
 }
@@ -378,11 +381,9 @@ function checkCuisine(phrase) {
                     recipeFound.push(obj)
                 }
             }
-            // console.log(recipeFound);
             return resolve(recipeFound)
         })
         console.log('end promises');
-        console.log('this is recipefound', recipeFound);
     })
 }
 
@@ -400,11 +401,9 @@ function checkDiet(phrase) {
                     recipeFound.push(obj)
                 }
             }
-            // console.log(recipeFound);
             return resolve(recipeFound)
         })
         console.log('end promises');
-        console.log('this is recipefound', recipeFound);
     })
 }
 
@@ -422,11 +421,9 @@ function checkDish(phrase) {
                     recipeFound.push(obj)
                 }
             }
-            // console.log(recipeFound);
             return resolve(recipeFound)
         })
         console.log('end promises');
-        console.log('this is recipefound', recipeFound);
     })
 }
 
@@ -440,7 +437,6 @@ export const searchContent = (phrase) => {
         onValue(recipes, (snapshot) => {
             const data = snapshot.val();
             for (const obj of data) {
-                console.log(obj);
                 if (obj.recipeName.toLowerCase().includes(phrase) && !recipeFound.includes(obj)) {
                     recipeFound.push(obj)
                 }
@@ -448,11 +444,9 @@ export const searchContent = (phrase) => {
                     recipeFound.push(obj)
                 }
             }
-            // console.log(recipeFound);
             return resolve(recipeFound)
         })
         console.log('end promises');
-        console.log('this is recipefound', recipeFound);
     })
 }
 
@@ -478,7 +472,6 @@ export const searchFavPast = (userid, phrase, type) => {
                     onValue(recipes, (snapshot) => {
                         const data = snapshot.val();
                         for (const obj of data) {
-                            // console.log(obj.id);
                             if (obj.recipeId == id) {
                                 if (obj.recipeName.toLowerCase().includes(phrase) && !recipeFound.includes(obj)) {
                                     recipeFound.push(obj)
@@ -488,7 +481,6 @@ export const searchFavPast = (userid, phrase, type) => {
                                 }
                             }
                         }
-                        // console.log(len);
                         return resolve(recipeFound);
                     });
                 }
@@ -497,7 +489,6 @@ export const searchFavPast = (userid, phrase, type) => {
                 console.log(message);
             });
         console.log("end promises");
-        console.log("this is recipefound", recipeFound);
     });
 }
 
@@ -510,19 +501,16 @@ export const getFavourite = (userid) => {
         getUser(userid)
             .then((value) => {
                 recipeIds = value.FavouriteRecipes;
-                console.log(recipeIds);
                 for (let id in recipeIds) {
                     // eslint-disable-next-line
                     const recipes = ref(db, "recipes");
                     onValue(recipes, (snapshot) => {
                         const data = snapshot.val();
                         for (const obj of data) {
-                            // console.log(obj.id);
                             if (obj.recipeId == id) {
                                 recipeFound.push(obj);
                             }
                         }
-                        // console.log(len);
                         return resolve(recipeFound);
                     });
                 }
@@ -531,7 +519,6 @@ export const getFavourite = (userid) => {
                 console.log(message);
             });
         console.log("end promises");
-        console.log("this is recipefound", recipeFound);
     });
 };
 
@@ -544,19 +531,16 @@ export const getPast = (userid) => {
         getUser(userid)
             .then((value) => {
                 recipeIds = value.PastRecipes;
-                // console.log(recipeIds);
                 for (let id in recipeIds) {
                     // eslint-disable-next-line
                     const recipes = ref(db, "recipes");
                     onValue(recipes, (snapshot) => {
                         const data = snapshot.val();
                         for (const obj of data) {
-                            // console.log(obj.id);
                             if (obj.recipeId == id) {
                                 recipeFound.push(obj);
                             }
                         }
-                        // console.log(len);
                         return resolve(recipeFound);
                     });
                 }
@@ -565,7 +549,6 @@ export const getPast = (userid) => {
                 console.log(message);
             });
         console.log("end promises");
-        console.log("this is recipefound", recipeFound);
     });
 };
 
@@ -573,7 +556,6 @@ export const getPast = (userid) => {
 export const addToFavourite = (userid, recipeId) => {
     console.log('Start addToFavourite');
 
-    console.log(userid, recipeId);
     const userFavList = ref(db, "users/" + userid + "/FavouriteRecipes/" + recipeId)
     set(userFavList, Number(recipeId))
 
@@ -584,7 +566,6 @@ export const addToFavourite = (userid, recipeId) => {
 export const addToPast = (userid, recipeId) => {
     console.log('Start addToFavourite');
 
-    console.log(userid, recipeId);
     const userFavList = ref(db, "users/" + userid + "/PastRecipes/" + recipeId)
     set(userFavList, Number(recipeId))
 
@@ -597,9 +578,7 @@ export const addToMissing = (userId, missingItems) => {
         console.log("Start addToMissing");
         let familyId = value.familyId
         console.log('Family found: ', value.familyId);
-        // console.log('Item adding: ', itemName);
         for (let item of missingItems) {
-            // console.log(item);
             push(ref(db, "families/" + familyId + "/missingIngredients/"), item);
         }
         console.log("End addToMissing");
@@ -611,31 +590,23 @@ export const addToMissing = (userId, missingItems) => {
 export const getAllMissing = (userId) => {
     return new Promise((resolve, reject) => {
         getFamily(userId).then((value) => {
-            // console.log("Start getAllMissing");
             let familyId = value.familyId
-            // console.log('Family found: ', value.familyId);
-            // console.log('Item adding: ', itemName);
             const missingListRef = ref(db, 'families/' + familyId + '/missingIngredients')
             onValue(missingListRef, (snapshot) => {
                 const missingList = snapshot.val()
-                // console.log(missingList);
-                // console.log("End getAllMissing");
                 return resolve(missingList);
             })
         })
     })
 }
 
+// getting all assigned ingredients for a user
 export const getAllAssignedIngredients = (userId) => {
-    // console.log(userId);
     return new Promise((resolve, reject) => {
         console.log("Start getAllAssignedIngredients");
-        // console.log('Item adding: ', itemName);
         const assignedIngredientsRef = ref(db, 'users/' + userId + '/assignedIngredients')
-        console.log(assignedIngredientsRef);
         onValue(assignedIngredientsRef, (snapshot) => {
             const assignedList = snapshot.val();
-            // console.log(assignedList);
             console.log("End getAllAssignedIngredients");
             return resolve(assignedList);
         })
@@ -649,7 +620,6 @@ export const removeItem = (userId, itemName) => {
     return new Promise((resolve, reject) => {
         getFamily(userId).then((value) => {
             let familyId = value.familyId
-            console.log('Item adding: ', itemName);
             const missingListRef = ref(db, 'families/' + familyId + '/missingIngredients')
             onValue(missingListRef, (snapshot) => {
                 const missingList = snapshot.val()
@@ -673,7 +643,7 @@ const itemType = {
 
 // Add item into the user's assignedIngredients
 function addItem(userId, itemName, itemImage) {
-    console.log("these are parameters in order", userId, itemName, itemImage);
+    console.log("addItem is called")
     itemName = itemName.toLowerCase();
     let type = Object.keys(itemType).find(key => itemType[key].includes(itemName));
     let wordArr = itemName.split(' ')
@@ -681,7 +651,6 @@ function addItem(userId, itemName, itemImage) {
         wordArr[i] = wordArr[i][0].toUpperCase() + wordArr[i].substr(1);
     }
     itemName = wordArr.join(' ')
-    console.log("addItem is called")
     const newUserItem = ref(db, 'users/' + userId + '/assignedIngredients')
     push(newUserItem, {
         itemName: itemName,
@@ -701,11 +670,9 @@ export const assignItem = (userId, itemName, itemImage) => {
 export const unassignItem = (userId, itemName) => {
     console.log("unassignItem is called");
     return new Promise((resolve) => {
-        console.log('Item to add to unassigned list: ', itemName);
         const missingListRef = ref(db, 'users/' + userId + '/assignedIngredients')
         onValue(missingListRef, (snapshot) => {
             const missingList = snapshot.val()
-            // console.log("this is missing list", missingList)
             for (const index in missingList) {
                 if (missingList[index].itemName == itemName) {
                     remove(ref(db, 'users/' + userId + '/assignedIngredients/' + index))
@@ -719,7 +686,6 @@ export const unassignItem = (userId, itemName) => {
 // change the assignment of item from one person to the other 
 export const changeAssignment = (userId, item, newMember) => {
     console.log("changeAssignment is called");
-    console.log("this is item in changeAssignment", item);
     return new Promise((resolve) => {
         addItem(newMember, item.name, item.image)
         unassignItem(userId, item.name)
@@ -741,8 +707,6 @@ async function getIndex(table) {
                 } else {
                     index = Object.keys(data).length;
                 }
-                console.log("this is data", data);
-                console.log("this is userid", index);
                 resolve(index);
             }),
             3000
@@ -750,41 +714,6 @@ async function getIndex(table) {
     });
     return indexPromise;
 }
-
-
-// creating a new user account
-// export const createUser = (username, email, password) => {
-//     console.log("createUser is called");
-
-//     if (username == "" || email == "" || password == "") {
-//         console.log("Please input your username, email and password");
-//         return;
-//     }
-
-//     console.log("this is res", getIndex("users"));
-//     getIndex("users").then(
-//         function (value) {
-//             console.log("this is the returned index", value);
-//             console.log("this is userId ATER CALLING", value);
-//             set(ref(db, "users/" + value), {
-//                 userId: value,
-//                 familyId: "",
-//                 username: username,
-//                 email: email,
-//                 password: password,
-//                 gender: "",
-//                 age: "",
-//                 height: "",
-//                 weight: "",
-//                 activityFrequency: "",
-//                 calorieDetails: [],
-//             });
-//         },
-//         function (error) {
-//             console.log("Error: " + error.message);
-//         }
-//     );
-// };
 
 // creating family table
 export const createFamily = (userId, userName) => {
@@ -795,7 +724,6 @@ export const createFamily = (userId, userName) => {
     }
     getIndex("families").then(
         function (value) {
-            console.log("this is the returned index", value);
             // creating the family table
             let code = Math.floor(100000 + Math.random() * 900000)
             set(ref(db, "families/" + code), {
@@ -824,8 +752,7 @@ export const createFamily = (userId, userName) => {
 
 // get family table
 export const getFamily = (userId) => {
-    // console.log("getFamily is called");
-    //   console.log('UserID of: ', userId);
+    console.log("getFamily is called");
     if (userId == undefined) {
         console.log("Error. Please pass in userId");
         return;
@@ -837,26 +764,19 @@ export const getFamily = (userId) => {
             if (data == null) {
                 return reject("no family found");
             }
-            // console.log("this isssss data", data);
             console.log('outside');
             for (let j in data) {
                 let obj = data[j];
-                // console.log("this isssss obj", obj);
                 for (let user of Object.keys(obj.users)) {
-                    // console.log("this is user", user);
                     if (user == undefined) {
                         continue;
                     }
                     if (user == userId) {
-                        // console.log("this is resolved", obj);
                         return resolve(obj);
                     }
-                    // console.log('no')
                 }
-                // console.log('end of loop')
             }
-            console.log('after');
-            // console.log("this is the end")
+            console.log("this is the end")
             return reject("no family found");
         });
     });
@@ -897,7 +817,6 @@ export const calculateCalories = (userId, height, weight, activityFrequency, dai
                 console.log("user not found")
                 return
             }
-            console.log("this is data", data)
             gender = data.gender
             age = data.age
         })
@@ -909,7 +828,6 @@ export const calculateCalories = (userId, height, weight, activityFrequency, dai
         } else {
             BMR = 655.1 + (9.563 * weight) + (1.85 * height) - (4.676 * age)
         }
-        console.log('this is activity frequency', activityFrequency)
         if (activityFrequency == "Little to no exercise") {
             calorieLimit = BMR * 1.2
         } else if (activityFrequency == "Exercise 1-3 days/week") {
@@ -921,7 +839,6 @@ export const calculateCalories = (userId, height, weight, activityFrequency, dai
         } else if (activityFrequency == "Hard exercise 6-7 days/week") {
             calorieLimit = BMR * 1.9
         }
-        console.log("this is calorie limit", calorieLimit)
         update(ref(db, 'users/' + userId), {
             height: height,
             weight: weight,
@@ -929,7 +846,6 @@ export const calculateCalories = (userId, height, weight, activityFrequency, dai
         });
         let date = new Date()
         let currDate = date.getDate() + " " + date.getMonth() + " " + date.getFullYear()
-        console.log("this is currDate", currDate)
         update(ref(db, 'users/' + userId + "/calorieDetails"), {
             [currDate]:
             {
@@ -956,15 +872,12 @@ export const getUser = (userId) => {
             if (data == null) {
                 return reject("no user found")
             }
-            // console.log("this is data", data)
             for (const content in data) {
                 let obj = data[content]
-                console.log("this is obj", obj)
                 if (obj == undefined) {
                     continue
                 }
                 if (obj.userId == userId) {
-                    console.log("this is resolved", obj)
                     return resolve(obj)
                 }
             }
@@ -983,8 +896,6 @@ export const updateCalories = (userId, calorieConsumed, dailyCalorieIntake, calo
     return new Promise(async (resolve) => {
         let date = new Date()
         let currDate = date.getDate() + " " + date.getMonth() + " " + date.getFullYear()
-        console.log("this is current calories", dailyCalorieIntake)
-
         await update(ref(db, 'users/' + userId + "/calorieDetails"), {
             [currDate]:
             {
@@ -997,6 +908,7 @@ export const updateCalories = (userId, calorieConsumed, dailyCalorieIntake, calo
     })
 };
 
+// saving user's ingredients in the fridge
 export const saveIngredients = (obj, itemName, quantity, selectedValue) => {
 
     let wordArr = itemName.split(' ')
@@ -1023,6 +935,7 @@ export const saveIngredients = (obj, itemName, quantity, selectedValue) => {
     obj.selectedValue = "";
 };
 
+// adding ingredients to fridge 
 export const addingIngredientToFridge = (item, userId) => {
     console.log("addingIngredientToFridge is called")
     return new Promise((resolve) => {
@@ -1036,13 +949,13 @@ export const addingIngredientToFridge = (item, userId) => {
     })
 }
 
+// deleting ingredients from fridge
 export const deleteFromFridge = (item) => {
     return new Promise((resolve, reject) => {
         const ingredients = ref(db, "fridge/");
         onValue(ingredients, (snapshot) => {
             const data = snapshot.val();
             for (let index in data) {
-                // console.log(items);
                 if (data[index].Name == item.itemName) {
                     return resolve(remove(ref(db, 'fridge/' + index)))
                 }
@@ -1062,9 +975,7 @@ export const retrieveIngredients = () => {
             if (data == null) {
                 return reject("no ingredients found");
             }
-            console.log("This is the ingredients in the fridge: " + data);
             for (let index in data) {
-                console.log('This are the indiv items: ', data[index]);
                 let retrievedObject = data[index];
                 let itemName = retrievedObject.Name;
                 let itemQuantity = retrievedObject.Quantity;
@@ -1077,7 +988,6 @@ export const retrieveIngredients = () => {
                 };
                 retrievedIngredientObject.push(ingredientObject);
             }
-            //   console.log(retrievedIngredientObject);
             resolve(retrievedIngredientObject);
         });
     });
@@ -1093,9 +1003,7 @@ export const getUserIngredients = (userId) => {
 
         getUser(userId).then((value) => {
             getIndex("users/" + userId + "/assignedIngredients").then((value) => {
-                console.log(value);
                 let updateValue = value;
-                console.log("this is retrieveduserId" + JSON.stringify(value));
                 for (let item of retrievedResults) {
                     update(ref(db, "users/" + userId + "/assignedIngredients"), {
                         [updateValue]: {
