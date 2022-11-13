@@ -12,6 +12,14 @@ import { ref, toRaw } from "vue";
 import NavBar from '../components/Navbar.vue'
 import Footer from '../components/Footer.vue'
 
+// window.addEventListener('resize', function(event) {
+//     document.location.reload(true)
+//     var graphWidth = window.innerWidth * 60 / 100;
+//     console.log("this is width", width) 
+//     let dashboard = document.getElementById("dashboard");
+//     dashboard.setAttribute("width", width); 
+// }, true);
+
 
 export default {
     components: {
@@ -51,6 +59,7 @@ export default {
             xAxisVariable: "day",
             filteredData: [],
             modalStatus: false,
+            // graphWidth: 950,
             graphWidth: 950,
         }
     },
@@ -72,8 +81,10 @@ export default {
                 this.height = user.height;
                 this.weight = user.weight;
                 this.activityFrequency = user.activityFrequency;
+                // console.log("this is userc calroei deiasl", user.calorieDetails[Object.keys(user.calorieDetails)[Object.keys(user.calorieDetails).length-1]])
                 if (user.calorieDetails != null){
                     if (this.calorieLimit == 0) {
+                        console.log("this is the this.calories to set",Object.keys(user.calorieDetails))
                         // getting the max date from the array 
                         const maxDate = new Date(
                             Math.max(
@@ -83,13 +94,16 @@ export default {
                             ),
                         );
                         // formatting to get the index of the max date
+                        // console.log("this is maxDate", maxDate)
                         let currDate = maxDate.getDate() + " " + maxDate.getMonth() + " " + maxDate.getFullYear()
+                        // console.log("this is currDate", currDate)
                         this.calorieLimit = Number(user.calorieDetails[currDate].calorieLimit).toFixed(2);
                     }
                     // converting the data to the format in firebase
                     let date = new Date()
                     let todayDateFormatted = date.getDate() + " " + date.getMonth() + " " + date.getFullYear()
                     if (user.calorieDetails[todayDateFormatted] == null) {  // checking if there has already been a entry for today
+                        // console.log("this has been no entry for today")
                         this.dailyCalorieIntake = 0
                     } else {
                         this.dailyCalorieIntake = user.calorieDetails[todayDateFormatted].dailyCalorieIntake
@@ -103,7 +117,7 @@ export default {
                     // console.log(this.userCaloriesData[0])
                     // console.log(this.userCaloriesData[0].date)
                     // console.log(this.userCaloriesData[0].calories)
-                    // console.log("this is userCaloriesData", this.userCaloriesData)
+                    console.log("this is userCaloriesData", this.userCaloriesData)
                     this.renderGraph(this.xAxisVariable)
                 }
                 this.gender = user.gender;
@@ -118,6 +132,7 @@ export default {
         // },
         async searchFood() {
             console.log("searchFood() called")
+            console.log("this is usersearch", this.userSearch)
             let foodOrBrand = this.userSearch
             const options = {
                 method: 'GET',
@@ -133,7 +148,9 @@ export default {
 
             let searchResults = []
             await axios.request(options).then(function (response) {
+                console.log("this is response data", response.data);
                 for (let i = 0; i < response.data.hits.length; i++) {
+                    console.log(response.data.hits[i].fields.item_name)
                     searchResults.push(
                         {
                             "label": `${response.data.hits[i].fields.brand_name}: ${response.data.hits[i].fields.item_name}`,
@@ -143,10 +160,12 @@ export default {
                             "item_name": response.data.hits[i].fields.item_name,
                         })
                 }
+                // console.log("this is searchResults", searchResults)
             }).catch(function (error) {
                 console.error(error);
             });
             this.searchResults = searchResults
+            console.log("this isthis.results", this.searchResults)
         },
         async addFood() {
             console.log("addFoodEvent is called")
@@ -164,13 +183,18 @@ export default {
 
             let dailyCalorieIntake = this.dailyCalorieIntake
             let calorieLimit = Number(this.calorieLimit)
+            console.log("this is failyCalorieIntake", dailyCalorieIntake)
             await axios.request(options).then(response => {
+                console.log("this is response data", response.data);
                 let calorieDetails = response.data.hits[3].fields.nf_calories
+                console.log("this is the calorie intake of new item", calorieDetails)
                 updateCalories(this.userId, calorieDetails, dailyCalorieIntake, calorieLimit).then(response => {
+                    console.log("this is response", response)
                     // calling on the method getUserDetails 
                     this.dailyCalorieIntake = dailyCalorieIntake
                     this.getUserDetails(this.userId)
                 })
+                console.log("this is the amount i hvae eaten", dailyCalorieIntake)
                 dailyCalorieIntake = calorieDetails + dailyCalorieIntake
                 this.userSearch = ""
             }).catch(function (error) {
@@ -215,9 +239,11 @@ export default {
             g.append("text")
             .attr('class', 'val') 
             .attr('x', function() {
+                console.log("this shld be my d", d.path[0]["__data__"].date)
                 return xScale(d.path[0]["__data__"].date) + ((xScale.bandwidth() + 10) / 4) - 5;
             })
             .attr('y', function() {
+                console.log("this is my caloriees", d.path[0]["__data__"].calories)
                 return yScale(d.path[0]["__data__"].calories) - 12;
             })
             .text(function() {
@@ -262,11 +288,13 @@ export default {
 
         renderGraph(variable) {
             console.log('renderGraph() called')
+            console.log("this is variable", variable)
             var svg = d3.select("#dashboard"),
                 margin = 170,
                 width = svg.attr("width") - margin,
                 height = svg.attr("height") - margin
 
+            // console.log("this is svg", svg)
             svg.append("text")
                 .attr("transform", "translate(100,0)")
                 .attr("x", 50)
@@ -302,8 +330,9 @@ export default {
             //         "calories": obj.calories
             //     })
             // }
-            // console.log("this is document.documentElement.clientWidth", document.documentElement.clientWidth)
-            if (document.documentElement.clientWidth > 1200) {  // handling for higher viewports
+            // console.log("this is converted data", data)
+            console.log("this is document.documentElement.clientWidth", document.documentElement.clientWidth)
+            if (document.documentElement.clientWidth > 1200) {
                 let days = {
                     0: "Sunday",
                     1: "Monday",
@@ -328,9 +357,11 @@ export default {
                     11: "December"
                 }
                 let data = this.userCaloriesData
+                console.log("thissss is data", data)
                 var filteredData = [{date:"Sunday", calories: 0}, {date:"Monday", calories: 0}, {date:"Tuesday", calories: 0}, {date:"Wednesday", calories: 0}, {date:"Thursday", calories: 0}, {date:"Friday", calories: 0}, {date:"Saturday", calories: 0}]
                 if (variable == "day") {
                     for (let obj of data) {
+                        // console.log("this is filtereddata day", days[new Date(obj.date).getDay()])
                         for (let obj2 of filteredData) {
                             if (days[new Date(obj.date).getDay()] == obj2.date) {
                                 obj2.calories += obj.calories
@@ -340,6 +371,7 @@ export default {
                 } else if (variable == "week") {
                     filteredData = [{date:"Week 1", calories: 0}, {date:"Week 2", calories: 0}, {date:"Week 3", calories: 0}, {date:"Week 4", calories: 0}, {date:"Week 5", calories: 0}]
                     for (let obj of data) {
+                        // console.log("this is filtereddata week", Math.ceil((new Date(obj.date).getDate() + 1) / 7))
                         for (let obj2 of filteredData) {
                             if (Math.ceil((new Date(obj.date).getDate() + 1) / 7) == obj2.date.slice(-1)) {
                                 obj2.calories += obj.calories
@@ -349,6 +381,7 @@ export default {
                 } else {
                     filteredData = [{date: "January", calories: 0}, {date: "February", calories: 0}, {date: "March", calories: 0}, {date: "April", calories: 0}, {date: "May", calories: 0}, {date: "June", calories: 0}, {date: "July", calories: 0}, {date: "August", calories: 0}, {date: "September", calories: 0}, {date: "October", calories: 0}, {date: "November", calories: 0}, {date: "December", calories: 0}]
                     for (let obj of data) {
+                        // console.log("this is filtereddata day", months[new Date(obj.date).getMonth()])
                         for (let obj2 of filteredData) {
                             if (months[new Date(obj.date).getMonth()] == obj2.date) {
                                 obj2.calories += obj.calories
@@ -356,7 +389,7 @@ export default {
                         }
                     }
                 }
-            } else {   // handling for smaller viewports
+            } else {
                 let days = {
                     0: "Sun",
                     1: "Mon",
@@ -381,9 +414,11 @@ export default {
                     11: "Dec"
                 }
                 let data = this.userCaloriesData
+                console.log("thissss is data", data)
                 var filteredData = [{date:"Sun", calories: 0}, {date:"Mon", calories: 0}, {date:"Tue", calories: 0}, {date:"Wed", calories: 0}, {date:"Thu", calories: 0}, {date:"Fri", calories: 0}, {date:"Sat", calories: 0}]
                 if (variable == "day") {
                     for (let obj of data) {
+                        // console.log("this is filtereddata day", days[new Date(obj.date).getDay()])
                         for (let obj2 of filteredData) {
                             if (days[new Date(obj.date).getDay()] == obj2.date) {
                                 obj2.calories += obj.calories
@@ -393,6 +428,7 @@ export default {
                 } else if (variable == "week") {
                     filteredData = [{date:"Wk 1", calories: 0}, {date:"Wk 2", calories: 0}, {date:"Wk 3", calories: 0}, {date:"Wk 4", calories: 0}, {date:"Wk 5", calories: 0}]
                     for (let obj of data) {
+                        // console.log("this is filtereddata week", Math.ceil((new Date(obj.date).getDate() + 1) / 7))
                         for (let obj2 of filteredData) {
                             if (Math.ceil((new Date(obj.date).getDate() + 1) / 7) == obj2.date.slice(-1)) {
                                 obj2.calories += obj.calories
@@ -402,6 +438,7 @@ export default {
                 } else {
                     filteredData = [{date: "Jan", calories: 0}, {date: "Feb", calories: 0}, {date: "Mar", calories: 0}, {date: "Apr", calories: 0}, {date: "May", calories: 0}, {date: "Jun", calories: 0}, {date: "Jul", calories: 0}, {date: "Aug", calories: 0}, {date: "Sep", calories: 0}, {date: "Oct", calories: 0}, {date: "Nov", calories: 0}, {date: "Dec", calories: 0}]
                     for (let obj of data) {
+                        // console.log("this is filtereddata day", months[new Date(obj.date).getMonth()])
                         for (let obj2 of filteredData) {
                             if (months[new Date(obj.date).getMonth()] == obj2.date) {
                                 obj2.calories += obj.calories
@@ -411,6 +448,7 @@ export default {
                 }
             }
 
+            console.log("this is filteredData", filteredData)
             this.filteredData = filteredData
 
             let scale = 1
@@ -420,6 +458,7 @@ export default {
                 scale = 30
             }
 
+            console.log("this is height", height)
             xScale.domain(filteredData.map(function (d) { return d.date }));
             let mult = Math.pow(10, 1 - Math.floor(Math.log(this.calorieLimit * scale) / Math.LN10) - 1);
             let maxY = Math.ceil(this.calorieLimit * scale * mult) / mult
