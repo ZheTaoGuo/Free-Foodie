@@ -12,6 +12,14 @@ import { ref, toRaw } from "vue";
 import NavBar from '../components/Navbar.vue'
 import Footer from '../components/Footer.vue'
 
+// window.addEventListener('resize', function(event) {
+//     document.location.reload(true)
+//     var graphWidth = window.innerWidth * 60 / 100;
+//     console.log("this is width", width) 
+//     let dashboard = document.getElementById("dashboard");
+//     dashboard.setAttribute("width", width); 
+// }, true);
+
 
 export default {
     components: {
@@ -51,6 +59,8 @@ export default {
             xAxisVariable: "day",
             filteredData: [],
             modalStatus: false,
+            // graphWidth: 950,
+            graphWidth: 950,
         }
     },
     methods: {
@@ -321,63 +331,123 @@ export default {
             //     })
             // }
             // console.log("this is converted data", data)
-            let days = {
-                0: "Sunday",
-                1: "Monday",
-                2: "Tuesday",
-                3: "Wednesday",
-                4: "Thursday",
-                5: "Friday",
-                6: "Saturday"
-            }
-            let months = {
-                0: "January",
-                1: "February",
-                2: "March",
-                3: "April",
-                4: "May",
-                5: "June",
-                6: "July",
-                7: "August",
-                8: "September",
-                9: "October",
-                10: "November",
-                11: "December"
-            }
-
-            let data = this.userCaloriesData
-            console.log("thissss is data", data)
-            let filteredData = [{date:"Sunday", calories: 0}, {date:"Monday", calories: 0}, {date:"Tuesday", calories: 0}, {date:"Wednesday", calories: 0}, {date:"Thursday", calories: 0}, {date:"Friday", calories: 0}, {date:"Saturday", calories: 0}]
-            if (variable == "day") {
-                for (let obj of data) {
-                    // console.log("this is filtereddata day", days[new Date(obj.date).getDay()])
-                    for (let obj2 of filteredData) {
-                        if (days[new Date(obj.date).getDay()] == obj2.date) {
-                            obj2.calories += obj.calories
+            console.log("this is document.documentElement.clientWidth", document.documentElement.clientWidth)
+            if (document.documentElement.clientWidth > 1200) {
+                let days = {
+                    0: "Sunday",
+                    1: "Monday",
+                    2: "Tuesday",
+                    3: "Wednesday",
+                    4: "Thursday",
+                    5: "Friday",
+                    6: "Saturday"
+                }
+                let months = {
+                    0: "January",
+                    1: "February",
+                    2: "March",
+                    3: "April",
+                    4: "May",
+                    5: "June",
+                    6: "July",
+                    7: "August",
+                    8: "September",
+                    9: "October",
+                    10: "November",
+                    11: "December"
+                }
+                let data = this.userCaloriesData
+                console.log("thissss is data", data)
+                var filteredData = [{date:"Sunday", calories: 0}, {date:"Monday", calories: 0}, {date:"Tuesday", calories: 0}, {date:"Wednesday", calories: 0}, {date:"Thursday", calories: 0}, {date:"Friday", calories: 0}, {date:"Saturday", calories: 0}]
+                if (variable == "day") {
+                    for (let obj of data) {
+                        // console.log("this is filtereddata day", days[new Date(obj.date).getDay()])
+                        for (let obj2 of filteredData) {
+                            if (days[new Date(obj.date).getDay()] == obj2.date) {
+                                obj2.calories += obj.calories
+                            }
                         }
                     }
-                }
-            } else if (variable == "week") {
-                filteredData = [{date:"Week 1", calories: 0}, {date:"Week 2", calories: 0}, {date:"Week 3", calories: 0}, {date:"Week 4", calories: 0}, {date:"Week 5", calories: 0}]
-                for (let obj of data) {
-                    // console.log("this is filtereddata week", Math.ceil((new Date(obj.date).getDate() + 1) / 7))
-                    for (let obj2 of filteredData) {
-                        if (Math.ceil((new Date(obj.date).getDate() + 1) / 7) == obj2.date.slice(-1)) {
-                            obj2.calories += obj.calories
+                } else if (variable == "week") {
+                    filteredData = [{date:"Week 1", calories: 0}, {date:"Week 2", calories: 0}, {date:"Week 3", calories: 0}, {date:"Week 4", calories: 0}, {date:"Week 5", calories: 0}]
+                    for (let obj of data) {
+                        // console.log("this is filtereddata week", Math.ceil((new Date(obj.date).getDate() + 1) / 7))
+                        for (let obj2 of filteredData) {
+                            if (Math.ceil((new Date(obj.date).getDate() + 1) / 7) == obj2.date.slice(-1)) {
+                                obj2.calories += obj.calories
+                            }
+                        }
+                    }
+                } else {
+                    filteredData = [{date: "January", calories: 0}, {date: "February", calories: 0}, {date: "March", calories: 0}, {date: "April", calories: 0}, {date: "May", calories: 0}, {date: "June", calories: 0}, {date: "July", calories: 0}, {date: "August", calories: 0}, {date: "September", calories: 0}, {date: "October", calories: 0}, {date: "November", calories: 0}, {date: "December", calories: 0}]
+                    for (let obj of data) {
+                        // console.log("this is filtereddata day", months[new Date(obj.date).getMonth()])
+                        for (let obj2 of filteredData) {
+                            if (months[new Date(obj.date).getMonth()] == obj2.date) {
+                                obj2.calories += obj.calories
+                            }
                         }
                     }
                 }
             } else {
-                filteredData = [{date: "January", calories: 0}, {date: "February", calories: 0}, {date: "March", calories: 0}, {date: "April", calories: 0}, {date: "May", calories: 0}, {date: "June", calories: 0}, {date: "July", calories: 0}, {date: "August", calories: 0}, {date: "September", calories: 0}, {date: "October", calories: 0}, {date: "November", calories: 0}, {date: "December", calories: 0}]
-                for (let obj of data) {
-                    // console.log("this is filtereddata day", months[new Date(obj.date).getMonth()])
-                    for (let obj2 of filteredData) {
-                        if (months[new Date(obj.date).getMonth()] == obj2.date) {
-                            obj2.calories += obj.calories
+                let days = {
+                    0: "Sun",
+                    1: "Mon",
+                    2: "Tue",
+                    3: "Wed",
+                    4: "Thu",
+                    5: "Fri",
+                    6: "Sat"
+                }
+                let months = {
+                    0: "Jan",
+                    1: "Feb",
+                    2: "Mar",
+                    3: "Apr",
+                    4: "May",
+                    5: "Jun",
+                    6: "Jul",
+                    7: "Aug",
+                    8: "Sep",
+                    9: "Oct",
+                    10: "Nov",
+                    11: "Dec"
+                }
+                let data = this.userCaloriesData
+                console.log("thissss is data", data)
+                var filteredData = [{date:"Sun", calories: 0}, {date:"Mon", calories: 0}, {date:"Tue", calories: 0}, {date:"Wed", calories: 0}, {date:"Thu", calories: 0}, {date:"Fri", calories: 0}, {date:"Sat", calories: 0}]
+                if (variable == "day") {
+                    for (let obj of data) {
+                        // console.log("this is filtereddata day", days[new Date(obj.date).getDay()])
+                        for (let obj2 of filteredData) {
+                            if (days[new Date(obj.date).getDay()] == obj2.date) {
+                                obj2.calories += obj.calories
+                            }
+                        }
+                    }
+                } else if (variable == "week") {
+                    filteredData = [{date:"Wk 1", calories: 0}, {date:"Wk 2", calories: 0}, {date:"Wk 3", calories: 0}, {date:"Wk 4", calories: 0}, {date:"Wk 5", calories: 0}]
+                    for (let obj of data) {
+                        // console.log("this is filtereddata week", Math.ceil((new Date(obj.date).getDate() + 1) / 7))
+                        for (let obj2 of filteredData) {
+                            if (Math.ceil((new Date(obj.date).getDate() + 1) / 7) == obj2.date.slice(-1)) {
+                                obj2.calories += obj.calories
+                            }
+                        }
+                    }
+                } else {
+                    filteredData = [{date: "Jan", calories: 0}, {date: "Feb", calories: 0}, {date: "Mar", calories: 0}, {date: "Apr", calories: 0}, {date: "May", calories: 0}, {date: "Jun", calories: 0}, {date: "Jul", calories: 0}, {date: "Aug", calories: 0}, {date: "Sep", calories: 0}, {date: "Oct", calories: 0}, {date: "Nov", calories: 0}, {date: "Dec", calories: 0}]
+                    for (let obj of data) {
+                        // console.log("this is filtereddata day", months[new Date(obj.date).getMonth()])
+                        for (let obj2 of filteredData) {
+                            if (months[new Date(obj.date).getMonth()] == obj2.date) {
+                                obj2.calories += obj.calories
+                            }
                         }
                     }
                 }
             }
+
             console.log("this is filteredData", filteredData)
             this.filteredData = filteredData
 
@@ -449,7 +519,16 @@ export default {
         },
         checkStatus() {
             this.modalStatus = true 
+        },
+        getDimensions() {
+            if (document.documentElement.clientWidth <= 991) {
+                this.graphWidth = document.documentElement.clientWidth * 80 /100
+            } else {
+                this.graphWidth = document.documentElement.clientWidth * 60 / 100;
+            }
+            this.renderGraph()
         }
+
 
     },
     mounted() {
@@ -458,12 +537,18 @@ export default {
             this.userName = user.userName 
             this.getUserDetails(this.userId)
         }).catch((message)=> {console.log("this is message from getLoggedInUser", message); this.userObj = null })
-    }
+
+        window.addEventListener('resize', this.getDimensions);
+    },
+    unmounted() {
+        window.removeEventListener('resize', this.getDimensions);
+    },
+
 }
 
 </script>
 
-<template>
+<template id="calorieTracker">
     <!--Start of NavBar-->
     <NavBar @checkLogin="isLoggedIn()"></NavBar>
     <!--End of NavBar-->
@@ -580,7 +665,7 @@ export default {
                         <div style="border:1px solid black;" class="mb-3">
                             <!-- <plot :height="500" style="padding-left:50px" :data="userCaloriesData" /> -->
             
-                            <svg width="950" height="600" id="dashboard"></svg>
+                            <svg :width="graphWidth" height="600" id="dashboard"></svg>
             
                             <div class="row d-flex justify-content-end m-4">
                                 <label for="colFormLabelSm" class="col-1 col-form-label col-form-label-sm"
