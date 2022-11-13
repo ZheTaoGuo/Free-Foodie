@@ -115,7 +115,9 @@
             <div class="row align-items-stretch no-gutters contact-wrap">
                 <div class="col-md-12">
                     <div class="h-100">
-                        <img src="../assets/fflogo.png" class="img mx auto" style="width: 30%;">
+                        <router-link to="/">
+                            <img src="../assets/fflogo.png" class="img mx auto" style="width: 30%;">
+                        </router-link>
                         <p class="h4 mb-3">
                             First, tell us about yourself:
                         </p>
@@ -152,7 +154,7 @@
                             <input class="form-control" id="familyId" placeholder="Input your family ID (optional)" />
                             <label for="familyId">Family ID (optional)</label>
                             <img src="/info-svgrepo-com.svg" alt="info" class="icon-image" data-bs-delay="0"
-                                data-bs-trigger="click" data-bs-toggle="tooltip" data-bs-placement="top"
+                                data-bs-trigger="click" data-bs-toggle="tooltip" data-bs-placement="top" role="button"
                                 title="If you are a new user, please leave this field blank. You can retrieve your family referral code on your profile">
                         </div>
 
