@@ -453,7 +453,7 @@ export default {
             this.userId = user.userId
             this.userName = user.userName 
             this.getUserDetails(this.userId)
-        })
+        }).catch((message)=> {console.log("this is message from getLoggedInUser", message); this.userObj = null })
     }
 }
 
@@ -464,7 +464,6 @@ export default {
     <NavBar @checkLogin="isLoggedIn()"></NavBar>
     <!--End of NavBar-->
     <div class="mainContent">
-
         <div class="container-fluid">
             <div class="row">
                 <!-- form -->
@@ -515,9 +514,12 @@ export default {
                     </div>
                 </form>
             </div>
+            <div v-if="userCaloriesData.length == 0 && this.userObj == null" class="alert alert-primary mb-1 px-0" role="alert">
+                Start entering your daily calorie intake to see your dashboard!
+            </div>
             <div class="row h-100 ">
-                <div class="col-lg-3 col-md-12 d-flex flex-column justify-content-between">
-                    <div class="box p-3 px-4" style="height: 65%;">
+                <div class="col-lg-3 col-md-12 d-flex flex-column justify-content-between mt-3">
+                    <div class="box p-3 px-4" style="height: 80%;">
                         <h2 style="text-align:start">Personal Details</h2>
                         <!-- letting user key in the fields of details of themselves -->
                         <div class="row d-flex justify-content-center mt-3 pt-2" style="text-align:start;">
@@ -568,7 +570,7 @@ export default {
                     </div>
                 </div>
                 <!-- dashboard -->
-                <div class="col-lg-9 col-md-12 box dashboard" style="position:relative">
+                <div class="col-lg-9 col-md-12 box dashboard mt-3" style="position:relative">
                     <div style="width:90%" class="p-3 mx-auto col-6">
                         <h2 style="text-align:left">Overview</h2>
                         <div style="border:1px solid black;" class="mb-3">
