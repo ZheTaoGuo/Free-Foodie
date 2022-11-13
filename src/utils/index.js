@@ -146,7 +146,7 @@ export const signin = () => {
 
 export const signin2 = () => {
     return new Promise ((resolve, reject)=> {
-        console.log("Handling signin")
+           console.log("Handling signin")
         var email = document.getElementById('email').value;
         var password = document.getElementById('password').value;
         let msgList = []
@@ -168,27 +168,34 @@ export const signin2 = () => {
         // Create user with email and pass.
         signInWithEmailAndPassword(getAuth(), email, password)
         .then(() => {
-            console.log("Successfully signed in")
-            router.push('/')
+                console.log("Successfully signed in")
+                router.push('/')
+            })
+            
+            .catch(function (error) {
+                // Handle Errors here.
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                if (errorCode === "auth/wrong-password") {
+                    // alert("Incorrect password!");
+                    let msg = "Incorrect password!"
+                    msgList.push(msg)
+                } 
+                else if (errorCode === "auth/user-not-found") {
+                    // alert("User not found! Please enter a valid email address");
+                    let msg = "User not found! Please enter a valid email address"
+                    msgList.push(msg)
+                } 
+                else {
+                    alert(errorMessage);
+                }
+                console.log(error);
+                if (msgList.length > 0) {
+                    return reject(msgList)
+                }
+            });
         })
-
-        .catch(function (error) {
-            // Handle Errors here.
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            if (errorCode === "auth/wrong-password") {
-                alert("Incorrect password!");
-            } 
-            else if (errorCode === "auth/user-not-found") {
-                alert("User not found! Please enter a valid email address");
-            } 
-            else {
-                alert(errorMessage);
-            }
-            console.log(error);
-        });
-    })
-}
+    }
 
 export const googlesignup = () => {
     var provider = new GoogleAuthProvider();
