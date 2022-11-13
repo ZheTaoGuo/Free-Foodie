@@ -6,18 +6,8 @@
             <!--End of NavBar-->
         </div>
         <div class="row " id="carouselStyle">
-            <div id="foodcarousel" class="carousel slide px-0" data-bs-ride="carousel" style="height:90%">
-                <div class="carousel-inner text-center">
-                    <div class="carousel-item active" data-bs-interval="2000">
-                        <img src="../assets/backgroundpicture1.jpg" class="d-block w-100">
-                    </div>
-                    <div class="carousel-item" data-bs-interval="3000">
-                        <img src="../assets/backgroundpicture2.jpg" class="d-block w-100">
-                    </div>
-                    <div class="carousel-item" data-bs-interval="3000">
-                        <img src="../assets/backgroundpicture3.jpg" class="d-block w-100">
-                    </div>
-                </div>
+            <div id="foodcarousel" style="height:90%; width: 100%; padding: 0;">
+                <img src="../assets/backgroundpicture1.jpg" class="w-100">
                 <div id="titledetails">
                     <h1 class="title" style="font-size: 5vw;" v-if="userName != ''">Welcome, {{userName}}! <br> Cook at home sustainably with us
                         today</h1>
