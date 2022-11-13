@@ -42,13 +42,45 @@
 </template>
 
 <script>
-import { signin, googlesignin } from '../utils'
+import { signin2, googlesignin } from '../utils'
 
 export default{
   name: 'appLogin',
   methods:{
-    signin,
-    googlesignin
+    googlesignin,
+    handlesignin() {
+      // console.log("handlesignin")
+      signin2().then().catch((msgList) => {
+        // msg can be: ["Please enter an email address.", "Please enter a password."]
+        // msg can be: ["Incorrect password!", "User not found! Please enter a valid email address"]
+        console.log("this is catch & msgList: ", msgList)
+        if (msgList.length == 2){
+          this.emailInvalid = true;
+          this.passwordInvalid = true;
+          this.emailMsg = msgList[0];
+          this.passwordMsg = msgList[1];
+        } else if (msgList.length == 1){
+          if (msgList[0] == "Please enter an email address."){
+            this.emailInvalid = true;
+            this.passwordInvalid = false;
+            this.emailMsg = msgList[0];
+          } else if (msgList[0] == "Please enter a password."){
+            this.emailInvalid = false;
+            this.passwordInvalid = true;
+            this.passwordMsg = msgList[0];
+          } else if (msgList[0] == "Incorrect password!"){
+            this.emailInvalid = false;
+            this.passwordInvalid = true;
+            this.passwordMsg = msgList[0];
+          } else if (msgList[0] == "User not found! Please enter a valid email address"){
+            this.emailInvalid = true;
+            this.passwordInvalid = false;
+            this.emailMsg = msgList[0];
+          }
+        }
+        
+      });
+    }
   }
 }
 </script>
