@@ -455,7 +455,7 @@ export default {
             this.userId = user.userId
             this.userName = user.userName 
             this.getUserDetails(this.userId)
-        })
+        }).catch((message)=> {console.log("this is message from getLoggedInUser", message); this.userObj = null })
     }
 }
 
@@ -605,6 +605,9 @@ export default {
             </div>
 
             <!-- dashboard -->
+            <div v-if="userCaloriesData.length == 0 && this.userObj == null" class="alert alert-primary mt-4 mb-1" role="alert">
+                Start entering your daily calorie intake to see your dashboard!
+            </div>
             <div class="col-lg-9 col-md-12 dashboard mt-3" style="position:relative">
                 <div style="width:100%" class="box p-3 mx-auto col-6">
                     <h2 style="text-align:left">Overview</h2>
