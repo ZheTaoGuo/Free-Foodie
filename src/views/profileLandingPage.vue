@@ -178,7 +178,7 @@
         <!--End of NavBar-->
         <div class="mainContent container-fluid">
             <div class="row justify-content-around">
-                <div class="col-lg-3" style="padding:0; margin-left:10px">
+                <div class="col-lg-3" style="padding:0; margin-left:20px">
                     <div class="row signout bg-secondary text-white" @click="signout()">
                         <div class="link col-9 pt-1">
                             <h5>Click here to sign out</h5>

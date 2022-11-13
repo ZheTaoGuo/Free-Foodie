@@ -122,7 +122,7 @@
                                                 </template>
                                             </select>
                                         </div>
-                                        <div class="col-3 align-self-start px-0" v-if="title != 'Personal'">  <!-- this is the assigned tab-->
+                                        <div class="col-3 align-self-center px-0" v-if="title != 'Personal'">  <!-- this is the assigned tab-->
                                             <button class="btn btn-primary mt-3"  v-on:click="IngredientBought" style="font-size:10px">
                                                 Bought
                                             </button>
