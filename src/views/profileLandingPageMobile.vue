@@ -211,7 +211,7 @@
                             <a href="/"><img src="../assets/love.png" style="height:30px; width:30px;"></a>
                         </div>
                         <div class="link col-9 pt-1">
-                            <h5>Your Favorite Recipies</h5>
+                            <h5>Your Favorite Recipes</h5>
                         </div>
                     </div>
                 </router-link>
@@ -222,7 +222,7 @@
                             <a href="/"><img src="../assets/history.png" style="height:30px; width:30px;"></a>
                         </div>
                         <div class="link col-9 pt-1">
-                            <h5>Your Past Recipies</h5>
+                            <h5>Your Past Recipes</h5>
                         </div>
                     </div>
                 </router-link>
