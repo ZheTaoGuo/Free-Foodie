@@ -11,7 +11,7 @@ The password for all emails are P@ssw0rd.
 2. tester2@hotmail.com
 
 ## Project Setup
-1. Run `git clone <repo-URL> to retrieve this repository. 
+1. Run `git clone <repo-URL>` to retrieve this repository. 
 2. Go to the project's root folder and run `npm install` to install the package dependencies.
 3. Run `npm run serve` to start the application 
 
