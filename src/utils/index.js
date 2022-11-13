@@ -233,7 +233,11 @@ export const googlesignup = () => {
             activityFrequency: "",
             calorieDetails: []
         });
-        addFamilyMember(result.user.uid, name, familyId)
+        if (familyId == '') {
+            createFamily(result.user.uid, name)
+        } else {
+            addFamilyMember(result.user.uid, name, familyId)
+        }
         router.push('/')
     }).catch(function (error) {
         var errorCode = error.code;
