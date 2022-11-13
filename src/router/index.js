@@ -16,17 +16,7 @@ const routes = [
     {
         path: '/fridge',
         name: 'Fridge',
-        component: () => import('../views/FridgeViewInit.vue')
-    },
-    {
-        path: '/fridgeviewmobile',
-        name: 'FridgeViewMobile',
-        component: () => import('../views/FridgeViewMobile.vue')
-    },
-    {
-        path: '/fridgeview',
-        name: 'FridgeView',
-        component: () => import('../views/FridgeView.vue')
+        component: FridgeView
     },
     {
         path: '/shoppinglistinit',

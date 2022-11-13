@@ -4,9 +4,9 @@
       <div class="row align-items-stretch no-gutters contact-wrap">
         <div class="col-md-12">
           <div class="form h-100">
-            <router-link to="/">
-              <img src="../assets/fflogo.png" class="img mx auto" style="width: 30%;">
-            </router-link>
+            <img src="../assets/fflogo.png" class="img mx auto" style="width: 30%;">
+            <!-- <h1 class="display-5 mb-3 section-titles">Sign In</h1> -->
+            <!-- !!! -->
               <h1 class="display-5 mb-3 section-titles">Log In</h1>
               <div class="form-floating mx-auto mb-3 col-6">
                 <input type="email" th:field="*{username}" class="form-control" id="email" placeholder="name@example.com">
