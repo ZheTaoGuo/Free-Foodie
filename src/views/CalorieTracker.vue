@@ -525,7 +525,7 @@ export default {
                     </div>
                     <div class="col-1">
                         <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" @click="checkStatus">
+                        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" @click="checkStatus">
                             Add
                         </button>
                         <!-- Modal -->
@@ -556,7 +556,7 @@ export default {
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                    <button type="button" class="btn btn-primary" v-on:click="addFood($event)" data-bs-dismiss="modal">Add</button>
+                                    <button type="button" class="btn btn-outline-primary" v-on:click="addFood($event)" data-bs-dismiss="modal">Add</button>
                                 </div>
                                 </div>
                             </div>
