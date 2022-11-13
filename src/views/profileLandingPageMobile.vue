@@ -147,8 +147,8 @@
                         console.log("thisss is this.userCaloriesData", this.userCaloriesData)
                         this.renderGraph()
                     }
-                })
-            })
+                }).catch((message)=> {console.log("this is message from getUser", message); this.userObj = null })
+            }).catch((message)=> {console.log("this is message from getLoggedInUser", message); this.userObj = null })
         }
     }
 
@@ -228,7 +228,10 @@
             </div>
 
             <!-- mini dashboard -->
-            <div class="col-lg-8 calorieTracker" style="padding-bottom:40px">
+            <div v-if="userCaloriesData.length == 0 && this.userObj == null" class="alert alert-primary mt-4 mb-2" role="alert">
+                Start entering your daily calorie intake to see your dashboard!
+            </div>
+            <div class="col-lg-8 calorieTracker mt-0" style="padding-bottom:40px">
             <router-link to="/CalorieTrackerInit" style="text-decoration:none">
                 <div class="d-flex justify-content-between">
                     <h5 style="text-align:start; color:black; padding-top:5px">My Dashboard</h5>

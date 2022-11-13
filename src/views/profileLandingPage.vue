@@ -24,16 +24,6 @@
             NavBar,
             Footer
         },
-        computed: {
-            graphWidth(){
-                return screen.width * 60/100
-            } 
-        },
-        computed: {
-            graphWidth(){
-                return screen.width * 60/100
-            } 
-        },
         data() {
             return {
                 userId: "",
@@ -146,10 +136,12 @@
             }
         },
         mounted(){
+            console.log("this is monted")
             this.getLoggedInUser().then((user)=> {
                 this.userId = user.userId
                 this.userName = user.userName 
-                
+
+                console.log("this is user", user)
                 this.getFamilyList(this.userId)
                 this.getUser(this.userId).then((user) => {
                     // console.log("this is userObj", user)
@@ -164,8 +156,9 @@
                         console.log("thisss is this.userCaloriesData", this.userCaloriesData)
                         this.renderGraph()
                     }
-                })
-            })
+                    console.log("this is caloriedetails", this.userCaloriesData)
+                }).catch((message)=> {console.log("this is message from getUser", message); this.userObj = null })
+            }).catch((message)=> {console.log("this is message from getLoggedInUser", message); this.userObj = null })
         }
     }
 
@@ -177,6 +170,9 @@
         <NavBar @checkLogin="isLoggedIn()"></NavBar>
         <!--End of NavBar-->
         <div class="mainContent container-fluid">
+            <div v-if="userCaloriesData.length == 0 && this.userObj == null" class="alert alert-primary" role="alert">
+                Start entering your daily calorie intake to see your dashboard!
+            </div>
             <div class="row justify-content-around">
                 <div class="col-lg-3" style="padding:0; margin-left:20px">
                     <div class="row signout bg-secondary text-white" @click="signout()">
@@ -288,7 +284,7 @@
     @media (min-width: 992px) {
         .mainContent {
             /* height: 100vh; */
-            padding: 50px 70px;
+            padding: 30px 70px;
             background-color: rgb(183, 221, 234);
         }
     }
