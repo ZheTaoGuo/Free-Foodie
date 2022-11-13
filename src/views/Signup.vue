@@ -79,7 +79,32 @@
                 } else {
                     this.passwordInvalid = false
                 }
+            },
+            checkName() {
+                if (this.name.length == 0){
+                    this.nameInvalid = true
+                }else{
+                    this.nameInvalid = false
+                }
+            },
+            checkAge() {
+                if (this.age.length == 0){
+                    this.ageInvalid = true
+                }else{
+                    this.ageInvalid = false
+                }
+            },
+            checkGender() {
+                if (this.gender == 'Gender'){
+                    this.genderInvalid = true
+                }else{
+                    this.genderInvalid = false
+                }
+            },
+            changeStyle(event){
+                console.log("this is event", event)
             }
+            
         }
     }
 </script>
@@ -97,29 +122,29 @@
                         <!-- !!! -->
 
                         <div class="form-floating mx-auto mb-3 col-6">
-                            <input class="form-control" id="name" placeholder="Name" v-model="name">
+                            <input class="form-control" id="name" placeholder="Name" v-model="name"  @blur="checkName">
                             <label for="name">Name</label>
                             <div id="nameHelpBlock" class="form-text text-danger" v-if="nameInvalid">
-                                Name field cannot be left empty
+                                Name field cannot be left empty.
                             </div>
                         </div>
                         <div class="form-floating mx-auto mb-3 col-6">
                             <input type="number" class="form-control" id="age" placeholder="Input your age" min="1"
-                                max="99" v-model="age">
+                                max="99" v-model="age"  @blur="checkAge">
                             <label for="age">Age</label>
                             <div id="ageHelpBlock" class="form-text text-danger" v-if="ageInvalid">
-                                Age field cannot be left empty
+                                Age field cannot be left empty.
                             </div>
                         </div>
 
                         <div class="form-floating mx-auto mb-3 col-6">
-                            <select class="form-select" id="gender" v-model="gender">
+                            <select class="form-select" id="gender" v-model="gender" @blur="checkGender">
                                 <option selected disabled>Gender</option>
                                 <option value="female">Female</option>
                                 <option value="male">Male</option>
                             </select>
                             <div id="genderHelpBlock" class="form-text text-danger" v-if="genderInvalid">
-                                Gender field cannot be left empty
+                                Gender field cannot be left empty.
                             </div>
                         </div>
 
@@ -143,7 +168,7 @@
                                     placeholder="name@example.com" @blur="checkEmail" v-model="useremail">
                                 <label for="email">Email address</label>
                                 <div id="emailHelpBlock" class="form-text text-danger" v-if="emailInvalid">
-                                    Email address is invalid! Please enter a valid email address
+                                    Email address is invalid! Please enter a valid email address.
                                 </div>
                             </div>
                             <div class="form-floating mx-auto mb-3 col-6">
