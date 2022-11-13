@@ -116,6 +116,16 @@ const routes = [
         path: '/signup',
         name: 'Signup',
         component: Signup
+    },
+    {
+        path: '/signupmobile',
+        name: 'SignupMobile',
+        component: () => import('../views/SignupMobile.vue')
+    },
+    {
+        path: '/signupInit',
+        name: 'SignupInit',
+        component: () => import('../views/SignupInit.vue')
     }
 ]
 
