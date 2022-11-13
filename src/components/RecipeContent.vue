@@ -10,7 +10,6 @@
         name: {
             type: String,
             default: "Test recipe Name",
-            // required: true
         },
         instructions: {
             type: Array,

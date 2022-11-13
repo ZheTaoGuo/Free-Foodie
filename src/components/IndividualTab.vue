@@ -27,12 +27,9 @@ export default {
 
 <style scoped>
     .tab-content{
-        /* top: 50%;
-        left: 50%; */
         margin: auto;
         min-height: 100vh;
         border-radius: 5px;
-        /* box-shadow: 5px 10px black; */
         background-color: rgb(183, 221, 234);
     }
 </style>

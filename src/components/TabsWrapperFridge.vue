@@ -36,7 +36,6 @@
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="itemModal">Add New Ingredient</h5>
-              <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
             </div>
             <div class="modal-body">
               <div class="form-group">
@@ -154,7 +153,6 @@ export default {
     },
     onClickEffect(event) {
       this.selectedTitle = event.path[0].innerText
-      console.log("this is event", event)
       event.path[0].style.backgroundColor = "green"
     }
   },

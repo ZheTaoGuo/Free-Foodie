@@ -144,7 +144,6 @@
         saveIngredients(this, this.itemName, this.quantity, this.selectedValue)
       },
       onHoverEffect(event){
-        console.log("this is event", event)
         this.hover = true
         this.hoverTitle = event.path[0].innerText
       },
@@ -154,7 +153,6 @@
       },
       onClickEffect(event) {
         this.selectedTitle = event.path[0].innerText
-        console.log("this is event", event)
         event.path[0].style.backgroundColor = "green"
       }
     },

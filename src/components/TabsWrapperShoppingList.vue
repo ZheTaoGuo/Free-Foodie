@@ -27,14 +27,6 @@ export default {
       hoverTitle: ""
     }
   },
-  computed: {
-    // styleObject: function (title) {
-    //   return {
-    //     'background-color': this.title == this.selectedTitle ? 'green' : 'white',
-    //     'focus': black
-    //   }
-    // }
-  },
   setup(props, { slots }) {
     const tabTitlesSlot = ref(slots.default().map((tab) => tab.props.title))
     const selectedTitle = ref(tabTitlesSlot.value[0])
@@ -46,21 +38,16 @@ export default {
     }
   },
   methods: {
-    onHoverEffect(event){
-      console.log("this is event", event)
-      // event.path[0].style.backgroundColor = "green"
+    onHoverEffect(event){      
       this.hover = true
       this.hoverTitle = event.path[0].innerText
     },
     outHoverEffect(event){
-      // event.path[0].style.backgroundColor = "white"
-      // event.path[0].innerText
       this.hover = false
       this.hoverTitle = ""
     },
     onClickEffect(event) {
       this.selectedTitle = event.path[0].innerText
-      console.log("this is event", event)
       event.path[0].style.backgroundColor = "green"
     }
   }
@@ -87,13 +74,6 @@ export default {
   width: 100%;
 }
 
-/* .individual-tab-style:hover {
-  background-color: red;
-} */
-
-/* .active {
-  background-color: blue;
-} */
 
 .tabs-header {
   width: auto;

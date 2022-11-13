@@ -4,7 +4,6 @@
         name: {
             type: String,
             default: "Test recipe Name",
-            // required: true
         },
         recipeId: {
             type: Number,

@@ -84,13 +84,7 @@
         d3.select(".plot__axes__x").call(d3.axisBottom(x).ticks(7));  // modify the ticks to change the number of numbers in the
         d3.select(".plot__axes__y").call(d3.axisLeft(y));
       },
-      render() {
-        // const svg = d3.select("svg")
-        // const g = svg.append("g");
-
-        // g.append("g")
-        // .call(d3.axisLeft(this.scales.y))
-        // .text("Calorie Intake");    
+      render() { 
 
         this.setSizes();
         this.setScales();
