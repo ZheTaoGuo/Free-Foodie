@@ -1,24 +1,18 @@
-# wad2
+# WAD2 Group Project Free Foodie
 
-## Project setup
-```
-npm install
-```
+## Project Description
+The app uses HTML, CSS and Javascript (Vue CLI) for its front end and Firebase as the database.
+The application has been deployed on a cloud server (https://freefoodie.netlify.app/) and can be deployed locally.
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+A full list of emails are as follows:
+The password for all emails are P@ssW0rd.
 
-### Compiles and minifies for production
-```
-npm run build
-```
+1. tester@hotmail.com
+2. tester2@hotmail.com
 
-### Lints and fixes files
-```
-npm run lint
-```
+## Project Setup
+1. Run `git clone <repo-URL> to retrieve this repository. 
+2. Go to the project's root folder and run `npm install` to install the package dependencies.
+3. Run `npm run serve` to start the application 
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+Run npm install to install the package dependencies 
