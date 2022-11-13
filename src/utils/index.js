@@ -36,7 +36,7 @@ export const isLoggedIn = () => {
     })
 }
 export const getLoggedInUser = () => {
-    return new Promise ((resolve) => {
+    return new Promise ((resolve, reject) => {
         onAuthStateChanged(getAuth(), (currentUser) => {
         if (currentUser) {
           var userId = currentUser.uid;
@@ -56,6 +56,7 @@ export const getLoggedInUser = () => {
         } 
         else{
             console.log(null)
+            reject(null)
         }
         })
     })
