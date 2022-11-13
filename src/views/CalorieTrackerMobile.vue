@@ -605,7 +605,7 @@ export default {
             </div>
 
             <!-- dashboard -->
-            <div v-if="userCaloriesData.length == 0 && this.userObj == null" class="alert alert-primary mt-4 mb-1" role="alert">
+            <div v-if="userObj.calorieDetails == undefined" class="alert alert-primary mt-4 mb-1" role="alert">
                 Start entering your daily calorie intake to see your dashboard!
             </div>
             <div class="col-lg-9 col-md-12 dashboard mt-3" style="position:relative">

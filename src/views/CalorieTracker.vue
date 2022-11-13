@@ -514,7 +514,7 @@ export default {
                     </div>
                 </form>
             </div>
-            <div v-if="userCaloriesData.length == 0 && this.userObj == null" class="alert alert-primary mb-1 px-0" role="alert">
+            <div v-if="userObj.calorieDetails == undefined" class="alert alert-primary mb-1 px-0" role="alert">
                 Start entering your daily calorie intake to see your dashboard!
             </div>
             <div class="row h-100 ">
