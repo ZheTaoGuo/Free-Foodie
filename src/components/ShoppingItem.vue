@@ -63,7 +63,7 @@
                         <div class="status">
                             <div class="icon" v-if="title != 'Personal'">
                                 <button class="btn btn-primary" v-on:click="IngredientBought">
-                                    Ingredient Bought
+                                    Bought
                                 </button>
                             </div>
                             
@@ -103,28 +103,31 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col" v-if="title != 'Personal'">  <!-- this is the assigned tab-->
-                                <button class="btn btn-primary mt-3"  v-on:click="IngredientBought" style="font-size:10px">
-                                    Ingredient Bought
-                                </button>
-                            </div>
-                            <div v-else> <!-- This is the unassigned tab -->
-                                <div class="row">
-                                    <div class="col">
-                                        <!-- assigning to someone. Unassigned Tab -->
+                            <div>
+                                <div class="row align-items-start">
+                                    <!-- assigning to someone. Unassigned Tab -->
+                                    <div v-if="title == 'Personal'" class="col-12 align-self-start">
                                         <select v-if="title == 'Personal'" class="form-select mt-3" v-model="famMember" @change="assignToMember()" style="font-size:10px">
                                             <option selected disabled>{{famMember}}</option>
                                             <option v-for="member of familyMembers" :value="member.userId">{{member.userName}}</option>
                                         </select>
-                                        <!-- assigning from someone to another person. Assigned tab -->
-                                        <select v-else class="form-select mt-3" v-model="famMember" @change="changeAssignment()">
-                                            <option selected disabled>{{famMember}}</option>
-                                            <template v-for="member of familyMembers">
-                                                <option v-if="member.userId != user" :value="member.userId">{{member.userName}}</option>
-                                            </template>
-                                        </select>
                                     </div>
-                                    
+                                    <!-- assigning from someone to another person. Assigned tab -->
+                                    <template v-else>
+                                        <div class="col-9 align-self-start">
+                                            <select class="form-select mt-3" v-model="famMember" @change="changeAssignment()">
+                                                <option selected disabled>{{famMember}}</option>
+                                                <template v-for="member of familyMembers">
+                                                    <option v-if="member.userId != user" :value="member.userId">{{member.userName}}</option>
+                                                </template>
+                                            </select>
+                                        </div>
+                                        <div class="col-3 align-self-start px-0" v-if="title != 'Personal'">  <!-- this is the assigned tab-->
+                                            <button class="btn btn-primary mt-3"  v-on:click="IngredientBought" style="font-size:10px">
+                                                Bought
+                                            </button>
+                                        </div>
+                                    </template>
                                 </div>
                             </div>
                         </div>

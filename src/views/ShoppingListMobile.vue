@@ -160,7 +160,7 @@
         <IndividualTab title="Unassigned Items" id="personal-style">
             <div v-for="item of missingList">
                 <ShoppingItem :title="'Personal'" :itemName="item.name" :user="loggedInUser"
-                    :familyMembers="familyMembers" @assignItem="moveItem" :itemImage="item.image"
+                    :familyMembers="familyMembers" @assignItem="moveItem" :itemImage="item.image" :item="item"
                     @cancelIngredientFromUnassigned="cancelIngredientFromUnassigned" :mobile="mobile"></ShoppingItem>
             </div>
 
