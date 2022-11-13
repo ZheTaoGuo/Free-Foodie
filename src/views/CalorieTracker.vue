@@ -72,7 +72,22 @@ export default {
                 this.activityFrequency = user.activityFrequency;
                 // console.log("this is userc calroei deiasl", user.calorieDetails[Object.keys(user.calorieDetails)[Object.keys(user.calorieDetails).length-1]])
                 if (user.calorieDetails != null){
-                    this.calorieLimit = Number(user.calorieDetails[Object.keys(user.calorieDetails)[Object.keys(user.calorieDetails).length - 1]].calorieLimit).toFixed(2);
+                    if (this.calorieLimit == 0) {
+                        console.log("this is the this.calories to set",Object.keys(user.calorieDetails))
+                        // getting the max date from the array 
+                        const maxDate = new Date(
+                            Math.max(
+                                ...Object.values(user.calorieDetails).map(element => {
+                                return new Date(element.date);
+                                }),
+                            ),
+                        );
+                        // formatting to get the index of the max date
+                        // console.log("this is maxDate", maxDate)
+                        let currDate = maxDate.getDate() + " " + maxDate.getMonth() + " " + maxDate.getFullYear()
+                        // console.log("this is currDate", currDate)
+                        this.calorieLimit = Number(user.calorieDetails[currDate].calorieLimit).toFixed(2);
+                    }
                     // converting the data to the format in firebase
                     let date = new Date()
                     let todayDateFormatted = date.getDate() + " " + date.getMonth() + " " + date.getFullYear()
@@ -395,6 +410,7 @@ export default {
                 .attr("y", 1)
                 .attr("dy", "-5.1em")
                 .attr("text-anchor", "middle")
+                .attr("style", "font-size: 15px; font-weight: bold; -webkit-text-fill-color: #1c87c9")
                 .attr("stroke", "black")
                 .text("Calories Consumed");
 
