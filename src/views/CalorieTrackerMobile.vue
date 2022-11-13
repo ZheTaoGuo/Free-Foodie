@@ -187,6 +187,7 @@ export default {
                 })
                 console.log("this is the amount i hvae eaten", dailyCalorieIntake)
                 dailyCalorieIntake = calorieDetails + dailyCalorieIntake
+                this.userSearch = ""
             }).catch(function (error) {
                 console.error(error);
             });
@@ -469,8 +470,8 @@ export default {
         <div class="row">
             <!-- form -->
             <div class="container" style="margin-bottom:20px">
-                <form class="row g-1 d-flex justify-content-center">
-                    <div class="col-6">
+                <form class="row g-1 d-flex justify-content-start">
+                    <div class="col-10 mt-2">
                         <!-- <AutoComplete v-model="userSearch" @complete="searchFood()"
                             placeholder="Enter your meal details here to track your calories!"
                             style="width:100%; padding-left: 90px;" :suggestions="searchResults" input-class="form-control"
@@ -478,11 +479,11 @@ export default {
                             search-message="" selection-message="" optionLabel="label">
                         </AutoComplete> -->
                         <div class="mb-3">
-                            <input type="text" class="form-control" id="search" placeholder="Enter your meal details here to track your calories!" v-model="userSearch" @input="searchFood">
+                            <input type="text" class="form-control" id="search" placeholder="Enter your meal details to track your calories!" v-model="userSearch" @input="searchFood">
                         </div>
 
                     </div>
-                    <div class="col-1">
+                    <div class="col-1 mt-2">
                         <!-- <Modal @close="toggleModal" :modalActive="modalActive">
                             <div class="modal-content" style="border:none">
                                 <div v-if="userSearch != ''">

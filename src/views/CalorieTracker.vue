@@ -185,6 +185,7 @@ export default {
                 })
                 console.log("this is the amount i hvae eaten", dailyCalorieIntake)
                 dailyCalorieIntake = calorieDetails + dailyCalorieIntake
+                this.userSearch = ""
             }).catch(function (error) {
                 console.error(error);
             });
