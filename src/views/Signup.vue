@@ -4,14 +4,19 @@
         googlesignup
     } from '../utils'
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-        return new bootstrap.Tooltip(tooltipTriggerEl, {
+    console.log(tooltipTriggerList);
+    var tooltip = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        this.addEventListener('click', function(){
+            console.log("clicked");
+            new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+        return bootstrap.Tooltip(tooltipTriggerEl, {
             delay: {
-                show: 0,
-                hide: 0,
+                "show": 0,
+                "hide": 0
             },
             trigger: 'click'
-        }, )
+        })
     });
 
     export default {
@@ -120,9 +125,9 @@
                         <div class="form-floating mx-auto mb-3 col-6">
                             <input class="form-control" id="familyId" placeholder="Input your family ID (optional)" />
                             <label for="familyId">Family ID (optional)</label>
-                            <img src="/info-svgrepo-com.svg" alt="info" class="icon-image" data-bs-delay="0"
-                                data-bs-trigger="click" data-bs-toggle="tooltip" data-bs-placement="top"
-                                title="If you are a new user, please leave this field blank. You can retrieve your family referral code on your profile">
+                                    <img src="/info-svgrepo-com.svg" alt="info" class="icon-image" data-bs-delay="0"
+                                    data-bs-toggle="tooltip" data-bs-trigger="click" type="button" data-bs-placement="right" role="tooltip"
+                                    title="If you are a new user, please leave this field blank. You can retrieve your family referral code on your profile">
                         </div>
 
                         <!-- <hr> -->
@@ -188,10 +193,22 @@
     .icon-image {
         position: absolute;
         top: 32%;
-        margin-right: 5px;
+        margin-right: 11px;
         right: 0;
         width: 20px;
         height: 20px;
     }
-
+    @media screen and (max-width: 480px){
+        [role="tooltip"].tooltip{
+            display: block;
+        }
+        .icon-image {
+            position: absolute;
+            top: 32%;
+            margin-right: 11px;
+            right: 0;
+            width: 20px;
+            height: 20px;
+        }
+    }
 </style>
