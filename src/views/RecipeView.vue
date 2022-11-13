@@ -105,11 +105,9 @@
                 console.log('End getAllFridgeIngredient');
             },
             getMissing(missingIngredient, recipeId) {
-                // console.log(missingIngredient, recipeId);
                 this.shoppingList[recipeId] = missingIngredient
             },
             callAddToMissing(recipeId) {
-                // console.log(this.shoppingList[recipeId]);
                 addToPast(this.loggedInUser, this.selectedRecipe)
                 addToMissing(this.loggedInUser, this.shoppingList[recipeId])
             }
@@ -229,7 +227,6 @@
     }
 
     .receipe-button {
-        /* box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.3)!important; */
         background-color: white !important;
         border-color: rgba(0, 0, 0, 0.5) !important;
         color: black !important;

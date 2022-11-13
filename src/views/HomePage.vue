@@ -109,7 +109,6 @@
         font-weight: bold;
         text-shadow: 2px 2.5px 2px rgba(0, 0, 0, 0.8);
         color: rgb(255, 255, 255);
-        /* background: rgba(255, 255, 255, 0.5); */
         padding: 10px;
         border-radius: 10px;
         margin-bottom: 10px;
@@ -131,7 +130,6 @@
 
     .section-header {
         padding-top: 30px;
-        /* padding-bottom: 25px; */
     }
 
     .container-fluid {
@@ -144,7 +142,6 @@
         background-color: #187ccde3;
         border-radius: 10px;
         width: 90%;
-        /* height: 80px; */
         padding: 20px;
 
     }

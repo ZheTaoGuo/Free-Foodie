@@ -83,7 +83,6 @@
             <Card v-for="recipe of recipes" :page="'favourite'" :image_url="recipe['image']"
                 :recipeId="recipe['recipeId']" :name="recipe['recipeName']" :duration="recipe['duration']"
                 :desc="recipe['summary'].slice(0, 150) + '...'" ></Card>
-            <!-- <Card :image_url="'tester'" :name="'fake'"></Card> -->
             <!-- End of Recipe -->
         </div>
         <div class="row" v-else>
@@ -91,7 +90,6 @@
             <!-- eslint-disable-next-line -->
             <Card v-for="recipe of recipeFiltered" :page="'favourite'" :image_url="recipe['image']" :recipeId="recipe['recipeId']" :name="recipe['recipeName']"
                 :duration="recipe['duration']" :desc="recipe['summary'].slice(0, 150)+'...'"></Card>
-            <!-- <Card :image_url="'tester'" :name="'fake'"></Card> -->
             <!-- End of Recipe -->
         </div>
     </div>
@@ -106,7 +104,6 @@
 
 .shopping-list-header {
   background-image: linear-gradient(to bottom right, #7395AE, #379683) !important;
-  /* border-radius: 20px; */
   color: #fff !important;
   box-shadow: 0 0 40px 0 rgba(94, 92, 154, .06);
   margin-bottom: 5px;

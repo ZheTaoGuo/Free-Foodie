@@ -1,13 +1,8 @@
 <script>
-// import { RouterLink } from 'vue-router'
 import { calculateCalories, getUser, updateCalories, getLoggedInUser, isLoggedIn } from '../utils'
 import * as d3 from "d3";
 import plot from "@/components/plotWithXandYaxis.vue";
-// import calorieSearchModal from '../components/calorieSearchModal.vue';
-// import * as axios from "axios";
 import axios from 'axios'
-// import AutoComplete from 'primevue/autocomplete';
-// import Modal from "@/components/Modal.vue";
 import { ref, toRaw } from "vue";
 import NavBar from '../components/Navbar.vue'
 import Footer from '../components/Footer.vue'
@@ -16,20 +11,8 @@ import Footer from '../components/Footer.vue'
 export default {
     components: {
         plot,
-        // AutoComplete,
-        // Modal,
         NavBar,
         Footer
-    },
-    setup() {
-        // const modalActive = ref(false);
-        // const toggleModal = () => {
-        //     modalActive.value = !modalActive.value;
-        // };
-        // // let userSearch = ref('')
-        
-        // return { modalActive, toggleModal };
-        
     },
     data() {
         return {
@@ -44,7 +27,6 @@ export default {
             age: "",
             userCalorieDetails: "",
             userSearch: "",
-            // isCalorieSearchModalVisible: false,
             searchResults: [],
             dailyCalorieIntake: 0,
             userCaloriesData: [],
@@ -72,7 +54,6 @@ export default {
                 this.height = user.height;
                 this.weight = user.weight;
                 this.activityFrequency = user.activityFrequency;
-                // console.log("this is userc calroei deiasl", user.calorieDetails[Object.keys(user.calorieDetails)[Object.keys(user.calorieDetails).length-1]])
                 if (user.calorieDetails != null){
                     if (this.calorieLimit == 0) {
                         console.log("this is the this.calories to set",Object.keys(user.calorieDetails))
@@ -85,29 +66,21 @@ export default {
                             ),
                         );
                         // formatting to get the index of the max date
-                        // console.log("this is maxDate", maxDate)
                         let currDate = maxDate.getDate() + " " + maxDate.getMonth() + " " + maxDate.getFullYear()
-                        // console.log("this is currDate", currDate)
                         this.calorieLimit = Number(user.calorieDetails[currDate].calorieLimit).toFixed(2);
                     }
                     // converting the data to the format in firebase
                     let date = new Date()
                     let todayDateFormatted = date.getDate() + " " + date.getMonth() + " " + date.getFullYear()
                     if (user.calorieDetails[todayDateFormatted] == null) {  // checking if there has already been a entry for today
-                        // console.log("this has been no entry for today")
                         this.dailyCalorieIntake = 0
                     } else {
                         this.dailyCalorieIntake = user.calorieDetails[todayDateFormatted].dailyCalorieIntake
-                        // console.log("this is the retrievde daily calorie intake", this.dailyCalorieIntake)
                     }
                     this.userCaloriesData = [];
                     for (const property in user.calorieDetails) {
-                        // console.log("this is new obj created", { date: user.calorieDetails[property].date, calories: user.calorieDetails[property].dailyCalorieIntake})
                         this.userCaloriesData.push({ date: user.calorieDetails[property].date, calories: user.calorieDetails[property].dailyCalorieIntake})
                     }
-                    // console.log(this.userCaloriesData[0])
-                    // console.log(this.userCaloriesData[0].date)
-                    // console.log(this.userCaloriesData[0].calories)
                     console.log("this is userCaloriesData", this.userCaloriesData)
                     this.renderGraph(this.xAxisVariable)
                 }
@@ -115,12 +88,6 @@ export default {
                 this.age = user.age;
             })
         },
-        // showModal() {
-        //     this.isCalorieSearchModalVisible = true;
-        // },
-        // closeModal() {
-        //     this.isCalorieSearchModalVisible = false;
-        // },
         async searchFood() {
             console.log("searchFood() called")
             console.log("this is usersearch", this.userSearch)
@@ -151,7 +118,6 @@ export default {
                             "item_name": response.data.hits[i].fields.item_name,
                         })
                 }
-                // console.log("this is searchResults", searchResults)
             }).catch(function (error) {
                 console.error(error);
             });
@@ -286,7 +252,6 @@ export default {
                 width = svg.attr("width") - margin,
                 height = svg.attr("height") - margin
 
-            // console.log("this is svg", svg)
             svg.append("text")
                 .attr("transform", "translate(70,0)")
                 .attr("x", 50)
@@ -300,7 +265,6 @@ export default {
 
             // DOM manipulation to remove <g> tag if it already exists
             if (document.getElementsByTagName("g").length >= 1) {
-                // console.log("this is getElementsByTagName", document.getElementsByTagName("g"))
                 document.getElementsByTagName("g")[0].remove()
                 document.getElementById("dashboardTitle").remove()
             }
@@ -308,21 +272,6 @@ export default {
             var g = svg.append("g")
                 .attr("transform", "translate(" + 70 + "," + 100 + ")");
 
-            // let data = [
-            //     { date: "2022-10-22T15:54:45.173Z", calories: 2560 },
-            //     { date: "2022-10-23T14:42:57.815Z", calories: 350 },
-            //     { date: "2022-10-24T06:57:29.537Z", calories: 395 },
-            // ]
-                
-            // let data = [] 
-            // for (let obj of this.userCaloriesData) {
-            //     console.log("this is my returned obj", obj)
-            //     data.push({
-            //         "date": obj.date,
-            //         "calories": obj.calories
-            //     })
-            // }
-            // console.log("this is converted data", data)
             let days = {
                 0: "Sun",
                 1: "Mon",
@@ -352,7 +301,6 @@ export default {
             let filteredData = [{date:"Sun", calories: 0}, {date:"Mon", calories: 0}, {date:"Tue", calories: 0}, {date:"Wed", calories: 0}, {date:"Thu", calories: 0}, {date:"Fri", calories: 0}, {date:"Sat", calories: 0}]
             if (variable == "day") {
                 for (let obj of data) {
-                    // console.log("this is filtereddata day", days[new Date(obj.date).getDay()])
                     for (let obj2 of filteredData) {
                         if (days[new Date(obj.date).getDay()] == obj2.date) {
                             obj2.calories += obj.calories
@@ -362,7 +310,6 @@ export default {
             } else if (variable == "week") {
                 filteredData = [{date:"Wk 1", calories: 0}, {date:"Wk 2", calories: 0}, {date:"Wk 3", calories: 0}, {date:"Wk 4", calories: 0}, {date:"Wk 5", calories: 0}]
                 for (let obj of data) {
-                    // console.log("this is filtereddata week", Math.ceil((new Date(obj.date).getDate() + 1) / 7))
                     for (let obj2 of filteredData) {
                         if (Math.ceil((new Date(obj.date).getDate() + 1) / 7) == obj2.date.slice(-1)) {
                             obj2.calories += obj.calories
@@ -372,7 +319,6 @@ export default {
             } else {
                 filteredData = [{date: "Jan", calories: 0}, {date: "Feb", calories: 0}, {date: "Mar", calories: 0}, {date: "Apr", calories: 0}, {date: "May", calories: 0}, {date: "Jun", calories: 0}, {date: "Jul", calories: 0}, {date: "Aug", calories: 0}, {date: "Sep", calories: 0}, {date: "Oct", calories: 0}, {date: "Nov", calories: 0}, {date: "Dec", calories: 0}]
                 for (let obj of data) {
-                    // console.log("this is filtereddata day", months[new Date(obj.date).getMonth()])
                     for (let obj2 of filteredData) {
                         if (months[new Date(obj.date).getMonth()] == obj2.date) {
                             obj2.calories += obj.calories
@@ -477,39 +423,12 @@ export default {
             <div class="container" style="margin-bottom:20px">
                 <form class="row g-1 d-flex justify-content-start">
                     <div class="col-10 mt-2">
-                        <!-- <AutoComplete v-model="userSearch" @complete="searchFood()"
-                            placeholder="Enter your meal details here to track your calories!"
-                            style="width:100%; padding-left: 90px;" :suggestions="searchResults" input-class="form-control"
-                            panel-class="bg-white pt-1" :emptySelectionMessage="''" empty-search-message=""
-                            search-message="" selection-message="" optionLabel="label">
-                        </AutoComplete> -->
                         <div class="mb-3">
                             <input type="text" class="form-control" id="search" placeholder="Enter your meal details to track your calories!" v-model="userSearch" @input="searchFood">
                         </div>
 
                     </div>
                     <div class="col-1 mt-2">
-                        <!-- <Modal @close="toggleModal" :modalActive="modalActive">
-                            <div class="modal-content" style="border:none">
-                                <div v-if="userSearch != ''">
-                                    <h2 style="font-weight:bold; text-align:start">You have eaten:</h2>
-                                    <br>
-                                    <p style="font-size:20px"> <span
-                                            style="font-weight:bold">{{ userSearch.item_name }}</span> from <span
-                                            style="font-weight:bold">{{ userSearch.brand_name }}</span></p>
-                                    <p style="font-size:20px">
-                                        It had {{ userSearch.calories }} calories. <br>
-                                        You have <span style="font-weight:bold">{{ Number(calorieLimit -
-                                                dailyCalorieIntake).toFixed(2)
-                                        }} calories left</span> for today.
-                                    </p>
-                                </div>
-                                <div v-else>
-                                    <h2 style="font-weight:bold">Please select a food entry first.</h2>
-                                </div>
-                            </div>
-                        </Modal> -->
-
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" @click="checkStatus">
                             Add

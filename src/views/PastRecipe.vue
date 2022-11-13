@@ -97,15 +97,9 @@
 </template>
 
 <style>
-    /* @media (max-width: 991px) {
-        .dashboard {
-            margin-top: 10px;
-        }
-    } */
 
 .shopping-list-header {
   background-image: linear-gradient(to bottom right, #7395AE, #379683) !important;
-  /* border-radius: 20px; */
   color: #fff !important;
   box-shadow: 0 0 40px 0 rgba(94, 92, 154, .06);
   margin-bottom: 5px;

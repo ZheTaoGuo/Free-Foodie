@@ -164,7 +164,6 @@
                                 Then, register using email or Google:
                             </p>
 
-                            <!-- <p class="h5 mb-3 section-titles">Or create account with email</p> -->
                             <div class="form-floating mx-auto mb-3 col-6">
                                 <input type="email" th:field class="form-control" id="email"
                                     placeholder="name@example.com" @blur="checkEmail" v-model="useremail">

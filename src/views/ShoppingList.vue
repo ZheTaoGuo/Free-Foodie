@@ -57,7 +57,6 @@
                     assignedList: []
                 })
             }
-            // this.familyUsers = Object.values(family.users);
             console.log(this.familyUsers);
             this.callGetAllMissing();
             this.callGetFamily();
@@ -68,7 +67,6 @@
             moveItem(itemName, memberId, itemImage) {
                 console.log(itemName, memberId);
                 let member = memberId
-                // console.log(member);
                 assignItem(member, itemName, itemImage) // removing the item from the unassigned list 
                 // mmoving item to the person 
                 this.sendMessage()

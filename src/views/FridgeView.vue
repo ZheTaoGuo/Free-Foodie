@@ -172,12 +172,10 @@ export default {
             });
         },
         callSaveIngedients(obj, itemName, quantity, selectedValue) {
-            console.log('emitted');
             saveIngredients(obj, itemName, quantity, selectedValue)
             this.loadIngredients()
         },
         deleteIngredients(item) {
-            console.log(item);
             deleteFromFridge(item).then(value => {
                 this.loadIngredients()
             }).catch(error => {

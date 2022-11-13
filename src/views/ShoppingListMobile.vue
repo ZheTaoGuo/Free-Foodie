@@ -57,7 +57,6 @@
                     assignedList: []
                 })
             }
-            // this.familyUsers = Object.values(family.users);
 
             console.log(this.familyUsers);
             this.callGetAllMissing();
@@ -70,7 +69,6 @@
             moveItem(itemName, memberId, itemImage) {
                 console.log(itemName, memberId);
                 let member = memberId
-                // console.log(member);
                 assignItem(member, itemName, itemImage) // removing the item from the unassigned list 
                 // mmoving item to the person 
                 this.sendMessage()
@@ -169,20 +167,6 @@
 
             <div class="container-fluid">
                 <div class="row flex-nowrap">
-                    <!-- bootstrap ver -->
-                    <!-- <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                        <li class="nav-item" role="presentation" v-for="user of familyUsers">
-                            <button class="nav-link active" :id="'pills-tab'+ user.userId" data-bs-toggle="pill" 
-                            :data-bs-target="'#pills-' + users.userId" type="button" role="tab" :aria-controls="'pills-' + user.userId" 
-                            :aria-selected="user.userId == loggedInUser" @click="updateSelectedUser(user)"><i class="fas fa-solid fa-user"></i>{{ user.userName }}</button>
-                        </li>
-                    </ul>
-                    <div class="tab-content" id="pills-tabContent">
-                        <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">...</div>
-                        <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">...</div>
-                        <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">...</div>
-                    </div> -->
-
                     <!-- using CSS & HTML -->
                     <div class="scrollmenu container">
                         <template v-for="user of familyUsers">
@@ -261,7 +245,4 @@
         cursor: pointer
     }
 
-    /* div.scrollmenu button:hover {
-    background-color: #777;
-    } */
 </style>

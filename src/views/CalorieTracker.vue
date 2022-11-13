@@ -1,13 +1,8 @@
 <script>
-// import { RouterLink } from 'vue-router'
 import { calculateCalories, getUser, updateCalories, getLoggedInUser, isLoggedIn } from '../utils'
 import * as d3 from "d3";
 import plot from "@/components/plotWithXandYaxis.vue";
-// import calorieSearchModal from '../components/calorieSearchModal.vue';
-// import * as axios from "axios";
 import axios from 'axios'
-// import AutoComplete from 'primevue/autocomplete';
-// import Modal from "@/components/Modal.vue";
 import { ref, toRaw } from "vue";
 import NavBar from '../components/Navbar.vue'
 import Footer from '../components/Footer.vue'
@@ -16,20 +11,8 @@ import Footer from '../components/Footer.vue'
 export default {
     components: {
         plot,
-        // AutoComplete,
-        // Modal,
         NavBar,
         Footer
-    },
-    setup() {
-        // const modalActive = ref(false);
-        // const toggleModal = () => {
-        //     modalActive.value = !modalActive.value;
-        // };
-        // // let userSearch = ref('')
-        
-        // return { modalActive, toggleModal };
-        
     },
     data() {
         return {
@@ -44,7 +27,6 @@ export default {
             age: "",
             userCalorieDetails: "",
             userSearch: "",
-            // isCalorieSearchModalVisible: false,
             searchResults: [],
             dailyCalorieIntake: 0,
             userCaloriesData: [],
@@ -93,29 +75,17 @@ export default {
                         this.dailyCalorieIntake = 0
                     } else {
                         this.dailyCalorieIntake = user.calorieDetails[todayDateFormatted].dailyCalorieIntake
-                        // console.log("this is the retrievde daily calorie intake", this.dailyCalorieIntake)
                     }
                     this.userCaloriesData = [];
                     for (const property in user.calorieDetails) {
-                        // console.log("this is new obj created", { date: user.calorieDetails[property].date, calories: user.calorieDetails[property].dailyCalorieIntake})
                         this.userCaloriesData.push({ date: user.calorieDetails[property].date, calories: user.calorieDetails[property].dailyCalorieIntake})
                     }
-                    // console.log(this.userCaloriesData[0])
-                    // console.log(this.userCaloriesData[0].date)
-                    // console.log(this.userCaloriesData[0].calories)
-                    // console.log("this is userCaloriesData", this.userCaloriesData)
                     this.renderGraph(this.xAxisVariable)
                 }
                 this.gender = user.gender;
                 this.age = user.age;
             })
         },
-        // showModal() {
-        //     this.isCalorieSearchModalVisible = true;
-        // },
-        // closeModal() {
-        //     this.isCalorieSearchModalVisible = false;
-        // },
         async searchFood() {
             console.log("searchFood() called")
             let foodOrBrand = this.userSearch
@@ -280,7 +250,7 @@ export default {
 
             // DOM manipulation to remove <g> tag if it already exists
             if (document.getElementsByTagName("g").length >= 1) {
-                // console.log("this is getElementsByTagName", document.getElementsByTagName("g"))
+
                 document.getElementsByTagName("g")[0].remove()
                 document.getElementById("dashboardTitle").remove()
             }
@@ -288,21 +258,6 @@ export default {
             var g = svg.append("g")
                 .attr("transform", "translate(" + 100 + "," + 100 + ")");
 
-            // let data = [
-            //     { date: "2022-10-22T15:54:45.173Z", calories: 2560 },
-            //     { date: "2022-10-23T14:42:57.815Z", calories: 350 },
-            //     { date: "2022-10-24T06:57:29.537Z", calories: 395 },
-            // ]
-                
-            // let data = [] 
-            // for (let obj of this.userCaloriesData) {
-            //     console.log("this is my returned obj", obj)
-            //     data.push({
-            //         "date": obj.date,
-            //         "calories": obj.calories
-            //     })
-            // }
-            // console.log("this is document.documentElement.clientWidth", document.documentElement.clientWidth)
             if (document.documentElement.clientWidth > 1200) {  // handling for higher viewports
                 let days = {
                     0: "Sunday",

@@ -2,21 +2,8 @@
     import { RouterLink } from 'vue-router'
     import { getFamily, createFamily, addFamilyMember, getUser, getLoggedInUser, isLoggedIn, signout } from '../utils'
     import * as d3 from "d3";
-    // import plot from "@/components/plotWithXandYaxis.vue";
     import NavBar from '../components/Navbar.vue'
     import Footer from '../components/Footer.vue'
-
-    // const userId = "1"   // TODO: obtained from cookies
-    // const userName = "bob"   // TODO: obtained from cookies
-
-    // window.addEventListener("resize", ()=>{
-    //     console.log("resize")
-    //     console.log("screen.width: " + screen.width)
-    //     let graph = document.getElementById("dashboard")
-    //     console.log(graph)
-    //     let resize = screen.width * 40 / 100
-    //     graph.setAttribute("width", resize)
-    // })
 
     export default {
         components: {
@@ -40,7 +27,6 @@
             signout,
             isLoggedIn,
             getLoggedInUser,
-            // createUser,
             getUser,
             getFamilyList(userId) {
                 getFamily(userId).then((value)=>{
@@ -71,7 +57,6 @@
 
                 // DOM manipulation to remove <g> tag if it already exists
                 if (document.getElementsByTagName("g").length >= 1) {
-                    // console.log("this is getElementsByTagName", document.getElementsByTagName("g"))
                     document.getElementsByTagName("g")[0].remove()
                     document.getElementById("dashboardTitle").remove()
                 }
@@ -90,7 +75,6 @@
                 let data = this.userCaloriesData
                 let filteredData = [{date:"Sunday", calories: 0}, {date:"Monday", calories: 0}, {date:"Tuesday", calories: 0}, {date:"Wednesday", calories: 0}, {date:"Thursday", calories: 0}, {date:"Friday", calories: 0}, {date:"Saturday", calories: 0}]
                 for (let obj of data) {
-                    // console.log("this is filtereddata day", days[new Date(obj.date).getDay()])
                     for (let obj2 of filteredData) {
                         if (days[new Date(obj.date).getDay()] == obj2.date) {
                             obj2.calories += obj.calories
@@ -144,13 +128,10 @@
                 console.log("this is user", user)
                 this.getFamilyList(this.userId)
                 this.getUser(this.userId).then((user) => {
-                    // console.log("this is userObj", user)
                     this.userObj = user
-                    // console.log("tjs is this.userObj", user.calorieDetails)
                     if (user.calorieDetails != undefined) {
                         this.calorieLimit = Number(user.calorieDetails[Object.keys(user.calorieDetails)[Object.keys(user.calorieDetails).length - 1]].calorieLimit).toFixed(2);
                         for (const property in user.calorieDetails) {
-                            // console.log("this is new obj created", { date: user.calorieDetails[property].date, calories: user.calorieDetails[property].dailyCalorieIntake})
                             this.userCaloriesData.push({ date: user.calorieDetails[property].date, calories: user.calorieDetails[property].dailyCalorieIntake})
                         }
                         console.log("thisss is this.userCaloriesData", this.userCaloriesData)
@@ -283,7 +264,6 @@
 
     @media (min-width: 992px) {
         .mainContent {
-            /* height: 100vh; */
             padding: 30px 70px;
             background-color: rgb(183, 221, 234);
         }
@@ -303,7 +283,6 @@
         height: 60px;
         width: 100%;
         border-radius: 10px;
-        /* text-align: start; */
         display: flex;
         justify-content: center;
         align-items: center;
@@ -323,7 +302,6 @@
         background-color: white;
         border-radius: 10px;
         text-align: start;
-        /* width: 100%; */
         padding: 20px 10px 0 20px;
         height: 540px;
     }

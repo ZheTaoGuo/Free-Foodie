@@ -65,10 +65,8 @@ export default{
   methods:{
     googlesignin,
     handlesignin() {
-      // console.log("handlesignin")
       signin2().then().catch((msgList) => {
-        // msg can be: ["Please enter an email address.", "Please enter a password."]
-        // msg can be: ["Incorrect password!", "User not found! Please enter a valid email address"]
+
         console.log("this is catch & msgList: ", msgList)
         if (msgList.length == 2){
           this.emailInvalid = true;
