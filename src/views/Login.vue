@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import { signin, googlesignin } from '../utils'
+import { signin2, googlesignin } from '../utils'
 
 export default{
   name: 'appLogin',
@@ -66,7 +66,7 @@ export default{
     googlesignin,
     handlesignin() {
       // console.log("handlesignin")
-      signin().then().catch((msgList) => {
+      signin2().then().catch((msgList) => {
         // msg can be: ["Please enter an email address.", "Please enter a password."]
         // msg can be: ["Incorrect password!", "User not found! Please enter a valid email address"]
         console.log("this is catch & msgList: ", msgList)
