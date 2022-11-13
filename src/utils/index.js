@@ -614,6 +614,8 @@ const itemType = {
 
 // Add item into the user's assignedIngredients
 function addItem(userId, itemName, itemImage) {
+    console.log("these are parameters in order", userId, itemName, itemImage);
+    itemName = itemName.toLowerCase();
     let type = Object.keys(itemType).find(key => itemType[key].includes(itemName));
     let wordArr = itemName.split(' ')
     for (let i = 0; i < wordArr.length; i++) {
