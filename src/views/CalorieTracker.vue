@@ -50,6 +50,7 @@ export default {
             userCaloriesData: [],
             xAxisVariable: "day",
             filteredData: [],
+            modalStatus: false,
         }
     },
     methods: {
@@ -445,6 +446,9 @@ export default {
                 .attr("text-anchor", "end")
                 .attr("style", "font-size: 15px; font-weight: bold")
                 .text("Max Calorie Intake: " + Number(this.calorieLimit * scale).toFixed(2))
+        },
+        checkStatus() {
+            this.modalStatus = true 
         }
 
     },
@@ -475,41 +479,41 @@ export default {
                     </div>
                     <div class="col-1">
                         <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" @click="checkStatus">
                             Add
                         </button>
                         <!-- Modal -->
                         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">New Food Entry</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div v-if="userSearch != ''">
-                                    <h2 style="font-weight:bold; text-align:start">You have chosen:</h2>
-                                    <br>
-                                    <p style="font-size:20px"> <span
-                                            style="font-weight:bold">{{ searchResults[3].item_name }}</span> from <span
-                                            style="font-weight:bold">{{ searchResults[3].brand_name }}</span></p>
-                                    <p style="font-size:20px">
-                                        It has {{ searchResults[3].calories }} calories. <br>
-                                        You will have <span style="font-weight:bold">{{ Number(calorieLimit -
-                                                dailyCalorieIntake).toFixed(2)
-                                        }} calories left</span> for today.
-                                    </p>
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">New Food Entry</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
-                                <div v-else>
-                                    <h2 style="font-weight:bold">Please select a food entry first.</h2>
+                                <div class="modal-body">
+                                    <div v-if="modalStatus == true">
+                                        <h2 style="font-weight:bold; text-align:start">You have chosen:</h2>
+                                        <br>
+                                        <p style="font-size:20px"> <span
+                                                style="font-weight:bold">{{ searchResults[3].item_name }}</span> from <span
+                                                style="font-weight:bold">{{ searchResults[3].brand_name }}</span></p>
+                                        <p style="font-size:20px">
+                                            It has {{ searchResults[3].calories }} calories. <br>
+                                            You will have <span style="font-weight:bold">{{ Number(calorieLimit -
+                                                    dailyCalorieIntake).toFixed(2)
+                                            }} calories left</span> for today.
+                                        </p>
+                                    </div>
+                                    <div v-else>
+                                        <h2 style="font-weight:bold">Please select a food entry first.</h2>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                    <button type="button" class="btn btn-primary" v-on:click="addFood($event)" data-bs-dismiss="modal">Add</button>
+                                </div>
                                 </div>
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                <button type="button" class="btn btn-primary" v-on:click="addFood($event)" data-bs-dismiss="modal">Add</button>
-                            </div>
-                            </div>
-                        </div>
                         </div>
                     </div>
                 </form>
