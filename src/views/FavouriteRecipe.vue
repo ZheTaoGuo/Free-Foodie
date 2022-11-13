@@ -59,7 +59,7 @@
         <h1 class="text-center">Favourite Recipes</h1>
     </div>
 
-    <div class="container-fluid">
+    <div class="container-fluid" style="min-height: 70vh;">
 
         <div class="row">
             <!--Start of Search Bar-->
@@ -93,9 +93,8 @@
             <!-- <Card :image_url="'tester'" :name="'fake'"></Card> -->
             <!-- End of Recipe -->
         </div>
-
     </div>
-    <Footer style="position:fixed; left:0; bottom:0; width: 100%;"></Footer>
+    <footer><Footer ></Footer></footer>
 </template>
 
 <style>
