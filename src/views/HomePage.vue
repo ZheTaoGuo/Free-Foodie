@@ -5,7 +5,7 @@
             <NavBar @checkLogin="isLoggedIn()"></NavBar>
             <!--End of NavBar-->
         </div>
-        <div class="row " id="carouselStyle ">
+        <div class="row " id="carouselStyle">
             <div id="foodcarousel" class="carousel slide px-0" data-bs-ride="carousel" style="height:90%">
                 <div class="carousel-inner text-center">
                     <div class="carousel-item active" data-bs-interval="2000">
@@ -99,13 +99,10 @@
     };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
     * {
-        /* font-family: Arial; */
         margin: 0;
         padding: 0;
-
     }
 
     .btnstyle {

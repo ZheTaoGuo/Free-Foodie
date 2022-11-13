@@ -38,7 +38,6 @@ const emit = defineEmits(['missing'])
 emit('missing', props.missingIngredient, props.recipeId)
 </script>
 
-
 <template>
     <div class="text-dark">
         <table>

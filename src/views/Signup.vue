@@ -7,9 +7,10 @@
     var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         return new bootstrap.Tooltip(tooltipTriggerEl, {
             delay: {
-                'show': 0,
-                'hide': 0
-            }
+                show: 0,
+                hide: 0,
+            },
+            trigger: 'click'
         }, )
     });
 
@@ -120,7 +121,7 @@
                             <input class="form-control" id="familyId" placeholder="Input your family ID (optional)" />
                             <label for="familyId">Family ID (optional)</label>
                             <img src="/info-svgrepo-com.svg" alt="info" class="icon-image" data-bs-delay="0"
-                                data-bs-trigger="hover focus" data-bs-toggle="tooltip" data-bs-placement="top"
+                                data-bs-trigger="click" data-bs-toggle="tooltip" data-bs-placement="top"
                                 title="If you are a new user, please leave this field blank. You can retrieve your family referral code on your profile">
                         </div>
 
@@ -133,7 +134,7 @@
                             <!-- <p class="h5 mb-3 section-titles">Or create account with email</p> -->
                             <div class="form-floating mx-auto mb-3 col-6">
                                 <input type="email" th:field class="form-control" id="email"
-                                    placeholder="name@example.com" :onkeypress="checkEmail" v-model="useremail">
+                                    placeholder="name@example.com" @blur="checkEmail" v-model="useremail">
                                 <label for="email">Email address</label>
                                 <div id="emailHelpBlock" class="form-text text-danger" v-if="emailInvalid">
                                     Email address is invalid! Please enter a valid email address
@@ -141,7 +142,7 @@
                             </div>
                             <div class="form-floating mx-auto mb-3 col-6">
                                 <input type="password" th:field="*{password}" class="form-control" id="password"
-                                    placeholder="Password" :onkeypress="checkPassword" v-model="userpass">
+                                    placeholder="Password" @blur="checkPassword" v-model="userpass">
                                 <label for="password">Password</label>
                                 <div id="passwordHelpBlock" class="form-text text-danger" v-if="passwordInvalid">
                                     Your password must be 8 characters or longer, contain letters and numbers, and must
@@ -171,8 +172,6 @@
                                 </p>
                             </router-link>
                         </div>
-
-
                     </div>
                 </div>
             </div>
@@ -186,7 +185,6 @@
     familyId {
         position: relative;
     }
-
     .icon-image {
         position: absolute;
         top: 32%;
@@ -194,34 +192,6 @@
         right: 0;
         width: 20px;
         height: 20px;
-
-
     }
 
-    /* .tooltip{
-  position:relative;
-  display: inline-block;
-  border-bottom: 1px dotted black;
-}
-
-.tooltip .tooltiptext{
-  position:absolute;
-  top: 0;
-  right: 0;
-  margin-top: 10px;
-  margin-right: 10px;
-  font-size: 20px;
-  background-color: black;
-  visibility: hidden;
-  width: 120px;
-  padding: 5px 0;
-  z-index: -1;
-  opacity: 0;
-  transition: opacity 1s;
-}
-
-.tooltip:hover .tooltiptext {
-  visibility: visible;
-  opacity: 1;
-} */
 </style>

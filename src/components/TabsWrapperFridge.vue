@@ -8,8 +8,9 @@
     <div class="row tabs-header">
       <!-- column content-->
       <div class="col individual-tab-style mx-4 text-center" v-for="title in tabTitlesSlot" :key="title"
-        :class="{ selected: title == selectedTitle }" @click="selectedTitle = title"
-        :style="{'background-color': title == selectedTitle ? 'green' : 'white'}">
+          :class="{ selected: title == selectedTitle }" @click="onClickEffect($event)"
+          :style="{ 'background-color': title == selectedTitle ? 'rgb(183, 221, 234)' : (hover == true && hoverTitle == title) ? 'lightgreen' : 'white' }"
+          @mouseenter="onHoverEffect($event)" @mouseleave="outHoverEffect($event)">
         {{ title }}
       </div>
     </div>
@@ -63,9 +64,9 @@
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="$emit('closeMe')">Close</button>
-              <button type="button" class="btn btn-primary"
-                @click="handleSaveClick()">Save</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                @click="$emit('closeMe')">Close</button>
+              <button type="button" class="btn btn-primary" @click="handleSaveClick()">Save</button>
             </div>
           </div>
         </div>
@@ -81,11 +82,12 @@
 
 <script>
 import { ref, provide } from "vue"
-import { saveIngredients} from '../utils';
+import { saveIngredients } from '../utils';
 import Footer from '../components/Footer.vue'
+import NavBar from '../components/Navbar.vue'
 export default {
-  data(){
-    return{
+  data() {
+    return {
       itemName: "",
       quantity: "",
       selectedValue: "",
@@ -94,50 +96,66 @@ export default {
       carbohydrates: [],
       condiments: [],
       sauces: [],
-      freshProduce: []
+      freshProduce: [],
+      hover: false,
+      hoverTitle: ""
     }
   },
-  components:{
-    Footer
+  components: {
+    Footer,NavBar
   },
-  methods:{
-    handleSaveClick(){
-        let alertMsg = ""
-      if(this.itemName == "" && this.quantity == "" && this.selectedValue == ""){
+  methods: {
+    handleSaveClick() {
+      let alertMsg = ""
+      if (this.itemName == "" && this.quantity == "" && this.selectedValue == "") {
         alertMsg += "Please fill out all fields";
       }
-      else{
+      else {
         var letters = /^[A-Za-z ]+$/
-        if (!letters.test(this.itemName) && this.itemName !== ""){
+        if (!letters.test(this.itemName) && this.itemName !== "") {
           alertMsg += "Item Name must only contain letters" + "\n"
         }
-        else if (this.itemName == ""){
+        else if (this.itemName == "") {
           alertMsg += "Please fill in the Item Name field" + "\n"
         }
-        if((Number.isFinite(this.quantity) == false) && this.quantity !== ""){
+
+        if ((Number.isFinite(this.quantity) == false) && this.quantity !== "") {
           alertMsg += "Quantity must only contain numbers" + "\n"
         }
-        else if(this.quantity == ""){
+        else if (this.quantity == "") {
           alertMsg += "Please fill in the Quantity field" + "\n"
         }
-        else if(Number.isFinite(this.quantity) == false){
+        else if (Number.isFinite(this.quantity) == false) {
           alertMsg += "Quantity must only contain numbers" + "\n"
         }
-
-        if(this.selectedValue == "" && this.selectedValue == null){
+        if (this.selectedValue == "" && this.selectedValue == null) {
           alertMsg += "Please select a category" + "\n"
         }
-        else if(this.selectedValue == ""){
+        else if (this.selectedValue == "") {
           alertMsg += "Please fill in the Category field" + "\n"
         }
       }
-      if(alertMsg !== ""){
+      if (alertMsg !== "") {
         alert(alertMsg);
       }
       else{
         alert("Your ingredient has been added to your fridge!");
       }
       saveIngredients(this, this.itemName, this.quantity, this.selectedValue)
+    },
+    onHoverEffect(event){
+      console.log("this is event", event)
+      this.hover = true
+      this.hoverTitle = event.path[0].innerText
+    },
+    outHoverEffect(event){
+      this.hover = false
+      this.hoverTitle = ""
+    },
+    onClickEffect(event) {
+      this.selectedTitle = event.path[0].innerText
+      console.log("this is event", event)
+      event.path[0].style.backgroundColor = "green"
     }
   },
   setup(props, { slots }) {
@@ -201,6 +219,7 @@ export default {
 .content {
   width: 100%;
 }
+
 .fridge-header {
   background-image: linear-gradient(to bottom right, #7395AE, #379683) !important;
   /* border-radius: 20px; */
@@ -209,7 +228,7 @@ export default {
   margin-bottom: 5px;
 }
 
-.fab-container{
+.fab-container {
   position: fixed;
   bottom: 20px;
   right: 20px;
@@ -219,14 +238,16 @@ export default {
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3) !important;
 }
 
-#plus{
+#plus {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100%;
   margin: 0 auto;
 }
-.button{
+
+.button {
+  margin-right:10px;
   width: 160px;
   height: 40px;
   padding: 10px;
@@ -235,8 +256,4 @@ export default {
   border: 1px solid black;
 }
 
-.ingredient-button{
-  margin-right:11px;
-  float:right;
-}
 </style>
