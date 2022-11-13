@@ -95,7 +95,7 @@
         </div>
 
     </div>
-    <Footer></Footer>
+    <Footer style="position:fixed; left:0; bottom:0; width: 100%;"></Footer>
 </template>
 
 <style>
