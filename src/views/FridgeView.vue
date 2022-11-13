@@ -145,6 +145,11 @@ export default {
         isLoggedIn,
         saveIngredients,
         loadIngredients() {
+            this.meat = []
+            this.carbohydrates = []
+            this.condiments = []
+            this.sauces = []
+            this.freshProduce = []
             const retrievedIngredientsObject = retrieveIngredients();
             retrievedIngredientsObject.then((value) => {
                 this.items = value
