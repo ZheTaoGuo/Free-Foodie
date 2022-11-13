@@ -226,7 +226,7 @@
             </div>
 
             <!-- mini dashboard -->
-            <div v-if="userCaloriesData.length == 0 && this.userObj == null" class="alert alert-primary mt-4 mb-2" role="alert">
+            <div v-if="userObj.calorieDetails == undefined" class="alert alert-primary mt-4 mb-2" role="alert">
                 Start entering your daily calorie intake to see your dashboard!
             </div>
             <div class="col-lg-8 calorieTracker" style="padding-bottom:40px">

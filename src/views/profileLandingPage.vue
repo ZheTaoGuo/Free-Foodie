@@ -146,8 +146,8 @@
                 this.getUser(this.userId).then((user) => {
                     // console.log("this is userObj", user)
                     this.userObj = user
-                    // console.log("tjs is this.userObj", this.userObj)
-                    if (user.calorieDetails != null) {
+                    // console.log("tjs is this.userObj", user.calorieDetails)
+                    if (user.calorieDetails != undefined) {
                         this.calorieLimit = Number(user.calorieDetails[Object.keys(user.calorieDetails)[Object.keys(user.calorieDetails).length - 1]].calorieLimit).toFixed(2);
                         for (const property in user.calorieDetails) {
                             // console.log("this is new obj created", { date: user.calorieDetails[property].date, calories: user.calorieDetails[property].dailyCalorieIntake})
@@ -170,7 +170,7 @@
         <NavBar @checkLogin="isLoggedIn()"></NavBar>
         <!--End of NavBar-->
         <div class="mainContent container-fluid">
-            <div v-if="userCaloriesData.length == 0 && this.userObj == null" class="alert alert-primary" role="alert">
+            <div v-if="userObj.calorieDetails == undefined" class="alert alert-primary" role="alert">
                 Start entering your daily calorie intake to see your dashboard!
             </div>
             <div class="row justify-content-around">

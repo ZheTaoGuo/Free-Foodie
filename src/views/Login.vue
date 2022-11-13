@@ -26,7 +26,7 @@
               </button>
             
             <div class="d-grid" style="align-items: center;"> 
-              <router-link to="/signup">
+              <router-link to="/signupInit">
                 <p style = "margin-top: 20px; text-decoration: underline; color: blue;">
                   Don't Have An Account? Sign Up
                 </p>
