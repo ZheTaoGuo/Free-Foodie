@@ -187,6 +187,7 @@ export default {
                 })
                 console.log("this is the amount i hvae eaten", dailyCalorieIntake)
                 dailyCalorieIntake = calorieDetails + dailyCalorieIntake
+                this.userSearch = ""
             }).catch(function (error) {
                 console.error(error);
             });
@@ -454,7 +455,7 @@ export default {
             this.userId = user.userId
             this.userName = user.userName 
             this.getUserDetails(this.userId)
-        })
+        }).catch((message)=> {console.log("this is message from getLoggedInUser", message); this.userObj = null })
     }
 }
 
@@ -469,8 +470,8 @@ export default {
         <div class="row">
             <!-- form -->
             <div class="container" style="margin-bottom:20px">
-                <form class="row g-1 d-flex justify-content-center">
-                    <div class="col-6">
+                <form class="row g-1 d-flex justify-content-start">
+                    <div class="col-10 mt-2">
                         <!-- <AutoComplete v-model="userSearch" @complete="searchFood()"
                             placeholder="Enter your meal details here to track your calories!"
                             style="width:100%; padding-left: 90px;" :suggestions="searchResults" input-class="form-control"
@@ -478,11 +479,11 @@ export default {
                             search-message="" selection-message="" optionLabel="label">
                         </AutoComplete> -->
                         <div class="mb-3">
-                            <input type="text" class="form-control" id="search" placeholder="Enter your meal details here to track your calories!" v-model="userSearch" @input="searchFood">
+                            <input type="text" class="form-control" id="search" placeholder="Enter your meal details to track your calories!" v-model="userSearch" @input="searchFood">
                         </div>
 
                     </div>
-                    <div class="col-1">
+                    <div class="col-1 mt-2">
                         <!-- <Modal @close="toggleModal" :modalActive="modalActive">
                             <div class="modal-content" style="border:none">
                                 <div v-if="userSearch != ''">
@@ -604,6 +605,9 @@ export default {
             </div>
 
             <!-- dashboard -->
+            <div v-if="userCaloriesData.length == 0 && this.userObj == null" class="alert alert-primary mt-4 mb-1" role="alert">
+                Start entering your daily calorie intake to see your dashboard!
+            </div>
             <div class="col-lg-9 col-md-12 dashboard mt-3" style="position:relative">
                 <div style="width:100%" class="box p-3 mx-auto col-6">
                     <h2 style="text-align:left">Overview</h2>

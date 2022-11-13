@@ -61,7 +61,7 @@
         <h1 class="text-center">Past Recipes</h1>
     </div>
 
-    <div class="container-fluid">
+    <div class="container-fluid" style="min-height: 80vh;">
 
         <div class="row">
             <!--Start of Search Bar-->
@@ -92,12 +92,18 @@
                 :duration="recipe['duration']" :desc="recipe['summary'].slice(0, 150)+'...'"></Card>
              <!-- End of Recipe -->
         </div>
-        
+
     </div>
-    <Footer></Footer>
+    <footer><Footer ></Footer></footer>
 </template>
 
 <style>
+    /* @media (max-width: 991px) {
+        .dashboard {
+            margin-top: 10px;
+        }
+    } */
+
 .shopping-list-header {
   background-image: linear-gradient(to bottom right, #7395AE, #379683) !important;
   /* border-radius: 20px; */

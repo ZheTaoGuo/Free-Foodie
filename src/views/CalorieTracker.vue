@@ -72,7 +72,22 @@ export default {
                 this.activityFrequency = user.activityFrequency;
                 // console.log("this is userc calroei deiasl", user.calorieDetails[Object.keys(user.calorieDetails)[Object.keys(user.calorieDetails).length-1]])
                 if (user.calorieDetails != null){
-                    this.calorieLimit = Number(user.calorieDetails[Object.keys(user.calorieDetails)[Object.keys(user.calorieDetails).length - 1]].calorieLimit).toFixed(2);
+                    if (this.calorieLimit == 0) {
+                        console.log("this is the this.calories to set",Object.keys(user.calorieDetails))
+                        // getting the max date from the array 
+                        const maxDate = new Date(
+                            Math.max(
+                                ...Object.values(user.calorieDetails).map(element => {
+                                return new Date(element.date);
+                                }),
+                            ),
+                        );
+                        // formatting to get the index of the max date
+                        // console.log("this is maxDate", maxDate)
+                        let currDate = maxDate.getDate() + " " + maxDate.getMonth() + " " + maxDate.getFullYear()
+                        // console.log("this is currDate", currDate)
+                        this.calorieLimit = Number(user.calorieDetails[currDate].calorieLimit).toFixed(2);
+                    }
                     // converting the data to the format in firebase
                     let date = new Date()
                     let todayDateFormatted = date.getDate() + " " + date.getMonth() + " " + date.getFullYear()
@@ -170,6 +185,7 @@ export default {
                 })
                 console.log("this is the amount i hvae eaten", dailyCalorieIntake)
                 dailyCalorieIntake = calorieDetails + dailyCalorieIntake
+                this.userSearch = ""
             }).catch(function (error) {
                 console.error(error);
             });
@@ -395,6 +411,7 @@ export default {
                 .attr("y", 1)
                 .attr("dy", "-5.1em")
                 .attr("text-anchor", "middle")
+                .attr("style", "font-size: 15px; font-weight: bold; -webkit-text-fill-color: #1c87c9")
                 .attr("stroke", "black")
                 .text("Calories Consumed");
 
@@ -436,7 +453,7 @@ export default {
             this.userId = user.userId
             this.userName = user.userName 
             this.getUserDetails(this.userId)
-        })
+        }).catch((message)=> {console.log("this is message from getLoggedInUser", message); this.userObj = null })
     }
 }
 
@@ -447,7 +464,6 @@ export default {
     <NavBar @checkLogin="isLoggedIn()"></NavBar>
     <!--End of NavBar-->
     <div class="mainContent">
-
         <div class="container-fluid">
             <div class="row">
                 <!-- form -->
@@ -498,9 +514,12 @@ export default {
                     </div>
                 </form>
             </div>
+            <div v-if="userCaloriesData.length == 0 && this.userObj == null" class="alert alert-primary mb-1 px-0" role="alert">
+                Start entering your daily calorie intake to see your dashboard!
+            </div>
             <div class="row h-100 ">
-                <div class="col-lg-3 col-md-12 d-flex flex-column justify-content-between">
-                    <div class="box p-3 px-4" style="height: 65%;">
+                <div class="col-lg-3 col-md-12 d-flex flex-column justify-content-between mt-3">
+                    <div class="box p-3 px-4" style="height: 80%;">
                         <h2 style="text-align:start">Personal Details</h2>
                         <!-- letting user key in the fields of details of themselves -->
                         <div class="row d-flex justify-content-center mt-3 pt-2" style="text-align:start;">
@@ -551,7 +570,7 @@ export default {
                     </div>
                 </div>
                 <!-- dashboard -->
-                <div class="col-lg-9 col-md-12 box dashboard" style="position:relative">
+                <div class="col-lg-9 col-md-12 box dashboard mt-3" style="position:relative">
                     <div style="width:90%" class="p-3 mx-auto col-6">
                         <h2 style="text-align:left">Overview</h2>
                         <div style="border:1px solid black;" class="mb-3">

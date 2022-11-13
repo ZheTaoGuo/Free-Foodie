@@ -42,14 +42,20 @@
 
                 if (this.name.length == 0){
                     this.nameInvalid = true
+                }else{
+                    this.nameInvalid = false
                 }
 
                 if (this.age.length == 0){
                     this.ageInvalid = true
+                }else{
+                    this.ageInvalid = false
                 }
 
                 if (this.gender == 'Gender'){
                     this.genderInvalid = true
+                }else{
+                    this.genderInvalid = false
                 }
 
                 if (!this.genderInvalid && !this.ageInvalid && !this.nameInvalid && !this.emailInvalid && !this.passwordInvalid){
