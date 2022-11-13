@@ -40,7 +40,7 @@
             }
         },
         async mounted() {
-            const currentUser = await getLoggedInUser();
+            const currentUser = getLoggedInUser();
             this.loggedInUser = currentUser.userId
             console.log('Current UserId: ', this.loggedInUser);
 
