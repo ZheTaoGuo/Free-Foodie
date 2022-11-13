@@ -111,44 +111,61 @@ export const register = () => {
 }
 
 export const signin = () => {
-    console.log("Handling signin")
-    var email = document.getElementById('email').value;
-    var password = document.getElementById('password').value;
-    if (email.length < 4) {
-        alert('Please enter an email address.');
-        return;
-    }
-    if (password.length < 4) {
-        alert('Please enter a password.');
-        return;
-    }
-    // Create user with email and pass.
-    signInWithEmailAndPassword(getAuth(), email, password)
+    return new Promise ((resolve, reject)=> {
+           console.log("Handling signin")
+        var email = document.getElementById('email').value;
+        var password = document.getElementById('password').value;
+        let msgList = []
+        if (email.length < 4) {
+            // alert('Please enter an email address.');
+            let msg = "Please enter an email address."
+            msgList.push(msg)
+        }
+        if (password.length < 4) {
+            // alert('Please enter a password.');
+            let msg = "Please enter a password."
+            msgList.push(msg)
+        }
+        console.log(msgList)
+        if (msgList.length > 0) {
+            return reject(msgList)
+        }
+        
+        // Create user with email and pass.
+        signInWithEmailAndPassword(getAuth(), email, password)
         .then(() => {
-            console.log("Successfully signed in")
-            router.push('/')
+                console.log("Successfully signed in")
+                router.push('/')
+            })
+            
+            .catch(function (error) {
+                // Handle Errors here.
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                if (errorCode === "auth/wrong-password") {
+                    // alert("Incorrect password!");
+                    let msg = "Incorrect password!"
+                    msgList.push(msg)
+                } 
+                else if (errorCode === "auth/user-not-found") {
+                    // alert("User not found! Please enter a valid email address");
+                    let msg = "User not found! Please enter a valid email address"
+                    msgList.push(msg)
+                } 
+                else {
+                    alert(errorMessage);
+                }
+                console.log(error);
+                if (msgList.length > 0) {
+                    return reject(msgList)
+                }
+            });
         })
-
-        .catch(function (error) {
-            // Handle Errors here.
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            if (errorCode === "auth/wrong-password") {
-                alert("Incorrect password!");
-            } 
-            else if (errorCode === "auth/user-not-found") {
-                alert("User not found! Please enter a valid email address");
-            } 
-            else {
-                alert(errorMessage);
-            }
-            console.log(error);
-        });
-}
-
-export const googlesignup = () => {
-    var provider = new GoogleAuthProvider();
-    const age = document.getElementById('age').value;
+    }
+    
+    export const googlesignup = () => {
+        var provider = new GoogleAuthProvider();
+        const age = document.getElementById('age').value;
     const gender = document.getElementById('gender').value;
     const familyId = document.getElementById('familyId').value;
     const name = document.getElementById('name').value;
