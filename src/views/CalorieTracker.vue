@@ -96,8 +96,8 @@ export default {
                     fields: 'item_name,item_id,brand_name,nf_calories,nf_total_fat',
                 },
                 headers: {
-                    'X-RapidAPI-Key': '5028148f06msh1985fb5840879e5p14fd5bjsn06b1e3192403',
-                    'X-RapidAPI-Host': 'nutritionix-api.p.rapidapi.com'
+                    'X-RapidAPI-Key': process.env.VUE_APP_X_RAPIDAPI_KEY,
+                    'X-RapidAPI-Host': process.env.VUE_APP_X_RAPIDAPI_HOST
                 }
             };
 
@@ -127,8 +127,8 @@ export default {
                     fields: 'item_name,item_id,brand_name,nf_calories,nf_total_fat',
                 },
                 headers: {
-                    'X-RapidAPI-Key': '5028148f06msh1985fb5840879e5p14fd5bjsn06b1e3192403',
-                    'X-RapidAPI-Host': 'nutritionix-api.p.rapidapi.com'
+                    'X-RapidAPI-Key': process.env.VUE_APP_X_RAPIDAPI_KEY,
+                    'X-RapidAPI-Host': process.env.VUE_APP_X_RAPIDAPI_HOST
                 }
             };
 
